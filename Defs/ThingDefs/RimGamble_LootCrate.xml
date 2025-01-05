@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Defs>
   <ThingDef ParentName="ResourceBase">
-    <defname>RimGamble_LootCrate</defname>
+    <defName>RimGamble_LootCrate</defName>
     <label>loot crate</label>
+    <thingClass>ThingWithComps</thingClass>
     <description>A small box filled with pride and accomplishment.</description>
 
     <!-- Visual related things -->
