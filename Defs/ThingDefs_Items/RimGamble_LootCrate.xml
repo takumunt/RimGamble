@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Defs>
-  <ThingDef ParentName="ResourceBase">
-    <defName>RimGamble_LootCrate</defName>
-    <label>loot crate</label>
-    <thingClass>ThingWithComps</thingClass>
-    <description>A small box filled with pride and accomplishment.</description>
-
-    <!-- Visual related things -->
-    <graphicData>
-      <texPath>RimGamble/LootCrate/LootCrate</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType></shaderType> <!-- We will not be using a shader for the time being -->
-    </graphicData>
-
-    <!-- Various Stats-->
+  <ThingDef ParentName="ResourceBase" Name="RimGamble_LootCrateBase" Abstract="True">
     <statBases>
       <DeteriorationRate>0.5</DeteriorationRate>
       <MarketValue>200</MarketValue>
@@ -21,17 +8,44 @@
       <Flammability>0.5</Flammability>
     </statBases>
 
-  <!-- comp for usability, causes crate to dispense item and disappear upon use -->
     <comps>
       <li Class="CompProperties_Usable">
         <useJob>UseItem</useJob>
         <useLabel>Use {0_label}</useLabel>
         <showUseGizmo>true</showUseGizmo>
       </li>
-      <li Class="CompProperties_UseEffect">
-        <compClass>RimGamble.CompUseEffect_DispenseRandomItem</compClass>
-      </li>
       <li Class="CompProperties_UseEffectDestroySelf" />
     </comps>
   </ThingDef>
+
+  <ThingDef ParentName="RimGamble_LootCrateBase">
+    <defName>RimGamble_LootCrateBasic</defName>
+    <label>basic loot crate</label>
+    <description>A small box filled with pride and accomplishment.</description>
+    <graphicData>
+      <texPath>RimGamble/LootCrate/LootCrate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <comps>
+      <li Class="RimGamble.CompProperties_LootCrate">
+        <compClass>RimGamble.CompUseEffectLootCrate_Base</compClass>
+        <lootItems>
+          <li Class="RimGamble.LootItem">
+            <item>Steel</item>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>10</itemQuantMax>
+            <itemWeight>100</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem">
+            <item>Plasteel</item>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>10</itemQuantMax>
+            <itemWeight>50</itemWeight>
+          </li>
+        </lootItems>
+      </li>
+    </comps>
+  </ThingDef>
+
 </Defs>
