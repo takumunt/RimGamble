@@ -3,3 +3,8 @@ C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\RimGamble\Source\Rim
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.csproj.CoreCompileInputs.cache
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.csproj.Up2Date
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.dll
+Z:\SteamLibrary\steamapps\common\RimWorld\Mods\RimGamble\Assemblies\RimGamble.dll
+Z:\SteamLibrary\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.csproj.AssemblyReference.cache
+Z:\SteamLibrary\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.csproj.CoreCompileInputs.cache
+Z:\SteamLibrary\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.csproj.Up2Date
+Z:\SteamLibrary\steamapps\common\RimWorld\Mods\RimGamble\Source\RimGamble\obj\Debug\RimGamble.dll
