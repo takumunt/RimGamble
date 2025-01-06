@@ -1,2 +1,14 @@
 # dll files
 Assemblies/
+
+# Visual Studio folders
+.vs/
+.idea/
+
+# Debug folder
+[Dd]ebug/
+
+# build folders
+/Source/[Bb]in/
+/Source/[Oo]bj/
+/Source/[Ll]og/
