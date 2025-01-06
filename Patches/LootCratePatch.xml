@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Patches vanilla traders to include loot crates -->
+<Patch>
+    <!-- Patches orbital exotic goods traders-->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/TraderKindDef[defName="Orbital_Exotic"]/stockGenerators</xpath>
+        <value>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrate</thingDef>
+                <countRange>1~20</countRange>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- Patches caravans (only outlanders) -->
+
+    <!-- Patch outlander base-->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/TraderKindDef[defName="Base_Outlander_Standard"]/stockGenerators</xpath>
+        <value>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrate</thingDef>
+                <countRange>1~20</countRange>
+            </li>
+        </value>
+    </Operation>
+
+    <!-- Patch outlander exotic-->
+    <Operation Class="PatchOperationAdd">
+        <xpath>Defs/TraderKindDef[defName="Caravan_Outlander_Exotic"]/stockGenerators</xpath>
+        <value>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrate</thingDef>
+                <countRange>1~20</countRange>
+            </li>
+        </value>
+    </Operation>
+</Patch>
