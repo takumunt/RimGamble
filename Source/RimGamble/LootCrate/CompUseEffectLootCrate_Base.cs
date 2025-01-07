@@ -58,15 +58,16 @@ namespace RimGamble
                     }
                 }
 
+                // present the gift with a random amount based on the LootItem's fields
                 if (gift != null)
                 {
                     Log.Message(gift.ToString());
 
 
-                    //Thing silverStack = ThingMaker.MakeThing(ThingDefOf.Silver);
-                    //silverStack.stackCount = UnityEngine.Random.Range(1, 400);
+                    Thing giftItem = ThingMaker.MakeThing(gift.item);
+                    giftItem.stackCount = UnityEngine.Random.Range(gift.itemQuantMin, gift.itemQuantMax);
 
-                    //GenSpawn.Spawn(silverStack, usedBy.Position, usedBy.Map);
+                    GenSpawn.Spawn(giftItem, usedBy.Position, usedBy.Map);
                 }
             }
         }
