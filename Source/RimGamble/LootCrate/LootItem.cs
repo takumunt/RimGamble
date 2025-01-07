@@ -11,19 +11,13 @@ namespace RimGamble
     /* Class that defines a LootItem, which contains information about a given "result" of a loot crate opening.
      * Information includes: chance of the item, possible quantity of the item, name of the item
      */
-    public class LootItem
+    public abstract class LootItem
     {
-        public ThingDef item;
         public int itemQuantMin;
         public int itemQuantMax;
         public int itemWeight;
 
         // default constructor
         public LootItem() { }
-
-        public override string ToString()
-        {
-            return this.item.defName;
-        }
     }
 }
