@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RimWorld;
 using Verse;
+using static RimWorld.PsychicRitualRoleDef;
 
 namespace RimGamble
 {
@@ -63,6 +64,7 @@ namespace RimGamble
                 {
 
                     Thing giftItem = null;
+                    QualityCategory? qual = null; // default quality
                     if (gift is LootItem_SingleDef singleDefGift)
                     {
                         giftItem = ThingMaker.MakeThing(singleDefGift.item);
@@ -70,21 +72,41 @@ namespace RimGamble
                     }
                     else if (gift is LootItem_Category categoryGift)
                     {
-                        giftItem = ThingMaker.MakeThing(categoryGift.category.childThingDefs.RandomElement());
+                        // make sure excluded items are not spawned
+                        List<ThingDef> validList = categoryGift.category.childThingDefs;
+                        foreach (ThingDef excludedItem in categoryGift.exclude)
+                        {
+                            validList.Remove(excludedItem);
+                        }
 
+                        ThingDef giftItemPreMake = validList.RandomElement();
+                        ThingDef stuff = null;
+
+                        // set the material of the item (if applicable)
+                        if (giftItemPreMake.MadeFromStuff)
+                        {
+                            stuff = GenStuff.RandomStuffByCommonalityFor(giftItemPreMake);
+                        }
+
+                        giftItem = ThingMaker.MakeThing(giftItemPreMake, stuff);
+
+                        // set the quality of the item (if applicable)
+                        if (giftItem.TryGetComp<CompQuality>() != null)
+                        {
+                            qual = QualityUtility.GenerateQualityRandomEqualChance();
+                        }
                     }
                     // spawn the item
                     giftItem.stackCount = UnityEngine.Random.Range(gift.itemQuantMin, gift.itemQuantMax);
-                    spawnItems(giftItem, usedBy.Position, usedBy.Map);
+                    spawnItems(giftItem, usedBy.Position, usedBy.Map, qual);
                 }
             }
         }
 
         /* given a location, the map, and a LootItem, attempts to spawn that item(s) on the given position
          * If there are too many items to fit on one tile, the rest will overflow onto adjacent open tiles
-         * If there are no free tiles, the leftover items are destroyed
          */
-        private void spawnItems(Thing giftItem, IntVec3 pos, Map map)
+        private void spawnItems(Thing giftItem, IntVec3 pos, Map map, QualityCategory? qual)
         {
             // split the stack into separate chunks if it is too large
             int lim = giftItem.def.stackLimit; // stack limit of the item
@@ -96,10 +118,18 @@ namespace RimGamble
                 Thing itemToSpawn = ThingMaker.MakeThing(giftItem.def, giftItem.Stuff);
                 itemToSpawn.stackCount = amountToSpawn;
 
+                if (qual != null)
+                {
+                    CompQuality compQuality = itemToSpawn.TryGetComp<CompQuality>();
+                    compQuality.SetQuality((QualityCategory) qual, ArtGenerationContext.Colony);
+                }
+
                 GenSpawn.Spawn(itemToSpawn, pos, map);
 
                 giftItem.stackCount -= amountToSpawn;
+
             }
+
         }
     }
 }

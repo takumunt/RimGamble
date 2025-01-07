@@ -49,14 +49,14 @@
           </li>
           <li Class="RimGamble.LootItem_SingleDef">
             <item>Steel</item>
-            <itemQuantMin>50</itemQuantMin>
-            <itemQuantMax>75</itemQuantMax>
+            <itemQuantMin>150</itemQuantMin>
+            <itemQuantMax>400</itemQuantMax>
             <itemWeight>70</itemWeight>
           </li>
           <li Class="RimGamble.LootItem_SingleDef">
             <item>Plasteel</item>
             <itemQuantMin>40</itemQuantMin>
-            <itemQuantMax>75</itemQuantMax>
+            <itemQuantMax>125</itemQuantMax>
             <itemWeight>40</itemWeight>
           </li>
           <li Class="RimGamble.LootItem_Category">
@@ -68,6 +68,24 @@
               <li>Luciferium</li>
               <li>MechSerumHealer</li>
               <li>MechSerumResurrector</li>
+            </exclude>
+          </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>WeaponsRanged</category>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <exclude>
+              <li>Gun_ChargeRifle</li>
+              <li>Gun_ChargeLance</li>
+            </exclude>
+          </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>WeaponsMelee</category>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <exclude>
             </exclude>
           </li>
         </lootItems>
