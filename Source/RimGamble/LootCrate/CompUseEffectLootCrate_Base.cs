@@ -15,14 +15,16 @@ namespace RimGamble
     public class CompUseEffectLootCrate_Base : CompUseEffect
     {
 
-        private CompProperties_LootCrate Props => (CompProperties_LootCrate)props;
+        public ModExtension_LootCrate Props => parent.def.GetModExtension<ModExtension_LootCrate>();
+
+
 
         /* Override of the DoEffect method from CompUseEffect, runs the original method then calls another 
          * method to open the box */
         public override void DoEffect(Pawn usedBy)
         {
             base.DoEffect(usedBy); // Does all the effects already in DoEffect, such as camera shake
-            
+
             OpenCrate(usedBy);
         }
 

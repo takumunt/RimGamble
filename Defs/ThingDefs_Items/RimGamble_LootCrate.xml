@@ -14,6 +14,11 @@
         <useLabel>Use {0_label}</useLabel>
         <showUseGizmo>true</showUseGizmo>
       </li>
+
+      <li Class="CompProperties_UseEffect">
+        <compClass>RimGamble.CompUseEffectLootCrate_Base</compClass>
+      </li>
+
       <li Class="CompProperties_UseEffectDestroySelf" />
     </comps>
   </ThingDef>
@@ -26,10 +31,9 @@
       <texPath>RimGamble/LootCrate/LootCrate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-
-    <comps>
-      <li Class="RimGamble.CompProperties_LootCrate">
-        <compClass>RimGamble.CompUseEffectLootCrate_Base</compClass>
+    
+    <modExtensions>
+      <li Class="RimGamble.ModExtension_LootCrate">
         <lootItems>
           <li Class="RimGamble.LootItem">
             <item>Steel</item>
@@ -45,7 +49,7 @@
           </li>
         </lootItems>
       </li>
-    </comps>
+    </modExtensions>
   </ThingDef>
 
 </Defs>

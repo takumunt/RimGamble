@@ -21,14 +21,6 @@ namespace RimGamble
         // default constructor
         public LootItem() { }
 
-        public LootItem(ThingDef item)
-        {
-            this.item = item;
-            this.itemQuantMin = 1;
-            this.itemQuantMax = 1;
-            this.itemWeight = 1;
-        }
-
         public override string ToString()
         {
             return this.item.defName;

@@ -49,8 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LootCrate\CompProperties_LootCrate.cs" />
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />
+    <Compile Include="LootCrate\ModExtension_LootCrate.cs" />
     <Compile Include="LootCrate\LootItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
