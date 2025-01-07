@@ -61,15 +61,33 @@ namespace RimGamble
                 // present the gift with a random amount based on the LootItem's fields
                 if (gift != null)
                 {
-                    Log.Message(gift.ToString());
 
+                    Thing giftItem = null;
+                    if (gift is LootItem_SingleDef singleDefGift)
+                    {
+                        giftItem = ThingMaker.MakeThing(singleDefGift.item);
 
-                    Thing giftItem = ThingMaker.MakeThing(gift.item);
+                    }
+                    else if (gift is LootItem_Category categoryGift)
+                    {
+                        giftItem = ThingMaker.MakeThing(categoryGift.category.childThingDefs.RandomElement());
+
+                    }
+                    // spawn the item
                     giftItem.stackCount = UnityEngine.Random.Range(gift.itemQuantMin, gift.itemQuantMax);
-
                     GenSpawn.Spawn(giftItem, usedBy.Position, usedBy.Map);
+                    //spawnItems(giftitem, usedBy.Position, usedBy.Map);
                 }
             }
+        }
+
+        /* given a location, the map, and a LootItem, attempts to spawn that item(s) on the given position
+         * If there are too many items to fit on one tile, the rest will overflow onto adjacent open tiles
+         * If there are no free tiles, the leftover items are destroyed
+         */
+        private void spawnItems(LootItem giftItem, IntVec3 pos, Map map)
+        {
+
         }
     }
 }

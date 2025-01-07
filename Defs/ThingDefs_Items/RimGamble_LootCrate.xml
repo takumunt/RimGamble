@@ -31,21 +31,44 @@
       <texPath>RimGamble/LootCrate/LootCrate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    
+
     <modExtensions>
       <li Class="RimGamble.ModExtension_LootCrate">
         <lootItems>
-          <li Class="RimGamble.LootItem">
-            <item>Steel</item>
-            <itemQuantMin>1</itemQuantMin>
-            <itemQuantMax>10</itemQuantMax>
+          <!-- <li Class="RimGamble.LootItem_SingleDef">
+            <item>Silver</item>
+            <itemQuantMin>50</itemQuantMin>
+            <itemQuantMax>400</itemQuantMax>
             <itemWeight>100</itemWeight>
           </li>
-          <li Class="RimGamble.LootItem">
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Gold</item>
+            <itemQuantMin>20</itemQuantMin>
+            <itemQuantMax>75</itemQuantMax>
+            <itemWeight>25</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Steel</item>
+            <itemQuantMin>50</itemQuantMin>
+            <itemQuantMax>75</itemQuantMax>
+            <itemWeight>70</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
             <item>Plasteel</item>
-            <itemQuantMin>1</itemQuantMin>
-            <itemQuantMax>10</itemQuantMax>
-            <itemWeight>50</itemWeight>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>75</itemQuantMax>
+            <itemWeight>40</itemWeight>
+          </li> -->
+          <li Class="RimGamble.LootItem_Category">
+            <category>Drugs</category>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>150</itemQuantMax>
+            <itemWeight>40</itemWeight>
+            <exclude>
+              <li>Luciferium</li>
+              <li>MechSerumHealer</li>
+              <li>MechSerumResurrector</li>
+            </exclude>
           </li>
         </lootItems>
       </li>
