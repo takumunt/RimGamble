@@ -75,8 +75,7 @@ namespace RimGamble
                     }
                     // spawn the item
                     giftItem.stackCount = UnityEngine.Random.Range(gift.itemQuantMin, gift.itemQuantMax);
-                    GenSpawn.Spawn(giftItem, usedBy.Position, usedBy.Map);
-                    //spawnItems(giftitem, usedBy.Position, usedBy.Map);
+                    spawnItems(giftItem, usedBy.Position, usedBy.Map);
                 }
             }
         }
@@ -85,9 +84,22 @@ namespace RimGamble
          * If there are too many items to fit on one tile, the rest will overflow onto adjacent open tiles
          * If there are no free tiles, the leftover items are destroyed
          */
-        private void spawnItems(LootItem giftItem, IntVec3 pos, Map map)
+        private void spawnItems(Thing giftItem, IntVec3 pos, Map map)
         {
+            // split the stack into separate chunks if it is too large
+            int lim = giftItem.def.stackLimit; // stack limit of the item
 
+            while (giftItem.stackCount > 0)
+            {
+                int amountToSpawn = Math.Min(giftItem.stackCount, lim);
+
+                Thing itemToSpawn = ThingMaker.MakeThing(giftItem.def, giftItem.Stuff);
+                itemToSpawn.stackCount = amountToSpawn;
+
+                GenSpawn.Spawn(itemToSpawn, pos, map);
+
+                giftItem.stackCount -= amountToSpawn;
+            }
         }
     }
 }

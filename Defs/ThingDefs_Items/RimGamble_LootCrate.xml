@@ -11,7 +11,7 @@
     <comps>
       <li Class="CompProperties_Usable">
         <useJob>UseItem</useJob>
-        <useLabel>Use {0_label}</useLabel>
+        <useLabel>Open {0_label}</useLabel>
         <showUseGizmo>true</showUseGizmo>
       </li>
 
@@ -35,7 +35,7 @@
     <modExtensions>
       <li Class="RimGamble.ModExtension_LootCrate">
         <lootItems>
-          <!-- <li Class="RimGamble.LootItem_SingleDef">
+          <li Class="RimGamble.LootItem_SingleDef">
             <item>Silver</item>
             <itemQuantMin>50</itemQuantMin>
             <itemQuantMax>400</itemQuantMax>
@@ -58,11 +58,11 @@
             <itemQuantMin>40</itemQuantMin>
             <itemQuantMax>75</itemQuantMax>
             <itemWeight>40</itemWeight>
-          </li> -->
+          </li>
           <li Class="RimGamble.LootItem_Category">
             <category>Drugs</category>
             <itemQuantMin>40</itemQuantMin>
-            <itemQuantMax>150</itemQuantMax>
+            <itemQuantMax>200</itemQuantMax>
             <itemWeight>40</itemWeight>
             <exclude>
               <li>Luciferium</li>

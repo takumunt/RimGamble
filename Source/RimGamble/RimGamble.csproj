@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LootCrate\CompUsable_LootCrate.cs" />
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />
     <Compile Include="LootCrate\LootItem_Category.cs" />
     <Compile Include="LootCrate\LootItem_SingleDef.cs" />
