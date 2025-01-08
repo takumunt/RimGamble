@@ -11,6 +11,7 @@ namespace RimGamble
     {
         public ThingCategoryDef category;
         public List<ThingDef> exclude = new List<ThingDef>();
-
+        public int rareModif = 2; // variable used to change how the random generation of quality is handled (where applicable) the given value is where quality will cluster around
+        public float widthFactor = 0; // variable used to change how clustered the random generation of quality is handled
     }
 }

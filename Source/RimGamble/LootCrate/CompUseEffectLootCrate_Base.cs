@@ -7,6 +7,8 @@ using UnityEngine;
 using RimWorld;
 using Verse;
 using static RimWorld.PsychicRitualRoleDef;
+using Verse.Noise;
+using System.Diagnostics.Eventing.Reader;
 
 namespace RimGamble
 {
@@ -64,7 +66,7 @@ namespace RimGamble
                 {
 
                     Thing giftItem = null;
-                    QualityCategory? qual = null; // default quality
+                    QualityCategory? qual = null;
                     if (gift is LootItem_SingleDef singleDefGift)
                     {
                         giftItem = ThingMaker.MakeThing(singleDefGift.item);
@@ -78,6 +80,8 @@ namespace RimGamble
                         {
                             validList.Remove(excludedItem);
                         }
+                        // exclude mechanoid weapons
+                        validList = validList.Where(item => !item.destroyOnDrop).ToList();
 
                         ThingDef giftItemPreMake = validList.RandomElement();
                         ThingDef stuff = null;
@@ -93,7 +97,7 @@ namespace RimGamble
                         // set the quality of the item (if applicable)
                         if (giftItem.TryGetComp<CompQuality>() != null)
                         {
-                            qual = QualityUtility.GenerateQualityRandomEqualChance();
+                            qual = generateQual(categoryGift.rareModif, categoryGift.widthFactor);
                         }
                     }
                     // spawn the item
@@ -130,6 +134,31 @@ namespace RimGamble
 
             }
 
+        }
+
+        // uses a gaussian distribution to generate a random quality given a quality to cluster values around
+        public QualityCategory generateQual(int rareModif, float widthFactor)
+        {
+            var values = Enum.GetValues(typeof(QualityCategory)).Cast<byte>();
+            byte min = values.Min();
+            byte max = values.Max();
+
+            float num = 2; // the rarity is normal by default
+
+            // generate a float that tends to cluster around the given rareModif
+            num = Rand.Gaussian((float)(int)rareModif + 0.5f, widthFactor);
+
+            // ensure that any given value falls within an acceptable range
+            if (num < (float)(int)min)
+            {
+                num = (int)min;
+            }
+            if (num > (float)(int)max)
+            {
+                num = (int)max;
+            }
+
+            return (QualityCategory)(int)num;
         }
     }
 }
