@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase" Name="RimGamble_LootCrateBase" Abstract="True">
+    <statBases>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <MarketValue>200</MarketValue>
+      <Mass>0.3</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>UseItem</useJob>
+        <useLabel>Open {0_label}</useLabel>
+        <showUseGizmo>true</showUseGizmo>
+      </li>
+
+      <li Class="CompProperties_UseEffect">
+        <compClass>RimGamble.CompUseEffectLootCrate_Base</compClass>
+      </li>
+
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+</Defs>

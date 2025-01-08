@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <ThingDef ParentName="RimGamble_LootCrateBase">
+    <defName>RimGamble_LootCrateAdvanced</defName>
+    <label>advanced loot crate</label>
+    <description>A somewhat ornate box filled with pride and accomplishment.</description>
+    <graphicData>
+      <texPath>RimGamble/LootCrate/LootCrate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <modExtensions>
+      <li Class="RimGamble.ModExtension_LootCrate">
+        <lootItems>
+          <!-- Resources -->
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Silver</item>
+            <itemQuantMin>200</itemQuantMin>
+            <itemQuantMax>600</itemQuantMax>
+            <itemWeight>100</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Gold</item>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>150</itemQuantMax>
+            <itemWeight>25</itemWeight>
+          </li>
+          <!-- Drugs -->
+          <li Class="RimGamble.LootItem_Category">
+            <category>Drugs</category>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>200</itemQuantMax>
+            <itemWeight>40</itemWeight>
+            <exclude>
+              <li>Luciferium</li>
+              <li>MechSerumHealer</li>
+              <li>MechSerumResurrector</li>
+            </exclude>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Luciferium</item>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>3</itemQuantMax>
+            <itemWeight>5</itemWeight>
+          </li>
+
+          <!-- Weapons -->
+          <li Class="RimGamble.LootItem_Category">
+            <category>WeaponsRanged</category>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <rareModif>3</rareModif>
+            <widthFactor>0.5</widthFactor>
+            <exclude>
+            </exclude>
+          </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>WeaponsMelee</category>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <rareModif>3</rareModif>
+            <widthFactor>0.5</widthFactor>
+            <exclude>
+            </exclude>
+          </li>
+        </lootItems>
+      </li>
+    </modExtensions>
+  </ThingDef>
+</Defs>
