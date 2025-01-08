@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- cerebral play -->
+  <JoyGiverDef>
+    <defName>PlaySlotMachine</defName>
+    <giverClass>RimGamble.JoyGiver_PlaySlotMachine</giverClass>
+    <baseChance>6</baseChance>
+    <thingDefs>
+      <li>RimGamble_SlotMachine</li>
+    </thingDefs>
+    <jobDef>PlaySlotMachine</jobDef>
+    <joyKind>Gaming_Cerebral</joyKind>
+    <requireChair>true</requireChair>
+    <requiredCapacities>
+      <li>Sight</li>
+    </requiredCapacities>
+  </JoyGiverDef>
+</Defs>
