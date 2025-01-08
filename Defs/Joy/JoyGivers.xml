@@ -2,15 +2,15 @@
 <Defs>
   <!-- cerebral play -->
   <JoyGiverDef>
-    <defName>Play_SlotMachine</defName>
-    <giverClass>JoyGiver_InteractBuildingSitAdjacent</giverClass>
-    <requireChair>false</requireChair>
-    <baseChance>3</baseChance>
+    <defName>PlaySlotMachine</defName>
+    <giverClass>RimGamble.JoyGiver_PlaySlotMachine</giverClass>
+    <baseChance>6</baseChance>
     <thingDefs>
       <li>RimGamble_SlotMachine</li>
     </thingDefs>
-    <jobDef>Play_GameOfUr</jobDef>
+    <jobDef>PlaySlotMachine</jobDef>
     <joyKind>Gaming_Cerebral</joyKind>
+    <requireChair>true</requireChair>
     <requiredCapacities>
       <li>Sight</li>
     </requiredCapacities>
