@@ -9,7 +9,7 @@ Assemblies/
 [Dd]ebug/
 
 # build folders
-/Source/RimGamble/RimGamble/[Bb]in/
-/Source/RimGamble/RimGamble/[Oo]bj/
-/Source/RimGamble/RimGamble/[Ll]og/
+/Source/RimGamble/[Bb]in/
+/Source/RimGamble/[Oo]bj/
+/Source/RimGamble/[Ll]og/
 /Source/RimGamble/Release/
