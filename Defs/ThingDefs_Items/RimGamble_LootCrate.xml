@@ -11,7 +11,7 @@
     <comps>
       <li Class="CompProperties_Usable">
         <useJob>UseItem</useJob>
-        <useLabel>Use {0_label}</useLabel>
+        <useLabel>Open {0_label}</useLabel>
         <showUseGizmo>true</showUseGizmo>
       </li>
 
@@ -31,21 +31,62 @@
       <texPath>RimGamble/LootCrate/LootCrate</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    
+
     <modExtensions>
       <li Class="RimGamble.ModExtension_LootCrate">
         <lootItems>
-          <li Class="RimGamble.LootItem">
-            <item>Steel</item>
-            <itemQuantMin>1</itemQuantMin>
-            <itemQuantMax>10</itemQuantMax>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Silver</item>
+            <itemQuantMin>50</itemQuantMin>
+            <itemQuantMax>400</itemQuantMax>
             <itemWeight>100</itemWeight>
           </li>
-          <li Class="RimGamble.LootItem">
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Gold</item>
+            <itemQuantMin>20</itemQuantMin>
+            <itemQuantMax>75</itemQuantMax>
+            <itemWeight>25</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Steel</item>
+            <itemQuantMin>150</itemQuantMin>
+            <itemQuantMax>400</itemQuantMax>
+            <itemWeight>70</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
             <item>Plasteel</item>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>125</itemQuantMax>
+            <itemWeight>40</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>Drugs</category>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>200</itemQuantMax>
+            <itemWeight>40</itemWeight>
+            <exclude>
+              <li>Luciferium</li>
+              <li>MechSerumHealer</li>
+              <li>MechSerumResurrector</li>
+            </exclude>
+          </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>WeaponsRanged</category>
             <itemQuantMin>1</itemQuantMin>
-            <itemQuantMax>10</itemQuantMax>
-            <itemWeight>50</itemWeight>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <exclude>
+              <li>Gun_ChargeRifle</li>
+              <li>Gun_ChargeLance</li>
+            </exclude>
+          </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>WeaponsMelee</category>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <exclude>
+            </exclude>
           </li>
         </lootItems>
       </li>
