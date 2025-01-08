@@ -25,7 +25,6 @@
             <itemQuantMax>150</itemQuantMax>
             <itemWeight>25</itemWeight>
           </li>
-
           <!-- Drugs -->
           <li Class="RimGamble.LootItem_Category">
             <category>Drugs</category>
@@ -51,9 +50,9 @@
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
+            <rareModif>3</rareModif>
+            <widthFactor>0.5</widthFactor>
             <exclude>
-              <li>Gun_ChargeRifle</li>
-              <li>Gun_ChargeLance</li>
             </exclude>
           </li>
           <li Class="RimGamble.LootItem_Category">
@@ -61,6 +60,8 @@
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
+            <rareModif>3</rareModif>
+            <widthFactor>0.5</widthFactor>
             <exclude>
             </exclude>
           </li>
