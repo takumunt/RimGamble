@@ -54,8 +54,10 @@
     <Compile Include="LootCrate\LootItem_SingleDef.cs" />
     <Compile Include="LootCrate\ModExtension_LootCrate.cs" />
     <Compile Include="LootCrate\LootItem.cs" />
-	<Compile Include="SlotMachine\RimGamble_Joy.cs" />
+    <Compile Include="OnlineGambling\NewCommsConsoleOnlineGambling.cs" />
+    <Compile Include="SlotMachine\RimGamble_Joy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

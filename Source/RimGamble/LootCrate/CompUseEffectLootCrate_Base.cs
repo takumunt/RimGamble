@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RimWorld;
 using Verse;
-using static RimWorld.PsychicRitualRoleDef;
-using Verse.Noise;
-using System.Diagnostics.Eventing.Reader;
+
 
 namespace RimGamble
 {

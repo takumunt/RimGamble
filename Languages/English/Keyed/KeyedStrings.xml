@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    
+    <!-- Text that describes "Connect to Online Gambling Network"  option on the Comms Console -->
+    <ConnectNetworkGamble>Connect to Online Gambling Network</ConnectNetworkGamble>
 </LanguageData>
