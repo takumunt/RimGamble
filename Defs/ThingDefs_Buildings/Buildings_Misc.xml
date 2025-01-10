@@ -7,7 +7,7 @@
     <description>Allows radio contact with local gambling organizations.</description>
     <thingClass>RimGamble.Building_GamblingTerminal</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/CommsConsole</texPath>
+      <texPath>RimGamble/GamblingTerminal/GamblingTerminal</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(5,4)</drawSize>
       <damageData>
