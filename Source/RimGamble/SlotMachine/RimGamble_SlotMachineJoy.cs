@@ -51,7 +51,6 @@ namespace RimGamble
             };
             playSlotToil.tickAction = delegate ()
             {
-                Log.Message($"Current pawn joyKind= {pawn.CurJob.def.joyKind}");
                 JoyUtility.JoyTickCheckEnd(this.pawn, JoyTickFullJoyAction.EndJob, 1f, (Building)base.TargetThingA);
             };
 
