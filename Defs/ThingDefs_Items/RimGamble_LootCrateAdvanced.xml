@@ -3,7 +3,7 @@
   <ThingDef ParentName="RimGamble_LootCrateBase">
     <defName>RimGamble_LootCrateAdvanced</defName>
     <label>advanced loot crate</label>
-    <description>A somewhat ornate box filled with pride and accomplishment.</description>
+    <description>A small box inscribed with inscriptions that almost seem to change form when observed. An archotech artifact of a bygone era, its contents remain a mystery. A small sense of pride and accomplishment seems to emanate from the box.</description>
     <graphicData>
       <texPath>RimGamble/LootCrate/LootCrateAdvanced</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
