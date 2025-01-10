@@ -8,9 +8,9 @@ using Verse;
 
 namespace RimGamble.OnlineGambling
 {
-    public class OnlineGambleScheduler : GameComponent
+    public class RimGambleScheduler : GameComponent
     {
-        public static OnlineGambleScheduler Instance;
+        public static RimGambleScheduler Instance;
 
         // list of all current bets
         public List<Bet> bets;
@@ -42,7 +42,37 @@ namespace RimGamble.OnlineGambling
                     { 
                         // send in a droppod with the payout
                         givePayout(payout);
-                        Log.Message(payout);
+                        // also give a mood buff
+                        foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
+                        {
+                            // Check if the pawn has a mood need
+                            if (pawn.needs?.mood != null)
+                            {
+                                // Try adding the "RimGamble_WonWager" thought
+                                ThoughtDef thoughtDef = ThoughtDef.Named("RimGamble_WonWager");
+                                if (thoughtDef != null)
+                                {
+                                    pawn.needs.mood.thoughts.memories.TryGainMemory(thoughtDef);
+                                }
+                            }
+                        }
+                    }
+                    // a payout of zero means the player lost the wager
+                    else if (payout == 0)
+                    {
+                        foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
+                        {
+                            // Check if the pawn has a mood need
+                            if (pawn.needs?.mood != null)
+                            {
+                                // Try adding the "RimGamble_WonWager" thought
+                                ThoughtDef thoughtDef = ThoughtDef.Named("RimGamble_LostWager");
+                                if (thoughtDef != null)
+                                {
+                                    pawn.needs.mood.thoughts.memories.TryGainMemory(thoughtDef);
+                                }
+                            }
+                        }
                     }
                     // in either case, remove it
                     bets.RemoveAt(i);
@@ -94,11 +124,11 @@ namespace RimGamble.OnlineGambling
         }
 
         // constructor
-        public OnlineGambleScheduler()
+        public RimGambleScheduler()
         {
             Instance = this;
         }
-        public OnlineGambleScheduler(Game game)
+        public RimGambleScheduler(Game game)
         {
             Instance = this;
         }

@@ -37,7 +37,7 @@ namespace RimGamble
         {
             if (stake == 0) // if the player is not participating
             {
-                return 0;
+                return -1;
             }
             // if the bet is successful
             if (UnityEngine.Random.value < odds)
