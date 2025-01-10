@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    
+    <!-- Text that describes "Connect to Online Gambling Network"  option on the Comms Console -->
+    <RimGamble.ConnectNetworkGamble>Connect to Online Gambling Network</RimGamble.ConnectNetworkGamble>
+
+    <!-- Text to describe the event the appears when the settlement receives a payout for their sucessful bet -->
+    <RimGamble.PayoutArrived>Payout Arrived</RimGamble.PayoutArrived>
+    <RimGamble.PayoutArrivedDesc>The payment for your successful bet has arrived.</RimGamble.PayoutArrivedDesc>
+    <RimGamble.OnlineGamblingNetwork>Online Gambling Network</RimGamble.OnlineGamblingNetwork>
+    <RimGamble.OnlineGamblingNetworkDesc>Place bets on ongoing wagers. Bets are made in silver, which must be in range of an orbital trade beacon. If won, a bet's payout is made inversely proportional to the likelihood of success.</RimGamble.OnlineGamblingNetworkDesc>
+    <RimGamble.GamblingSiteName>Gambling Organization</RimGamble.GamblingSiteName>
+    <RimGamble.GamblingType>Type of Wager</RimGamble.GamblingType>
+    <RimGamble.Odds>Odds of Winning</RimGamble.Odds>
+    <RimGamble.Expiry>Conclusion Time</RimGamble.Expiry>
+    <RimGamble.Stake>Stake</RimGamble.Stake>
+    <RimGamble.BetReturned>Wager Returned</RimGamble.BetReturned>
+    <RimGamble.BetReturnedDesc>Since you have updated your bets, some silver has been returned to you.</RimGamble.BetReturnedDesc>
 </LanguageData>

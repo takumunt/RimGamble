@@ -1,35 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Defs>
-  <ThingDef ParentName="ResourceBase" Name="RimGamble_LootCrateBase" Abstract="True">
-    <statBases>
-      <DeteriorationRate>0.5</DeteriorationRate>
-      <MarketValue>200</MarketValue>
-      <Mass>0.3</Mass>
-      <Flammability>0.5</Flammability>
-    </statBases>
-
-    <comps>
-      <li Class="CompProperties_Usable">
-        <useJob>UseItem</useJob>
-        <useLabel>Open {0_label}</useLabel>
-        <showUseGizmo>true</showUseGizmo>
-      </li>
-
-      <li Class="CompProperties_UseEffect">
-        <compClass>RimGamble.CompUseEffectLootCrate_Base</compClass>
-      </li>
-
-      <li Class="CompProperties_UseEffectDestroySelf" />
-    </comps>
-  </ThingDef>
-
   <ThingDef ParentName="RimGamble_LootCrateBase">
     <defName>RimGamble_LootCrateBasic</defName>
     <label>basic loot crate</label>
-    <description>A small box filled with pride and accomplishment.</description>
+    <description>A small box inscribed with small sigils and symbols. An archotech artifact of a
+      bygone era, its contents remain a mystery. A small sense of pride and accomplishment seems to
+      emanate from the box.</description>
     <graphicData>
-      <texPath>RimGamble/LootCrate/LootCrate</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>RimGamble/LootCrate/LootCrateBasic</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
 
     <modExtensions>
@@ -75,6 +54,8 @@
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
+            <rareModif>2</rareModif>
+            <widthFactor>0.5</widthFactor>
             <exclude>
               <li>Gun_ChargeRifle</li>
               <li>Gun_ChargeLance</li>
@@ -85,6 +66,8 @@
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
+            <rareModif>2</rareModif>
+            <widthFactor>0.5</widthFactor>
             <exclude>
             </exclude>
           </li>
@@ -92,5 +75,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <RimGamble.GambleSiteDef>
+    <defName>RimGamble_ThrumboRacers</defName>
+    <siteLabel>Thrumbo Racers</siteLabel>
+    <betLabel>Animal Sport</betLabel>
+  </RimGamble.GambleSiteDef>
+
+  <RimGamble.GambleSiteDef>
+    <defName>RimGamble_NeolithicFightClub</defName>
+    <siteLabel>Neolithic Fight Club</siteLabel>
+    <betLabel>Gladiator Battle</betLabel>
+  </RimGamble.GambleSiteDef>
+
+  <RimGamble.GambleSiteDef>
+    <defName>RimGamble_SurvivalGame</defName>
+    <siteLabel>Duck Games</siteLabel>
+    <betLabel>Survival Game</betLabel>
+  </RimGamble.GambleSiteDef>
+
+  <RimGamble.GambleSiteDef>
+    <defName>RimGamble_BoomalopeRodeo</defName>
+    <siteLabel>Boomalope Rodeo</siteLabel>
+    <betLabel>Animal Sport</betLabel>
+  </RimGamble.GambleSiteDef>
+</Defs>
