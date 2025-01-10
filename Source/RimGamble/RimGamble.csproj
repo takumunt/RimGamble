@@ -47,6 +47,14 @@
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />
@@ -54,8 +62,16 @@
     <Compile Include="LootCrate\LootItem_SingleDef.cs" />
     <Compile Include="LootCrate\ModExtension_LootCrate.cs" />
     <Compile Include="LootCrate\LootItem.cs" />
-	<Compile Include="SlotMachine\RimGamble_Joy.cs" />
+    <Compile Include="OnlineGambling\Bet.cs" />
+    <Compile Include="OnlineGambling\Building_GamblingTerminal.cs" />
+    <Compile Include="OnlineGambling\GambleSiteDef.cs" />
+    <Compile Include="OnlineGambling\JobDriver_StartOnlineGambling.cs" />
+    <Compile Include="OnlineGambling\RimGambleScheduler.cs" />
+    <Compile Include="SlotMachine\RimGamble_Joy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Window_OnlineGambling.cs" />
+    <Compile Include="Utils\RimGamble_DefOf.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

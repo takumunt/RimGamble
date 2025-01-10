@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <JobDef>
+    <defName>RimGamble_StartOnlineGambling</defName>
+    <driverClass>RimGamble.JobDriver_StartOnlineGambling</driverClass>
+    <reportString>using comms console to connect to Online Gambling Network</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+</Defs>
