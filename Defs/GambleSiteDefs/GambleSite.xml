@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <RimGamble.GambleSiteDef>
+    <defName>RimGamble_ThrumboRacers</defName>
+    <siteLabel>Thrumbo Racers</siteLabel>
+    <betLabel>Thrumbo Racing</betLabel>
+  </RimGamble.GambleSiteDef>
+
+  <RimGamble.GambleSiteDef>
+    <defName>RimGamble_NeolithicFightClub</defName>
+    <siteLabel>Neolithic Fight Club</siteLabel>
+    <betLabel>Gladiator Battle</betLabel>
+  </RimGamble.GambleSiteDef>
+</Defs>
