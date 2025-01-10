@@ -7,7 +7,11 @@
         <value>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateBasic</thingDef>
-                <countRange>1~20</countRange>
+                <countRange>1~10</countRange>
+            </li>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrateAdvanced</thingDef>
+                <countRange>1~4</countRange>
             </li>
         </value>
     </Operation>
@@ -20,7 +24,11 @@
         <value>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateBasic</thingDef>
-                <countRange>1~20</countRange>
+                <countRange>1~10</countRange>
+            </li>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrateAdvanced</thingDef>
+                <countRange>1~4</countRange>
             </li>
         </value>
     </Operation>
@@ -31,7 +39,11 @@
         <value>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateBasic</thingDef>
-                <countRange>1~20</countRange>
+                <countRange>1~10</countRange>
+            </li>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrateAdvanced</thingDef>
+                <countRange>1~4</countRange>
             </li>
         </value>
     </Operation>
