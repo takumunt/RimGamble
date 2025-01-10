@@ -5,8 +5,8 @@
     <label>advanced loot crate</label>
     <description>A somewhat ornate box filled with pride and accomplishment.</description>
     <graphicData>
-      <texPath>RimGamble/LootCrate/LootCrate</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>RimGamble/LootCrate/LootCrateAdvanced</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
 
     <modExtensions>
