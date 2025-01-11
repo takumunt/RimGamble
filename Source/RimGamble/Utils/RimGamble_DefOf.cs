@@ -12,6 +12,8 @@ namespace RimGamble
     public static class RimGamble_DefOf
     {
         public static JobDef RimGamble_StartOnlineGambling;
+        public static JobDef RimGamble_PlayGachaMachine;
+        public static JobDef RimGamble_PlaySlotMachine;
         public static JobDef RimGamble_RefuelGachaMachines;
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,22 +10,6 @@ using Verse.AI;
 
 namespace RimGamble
 {
-    public class JoyGiver_PlayGachaMachine : JoyGiver_InteractBuildingInteractionCell
-    {
-        protected override bool CanDoDuringGathering
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        protected override Job TryGivePlayJob(Pawn pawn, Thing t)
-        {
-            return JobMaker.MakeJob(this.def.jobDef, t);
-        }
-    }
-
     public class JobDriver_PlayGachaMachine : JobDriver
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -74,7 +58,7 @@ namespace RimGamble
                 this.pawn.rotationTracker.FaceTarget(TargetThingA.InteractionCell);
             };
 
-            playSlotToil.defaultDuration = 300; // Duration in ticks
+            playSlotToil.defaultDuration = 1000; // Duration in ticks
             playSlotToil.defaultCompleteMode = ToilCompleteMode.Delay; // Wait for a specified duration
 
             playSlotToil.AddFinishAction(() =>

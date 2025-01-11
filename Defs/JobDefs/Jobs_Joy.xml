@@ -2,7 +2,7 @@
 
 <Defs>
   <JobDef>
-    <defName>PlaySlotMachine</defName>
+    <defName>RimGamble_PlaySlotMachine</defName>
     <driverClass>RimGamble.JobDriver_PlaySlotMachine</driverClass>
     <reportString>Playing the slot machine.</reportString>
     <joyDuration>4000</joyDuration>
@@ -14,7 +14,7 @@
     <joyGainRate>1.0</joyGainRate>
   </JobDef>
   <JobDef>
-    <defName>PlayGachaMachine</defName>
+    <defName>RimGamble_PlayGachaMachine</defName>
     <driverClass>RimGamble.JobDriver_PlayGachaMachine</driverClass>
     <reportString>Playing the gacha machine.</reportString>
     <joyMaxParticipants>1</joyMaxParticipants>

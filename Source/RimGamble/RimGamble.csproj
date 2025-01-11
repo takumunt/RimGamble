@@ -57,26 +57,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GachaMachine\CompGachaRefuelable.cs" />
-    <Compile Include="GachaMachine\CompProperties_GachaRefuelable.cs" />
-    <Compile Include="GachaMachine\GachaRefuelWorkGiverUtility.cs" />
-    <Compile Include="GachaMachine\JobDriver_RefuelGachaMachines.cs" />
+    <Compile Include="GachaMachine\Refuel\CompGachaRefuelable.cs" />
+    <Compile Include="GachaMachine\Refuel\CompProperties_GachaRefuelable.cs" />
+    <Compile Include="GachaMachine\Refuel\GachaRefuelWorkGiverUtility.cs" />
+    <Compile Include="GachaMachine\JobDriver_PlayGachaMachine.cs" />
+    <Compile Include="GachaMachine\Refuel\JobDriver_RefuelGachaMachines.cs" />
+    <Compile Include="GachaMachine\JoyGiver_PlayGachaMachine.cs" />
+    <Compile Include="SlotMachine\JobDriver_PlaySlotMachine.cs" />
+    <Compile Include="SlotMachine\JoyGiver_PlaySlotMachine.cs" />
     <Compile Include="Utils\RimGamble_StaticCollections.cs" />
-    <Compile Include="GachaMachine\WorkGiver_RefuelGachaMachines.cs" />
+    <Compile Include="GachaMachine\Refuel\WorkGiver_RefuelGachaMachines.cs" />
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />
     <Compile Include="LootCrate\LootItem_Category.cs" />
     <Compile Include="LootCrate\LootItem_SingleDef.cs" />
     <Compile Include="LootCrate\ModExtension_LootCrate.cs" />
     <Compile Include="LootCrate\LootItem.cs" />
-    <Compile Include="SlotMachine\RimGamble_SlotMachineJoy.cs" />
-    <Compile Include="GachaMachine\RimGamble_GachaJoy.cs" />
     <Compile Include="OnlineGambling\Bet.cs" />
     <Compile Include="OnlineGambling\Building_GamblingTerminal.cs" />
     <Compile Include="OnlineGambling\GambleSiteDef.cs" />
     <Compile Include="OnlineGambling\JobDriver_StartOnlineGambling.cs" />
     <Compile Include="OnlineGambling\RimGambleScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\RimGamble_DefOf.cs" />
     <Compile Include="UI\Window_OnlineGambling.cs" />
     <Compile Include="Utils\RimGamble_DefOf.cs" />
   </ItemGroup>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <ThingDef ParentName="RimGamble_GachaBallBase">
+    <defName>RimGamble_GachaBallBasic</defName>
+    <label>gacha ball</label>
+    <description>A small ball that contains a random small treasure, bringing joy via gambling.</description>
+    <graphicData>
+      <texPath>RimGamble/GachaBall/GachaBallBasic</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+  </ThingDef>
+</Defs>

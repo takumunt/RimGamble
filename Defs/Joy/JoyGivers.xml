@@ -8,7 +8,7 @@
     <thingDefs>
       <li>RimGamble_SlotMachine</li>
     </thingDefs>
-    <jobDef>PlaySlotMachine</jobDef>
+    <jobDef>RimGamble_PlaySlotMachine</jobDef>
     <joyKind>Gambling</joyKind>
     <requireChair>true</requireChair>
     <requiredCapacities>
@@ -23,7 +23,7 @@
     <thingDefs>
       <li>RimGamble_GachaMachine</li>
     </thingDefs>
-    <jobDef>PlayGachaMachine</jobDef>
+    <jobDef>RimGamble_PlayGachaMachine</jobDef>
     <joyKind>Gambling</joyKind>
     <requireChair>true</requireChair>
     <requiredCapacities>

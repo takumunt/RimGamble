@@ -33,7 +33,7 @@
     </building>
     <costList>
       <Steel>50</Steel>
-      <ComponentIndustrial>1</ComponentIndustrial>
+      <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
     <statBases>
       <MaxHitPoints>500</MaxHitPoints>
@@ -115,10 +115,9 @@
     <comps>
       <li Class="RimGamble.CompProperties_GachaRefuelable">
         <fuelCapacity>50.0</fuelCapacity>
-        <fuelConsumptionRate>100</fuelConsumptionRate>
         <fuelFilter>
           <thingDefs>
-            <li>WoodLog</li>
+            <li>RimGamble_GachaBallBasic</li>
           </thingDefs>
         </fuelFilter>
         <fuelLabel>Gacha Balls</fuelLabel>

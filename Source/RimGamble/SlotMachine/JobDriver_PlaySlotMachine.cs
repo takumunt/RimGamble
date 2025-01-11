@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,22 +10,6 @@ using Verse.AI;
 
 namespace RimGamble
 {
-    public class JoyGiver_PlaySlotMachine : JoyGiver_InteractBuildingInteractionCell
-    {
-        protected override bool CanDoDuringGathering
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        protected override Job TryGivePlayJob(Pawn pawn, Thing t)
-        {
-            return JobMaker.MakeJob(this.def.jobDef, t);
-        }
-    }
-
     public class JobDriver_PlaySlotMachine : JobDriver
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)

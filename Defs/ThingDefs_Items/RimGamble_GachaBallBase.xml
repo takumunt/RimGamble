@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase" Name="RimGamble_GachaBallBase" Abstract="True">
+    <statBases>
+      <MarketValue>5.0</MarketValue>
+      <Mass>0.2</Mass>
+    </statBases>
+    <stackLimit>75</stackLimit>
+  </ThingDef>
+</Defs>
