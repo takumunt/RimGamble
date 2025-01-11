@@ -14,12 +14,12 @@ namespace RimGamble.OnlineGambling
 
         // list of all current bets
         public List<Bet> bets;
-
+            
         // allows us to generate events periodically
         public override void GameComponentTick()
         {
-            // we will generate a new betting event occasionally
-            if (Rand.MTBEventOccurs(1f, 60000f, 1f))
+            // we will generate a new betting event occasionally as long as there are less than 20 bets
+            if (Rand.MTBEventOccurs(1f, 60000f, 1f) && bets.Count < 20)
             {
                 // when a new betting event occurs
                 // randomly pick one of the gambling organizations and generate an event
@@ -38,7 +38,7 @@ namespace RimGamble.OnlineGambling
                 {
                     // evaluate the result of the bet
                     int payout = bets[i].completeBet();
-                    if (payout != 0)
+                    if (payout > 0)
                     { 
                         // send in a droppod with the payout
                         givePayout(payout);

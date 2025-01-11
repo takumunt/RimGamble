@@ -18,6 +18,7 @@ namespace RimGamble
      */
     public class Window_OnlineGambling : Window
     {
+        // runs on initial opening of window 
         public Window_OnlineGambling()
         {
             silverFinder(Find.CurrentMap);
@@ -64,7 +65,7 @@ namespace RimGamble
 
             // expiry
             Widgets.Label(new Rect(pos.x, pos.y, inRect.width * 0.2f, 24), "RimGamble.Expiry".Translate());
-            pos.x += inRect.width * 0.2f;
+            pos.x += inRect.width * 0.1f;
 
             // Stake
             Widgets.Label(new Rect(pos.x, pos.y, inRect.width * 0.1f, 24), "RimGamble.Stake".Translate());
@@ -82,19 +83,21 @@ namespace RimGamble
              */
             pos.x = 0;
             pos.y += 24;
+            GUI.color = new Color(1f, 1f, 1f, 0.2f);
+            Widgets.DrawLineHorizontal(0f, pos.y, inRect.width);
+            pos.y += 10;
 
+            GUI.color = Color.white;
             var wagerList = RimGambleScheduler.Instance.bets;
-            float listHeight = wagerList.Count * 26;
+            float listHeight = wagerList.Count * 24;
             Rect viewRect = new Rect(pos.x, pos.y, inRect.width - 10, 400);
             Rect scrollRect = new Rect(pos.x, pos.y, viewRect.width - 16f, listHeight);
             Widgets.BeginScrollView(viewRect, ref scrollPos, scrollRect);
-            GUI.color = new Color(1f, 1f, 1f, 0.2f);
-            Widgets.DrawLineHorizontal(0f, pos.y, viewRect.width);
             Text.Anchor = TextAnchor.MiddleLeft;
+            
 
             // actual entries start from here
-            GUI.color = Color.white;
-            for (int i = 0; i < wagerList.Count; i++) // go through the list of wagers an put each of them up
+            for (int i = 0; i < wagerList.Count; i++) // go through the list of wagers and put each of them up
             {
                 pos.x = 0;
                 var wager = wagerList[i];
@@ -128,7 +131,7 @@ namespace RimGamble
                 }
                 // number field
                 GUI.color = Color.white;
-                var textEntry = new Rect(decreaseButton.xMax + 5, pos.y, 60, 24);
+                var stakeEntry = new Rect(decreaseButton.xMax + 5, pos.y, 60, 24);
                 if (wager.stakeBufferInt == 0) // set the buffer to the current stake
                 {
                     wager.stakeBuffer = "";
@@ -137,14 +140,14 @@ namespace RimGamble
                 {
                     wager.stakeBuffer = wager.stakeBufferInt.ToString();
                 }
-                Widgets.TextFieldNumeric<int>(textEntry, ref wager.stakeBufferInt, ref wager.stakeBuffer);
+                Widgets.TextFieldNumeric<int>(stakeEntry, ref wager.stakeBufferInt, ref wager.stakeBuffer);
                 if (string.IsNullOrEmpty(wager.stakeBuffer))
                 {
                     wager.stakeBufferInt = 0;
                 }
                 // increase button
-                var increaseButton = new Rect(pos.x, pos.y, 24, 24);
-                if (Widgets.ButtonText(increaseButton, "<"))
+                var increaseButton = new Rect(stakeEntry.xMax + 5, pos.y, 24, 24);
+                if (Widgets.ButtonText(increaseButton, ">"))
                 {
                     wager.stakeBufferInt = Mathf.Max(0, wager.stakeBufferInt - (1 * GenUI.CurrentAdjustmentMultiplier()));
                 }
@@ -153,7 +156,7 @@ namespace RimGamble
             }
             Widgets.EndScrollView(); // end of scrollable betting window
 
-            Rect placeBetsButtonRect = new Rect(inRect.width * 0.35f, pos.y + 5f, inRect.width * 0.3f, 30);
+            Rect placeBetsButtonRect = new Rect(inRect.width * 0.35f, 540, inRect.width * 0.3f, 40);
             if (Widgets.ButtonText(placeBetsButtonRect, "Place Bets"))
             {
                 // first evaluate if the colony has enough money to make their bets
