@@ -4,15 +4,31 @@
   <JoyGiverDef>
     <defName>PlaySlotMachine</defName>
     <giverClass>RimGamble.JoyGiver_PlaySlotMachine</giverClass>
-    <baseChance>6</baseChance>
+    <baseChance>5</baseChance>
     <thingDefs>
       <li>RimGamble_SlotMachine</li>
     </thingDefs>
-    <jobDef>PlaySlotMachine</jobDef>
-    <joyKind>Gaming_Cerebral</joyKind>
+    <jobDef>RimGamble_PlaySlotMachine</jobDef>
+    <joyKind>Gambling</joyKind>
     <requireChair>true</requireChair>
     <requiredCapacities>
       <li>Sight</li>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </JoyGiverDef>
+  <JoyGiverDef>
+    <defName>PlayGachaMachine</defName>
+    <giverClass>RimGamble.JoyGiver_PlayGachaMachine</giverClass>
+    <baseChance>5</baseChance>
+    <thingDefs>
+      <li>RimGamble_GachaMachine</li>
+    </thingDefs>
+    <jobDef>RimGamble_PlayGachaMachine</jobDef>
+    <joyKind>Gambling</joyKind>
+    <requireChair>true</requireChair>
+    <requiredCapacities>
+      <li>Sight</li>
+      <li>Manipulation</li>
     </requiredCapacities>
   </JoyGiverDef>
 </Defs>

@@ -5,6 +5,9 @@ Assemblies/
 .vs/
 .idea/
 
+# Visual Studio files
+/Source/RimGamble/RimGamble.csproj.user
+
 # Debug folder
 [Dd]ebug/
 

@@ -6,4 +6,10 @@
     <reportString>using comms console to connect to Online Gambling Network</reportString>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
+  <JobDef>
+    <defName>RimGamble_RefuelGachaMachines</defName>
+    <driverClass>RimGamble.JobDriver_RefuelGachaMachines</driverClass>
+    <reportString>refueling gacha machine</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
 </Defs>

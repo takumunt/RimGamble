@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <!-- ============= Hauling ============= -->
+  <WorkGiverDef>
+    <defName>RimGamble_RefuelGachaMachines</defName>
+    <label>refuel gacha machines</label>
+    <giverClass>RimGamble.WorkGiver_RefuelGachaMachine</giverClass>
+    <workType>Hauling</workType>
+    <verb>refuel</verb>
+    <gerund>refueling</gerund>
+    <priorityInType>140</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+    <canBeDoneByMutants>false</canBeDoneByMutants>
+  </WorkGiverDef>
+</Defs>

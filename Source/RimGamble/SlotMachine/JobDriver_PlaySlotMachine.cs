@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,22 +10,6 @@ using Verse.AI;
 
 namespace RimGamble
 {
-    public class JoyGiver_PlaySlotMachine : JoyGiver_InteractBuildingInteractionCell
-    {
-        protected override bool CanDoDuringGathering
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        protected override Job TryGivePlayJob(Pawn pawn, Thing t)
-        {
-            return JobMaker.MakeJob(this.def.jobDef, t);
-        }
-    }
-
     public class JobDriver_PlaySlotMachine : JobDriver
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -51,12 +35,11 @@ namespace RimGamble
             };
             playSlotToil.tickAction = delegate ()
             {
-                Log.Message($"Current pawn joyKind= {pawn.CurJob.def.joyKind}");
                 JoyUtility.JoyTickCheckEnd(this.pawn, JoyTickFullJoyAction.EndJob, 1f, (Building)base.TargetThingA);
             };
 
             playSlotToil.defaultCompleteMode = ToilCompleteMode.Delay; // Wait for a specified duration
-            playSlotToil.defaultDuration = 2500; // Duration in ticks
+            playSlotToil.defaultDuration = job.def.joyDuration; // Duration in ticks
             playSlotToil.AddFinishAction(() =>
             {
                 JoyUtility.TryGainRecRoomThought(this.pawn);
