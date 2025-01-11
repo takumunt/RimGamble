@@ -9,7 +9,7 @@
       <li>RimGamble_SlotMachine</li>
     </thingDefs>
     <jobDef>PlaySlotMachine</jobDef>
-    <joyKind>Gaming_Cerebral</joyKind>
+    <joyKind>Gambling</joyKind>
     <requireChair>true</requireChair>
     <requiredCapacities>
       <li>Sight</li>
@@ -24,7 +24,7 @@
       <li>RimGamble_GachaMachine</li>
     </thingDefs>
     <jobDef>PlayGachaMachine</jobDef>
-    <joyKind>Gaming_Cerebral</joyKind>
+    <joyKind>Gambling</joyKind>
     <requireChair>true</requireChair>
     <requiredCapacities>
       <li>Sight</li>

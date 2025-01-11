@@ -9,8 +9,7 @@
     <joyMaxParticipants>1</joyMaxParticipants>
     <joySkill>Intellectual</joySkill>
     <joyXpPerTick>0.004</joyXpPerTick>
-    <joyKind>Gaming_Cerebral</joyKind>
-    <taleOnCompletion>PlayedGame</taleOnCompletion>
+    <joyKind>Gambling</joyKind>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     <joyGainRate>1.0</joyGainRate>
   </JobDef>
@@ -21,7 +20,7 @@
     <joyMaxParticipants>1</joyMaxParticipants>
     <joySkill>Intellectual</joySkill>
     <joyXpPerTick>0.004</joyXpPerTick>
-    <joyKind>Gaming_Cerebral</joyKind>
+    <joyKind>Gambling</joyKind>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     <joyGainRate>1.0</joyGainRate>
   </JobDef>
