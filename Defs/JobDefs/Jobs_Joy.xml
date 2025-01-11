@@ -1,27 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Defs>
   <JobDef>
     <defName>RimGamble_PlaySlotMachine</defName>
     <driverClass>RimGamble.JobDriver_PlaySlotMachine</driverClass>
-    <reportString>Playing the slot machine.</reportString>
+    <reportString>playing slots.</reportString>
     <joyDuration>4000</joyDuration>
     <joyMaxParticipants>1</joyMaxParticipants>
-    <joySkill>Intellectual</joySkill>
-    <joyXpPerTick>0.004</joyXpPerTick>
     <joyKind>Gambling</joyKind>
+    <joyXpPerTick>0.004</joyXpPerTick>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
-    <joyGainRate>1.0</joyGainRate>
   </JobDef>
   <JobDef>
     <defName>RimGamble_PlayGachaMachine</defName>
     <driverClass>RimGamble.JobDriver_PlayGachaMachine</driverClass>
-    <reportString>Playing the gacha machine.</reportString>
+    <reportString>pulling a gacha ball.</reportString>
+    <joyDuration>1000</joyDuration>
     <joyMaxParticipants>1</joyMaxParticipants>
-    <joySkill>Intellectual</joySkill>
-    <joyXpPerTick>0.004</joyXpPerTick>
     <joyKind>Gambling</joyKind>
+    <joyXpPerTick>0.004</joyXpPerTick>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
-    <joyGainRate>1.0</joyGainRate>
   </JobDef>
 </Defs>

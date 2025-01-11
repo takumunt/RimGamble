@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>RimGamble_SlotMachine</defName>
     <label>slot machine</label>
-    <description>A machine that simulates gambling.</description>
+    <description>A simple mechanical device with spinning reels to simulate the slot machines found on more affluent worlds. Its flashing lights and chaotic sounds provide an exciting form of play.</description>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>
     <graphicData>
@@ -36,13 +36,13 @@
       <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
     <statBases>
-      <MaxHitPoints>500</MaxHitPoints>
-      <WorkToBuild>25000</WorkToBuild>
-      <Mass>50</Mass>
-      <Flammability>0.5</Flammability>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>10000</WorkToBuild>
+      <Mass>10</Mass>
+      <Flammability>100</Flammability>
       <Beauty>0</Beauty>
       <JoyGainFactor>1.3</JoyGainFactor>
-      <MarketValue>800</MarketValue>
+      <MarketValue>170</MarketValue>
     </statBases>
     <placeWorkers>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>
@@ -55,19 +55,19 @@
         <shortCircuitInRain>true</shortCircuitInRain>
         <basePowerConsumption>75</basePowerConsumption>
       </li>
-      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Flickable" />
     </comps>
     <researchPrerequisites>
       <li>MicroelectronicsBasics</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
   </ThingDef>
-  
+
   <!-- Gacha Machine -->
   <ThingDef ParentName="BuildingBase">
     <defName>RimGamble_GachaMachine</defName>
     <label>gacha machine</label>
-    <description>A machine that despises capsules that contain a random toy or trinket. Must contain Gacha Capsules to be used.</description>
+    <description>A machine that dispenses capsules that contain a random toy or trinket. Must contain Gacha Capsules to be used.</description>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>
     <graphicData>
@@ -99,13 +99,13 @@
       <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
     <statBases>
-      <MaxHitPoints>500</MaxHitPoints>
-      <WorkToBuild>25000</WorkToBuild>
-      <Mass>50</Mass>
-      <Flammability>0.5</Flammability>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>2500</WorkToBuild>
+      <Mass>10</Mass>
+      <Flammability>100</Flammability>
       <Beauty>0</Beauty>
       <JoyGainFactor>1.3</JoyGainFactor>
-      <MarketValue>800</MarketValue>
+      <MarketValue>150</MarketValue>
     </statBases>
     <placeWorkers>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>

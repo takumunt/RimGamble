@@ -58,7 +58,7 @@ namespace RimGamble
                 this.pawn.rotationTracker.FaceTarget(TargetThingA.InteractionCell);
             };
 
-            playSlotToil.defaultDuration = 1000; // Duration in ticks
+            playSlotToil.defaultDuration = job.def.joyDuration; // Duration in ticks
             playSlotToil.defaultCompleteMode = ToilCompleteMode.Delay; // Wait for a specified duration
 
             playSlotToil.AddFinishAction(() =>

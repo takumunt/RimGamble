@@ -39,7 +39,7 @@ namespace RimGamble
             };
 
             playSlotToil.defaultCompleteMode = ToilCompleteMode.Delay; // Wait for a specified duration
-            playSlotToil.defaultDuration = 2500; // Duration in ticks
+            playSlotToil.defaultDuration = job.def.joyDuration; // Duration in ticks
             playSlotToil.AddFinishAction(() =>
             {
                 JoyUtility.TryGainRecRoomThought(this.pawn);

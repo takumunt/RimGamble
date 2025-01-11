@@ -5,6 +5,6 @@
       <MarketValue>5.0</MarketValue>
       <Mass>0.2</Mass>
     </statBases>
-    <stackLimit>75</stackLimit>
+    <stackLimit>50</stackLimit>
   </ThingDef>
 </Defs>
