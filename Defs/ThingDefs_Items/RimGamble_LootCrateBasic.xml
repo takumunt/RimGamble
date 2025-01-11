@@ -54,9 +54,8 @@
             <itemWeight>20</itemWeight>
             <rareModif>2</rareModif>
             <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Industrial</maxTechLevelGenerate>
             <exclude>
-              <li>Gun_ChargeRifle</li>
-              <li>Gun_ChargeLance</li>
             </exclude>
           </li>
           <li Class="RimGamble.LootItem_Category">
@@ -66,6 +65,7 @@
             <itemWeight>20</itemWeight>
             <rareModif>2</rareModif>
             <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Industrial</maxTechLevelGenerate>
             <exclude>
             </exclude>
           </li>
