@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RimWorld;
 using Verse;
+using static RimWorld.PsychicRitualRoleDef;
 
 
 namespace RimGamble
@@ -72,17 +73,11 @@ namespace RimGamble
                     }
                     else if (gift is LootItem_Category categoryGift)
                     {
-                        // make sure excluded items are not spawned
-                        List<ThingDef> validList = categoryGift.category.childThingDefs;
-                        foreach (ThingDef excludedItem in categoryGift.exclude)
-                        {
-                            validList.Remove(excludedItem);
-                        }
-                        // exclude mechanoid weapons
-                        validList = validList.Where(item => !item.destroyOnDrop).ToList();
-
-                        ThingDef giftItemPreMake = validList.RandomElement();
                         ThingDef stuff = null;
+                        if (!categoryGift.category.DescendantThingDefs.Where((ThingDef t) => (int)t.techLevel <= (int)categoryGift.maxTechLevelGenerate && (categoryGift.exclude == null || !categoryGift.exclude.Contains(t))).TryRandomElement(out var giftItemPreMake))
+                        {
+                            Log.Error("Could not generate a valid item for the loot crate.");
+                        }
 
                         // set the material of the item (if applicable)
                         if (giftItemPreMake.MadeFromStuff)
