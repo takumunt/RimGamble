@@ -28,10 +28,11 @@
             <itemQuantMax>150</itemQuantMax>
             <itemWeight>25</itemWeight>
           </li>
+
           <!-- Drugs -->
           <li Class="RimGamble.LootItem_Category">
             <category>Drugs</category>
-            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMin>80</itemQuantMin>
             <itemQuantMax>200</itemQuantMax>
             <itemWeight>40</itemWeight>
             <exclude>
@@ -55,6 +56,7 @@
             <itemWeight>20</itemWeight>
             <rareModif>3</rareModif>
             <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Spacer</maxTechLevelGenerate>
             <exclude>
             </exclude>
           </li>
@@ -65,15 +67,18 @@
             <itemWeight>20</itemWeight>
             <rareModif>3</rareModif>
             <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Spacer</maxTechLevelGenerate>
             <exclude>
             </exclude>
           </li>
+
+          <!-- Apparel -->
           <li Class="RimGamble.LootItem_Category">
             <category>Apparel</category>
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
-            <rareModif>2</rareModif>
+            <rareModif>3</rareModif>
             <widthFactor>0.5</widthFactor>
             <maxTechLevelGenerate>Spacer</maxTechLevelGenerate>
             <exclude>
