@@ -7,11 +7,15 @@
         <value>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateBasic</thingDef>
-                <countRange>1~10</countRange>
+                <countRange>-3~10</countRange>
             </li>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateAdvanced</thingDef>
-                <countRange>1~4</countRange>
+                <countRange>-3~3</countRange>
+            </li>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrateMaster</thingDef>
+                <countRange>-3~1</countRange>
             </li>
         </value>
     </Operation>
@@ -24,11 +28,15 @@
         <value>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateBasic</thingDef>
-                <countRange>1~10</countRange>
+                <countRange>-3~10</countRange>
             </li>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateAdvanced</thingDef>
-                <countRange>1~4</countRange>
+                <countRange>-3~3</countRange>
+            </li>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrateMaster</thingDef>
+                <countRange>-3~1</countRange>
             </li>
         </value>
     </Operation>
@@ -39,11 +47,15 @@
         <value>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateBasic</thingDef>
-                <countRange>1~10</countRange>
+                <countRange>-3~10</countRange>
             </li>
             <li Class="StockGenerator_SingleDef">
                 <thingDef>RimGamble_LootCrateAdvanced</thingDef>
-                <countRange>1~4</countRange>
+                <countRange>-3~3</countRange>
+            </li>
+            <li Class="StockGenerator_SingleDef">
+                <thingDef>RimGamble_LootCrateMaster</thingDef>
+                <countRange>-3~1</countRange>
             </li>
         </value>
     </Operation>
