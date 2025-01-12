@@ -69,6 +69,17 @@
             <exclude>
             </exclude>
           </li>
+          <li Class="RimGamble.LootItem_Category">
+            <category>Apparel</category>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>20</itemWeight>
+            <rareModif>2</rareModif>
+            <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Spacer</maxTechLevelGenerate>
+            <exclude>
+            </exclude>
+          </li>
         </lootItems>
       </li>
     </modExtensions>
