@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Defs>
   <ThingDef ParentName="RimGamble_LootCrateBase">
-    <defName>RimGamble_LootCrateAdvanced</defName>
-    <label>advanced loot crate</label>
-    <description>A small box inscribed with inscriptions that almost seem to change form when observed. An archotech artifact of a bygone era, its contents remain a mystery. A small sense of pride and accomplishment seems to emanate from the box.</description>
+    <defName>RimGamble_LootCrateBasic</defName>
+    <label>basic loot crate</label>
+    <description>A small box inscribed with small sigils and symbols. An archotech artifact of a bygone era, its contents remain a mystery. A small sense of pride and accomplishment seems to emanate from the box.</description>
     <graphicData>
-      <texPath>RimGamble/LootCrate/LootCrateAdvanced</texPath>
+      <texPath>RimGamble/LootCrate/LootCrateBasic</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
-    <statBases>
-      <MarketValue>500</MarketValue>
-    </statBases>
 
     <modExtensions>
       <li Class="RimGamble.ModExtension_LootCrate">
         <lootItems>
-          <!-- Resources -->
           <li Class="RimGamble.LootItem_SingleDef">
             <item>Silver</item>
-            <itemQuantMin>200</itemQuantMin>
-            <itemQuantMax>600</itemQuantMax>
+            <itemQuantMin>50</itemQuantMin>
+            <itemQuantMax>400</itemQuantMax>
             <itemWeight>100</itemWeight>
           </li>
           <li Class="RimGamble.LootItem_SingleDef">
             <item>Gold</item>
-            <itemQuantMin>40</itemQuantMin>
-            <itemQuantMax>150</itemQuantMax>
+            <itemQuantMin>20</itemQuantMin>
+            <itemQuantMax>75</itemQuantMax>
             <itemWeight>25</itemWeight>
           </li>
-          <!-- Drugs -->
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Steel</item>
+            <itemQuantMin>150</itemQuantMin>
+            <itemQuantMax>400</itemQuantMax>
+            <itemWeight>70</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>Plasteel</item>
+            <itemQuantMin>40</itemQuantMin>
+            <itemQuantMax>125</itemQuantMax>
+            <itemWeight>40</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>MechSerumHealer</item>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>10</itemWeight>
+          </li>
+          <li Class="RimGamble.LootItem_SingleDef">
+            <item>MechSerumResurrector</item>
+            <itemQuantMin>1</itemQuantMin>
+            <itemQuantMax>1</itemQuantMax>
+            <itemWeight>10</itemWeight>
+          </li>
           <li Class="RimGamble.LootItem_Category">
             <category>Drugs</category>
             <itemQuantMin>40</itemQuantMin>
@@ -40,21 +59,14 @@
               <li>MechSerumResurrector</li>
             </exclude>
           </li>
-          <li Class="RimGamble.LootItem_SingleDef">
-            <item>Luciferium</item>
-            <itemQuantMin>1</itemQuantMin>
-            <itemQuantMax>3</itemQuantMax>
-            <itemWeight>5</itemWeight>
-          </li>
-
-          <!-- Weapons -->
           <li Class="RimGamble.LootItem_Category">
             <category>WeaponsRanged</category>
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
-            <rareModif>3</rareModif>
+            <rareModif>2</rareModif>
             <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Ultra</maxTechLevelGenerate>
             <exclude>
             </exclude>
           </li>
@@ -63,8 +75,9 @@
             <itemQuantMin>1</itemQuantMin>
             <itemQuantMax>1</itemQuantMax>
             <itemWeight>20</itemWeight>
-            <rareModif>3</rareModif>
+            <rareModif>2</rareModif>
             <widthFactor>0.5</widthFactor>
+            <maxTechLevelGenerate>Ultra</maxTechLevelGenerate>
             <exclude>
             </exclude>
           </li>
@@ -75,7 +88,7 @@
             <itemWeight>20</itemWeight>
             <rareModif>2</rareModif>
             <widthFactor>0.5</widthFactor>
-            <maxTechLevelGenerate>Spacer</maxTechLevelGenerate>
+            <maxTechLevelGenerate>Ultra</maxTechLevelGenerate>
             <exclude>
             </exclude>
           </li>
