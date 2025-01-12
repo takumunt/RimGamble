@@ -166,7 +166,7 @@ namespace RimGamble
                     silverDiff += (wager.stake - wager.stakeBufferInt);
                 }
                 // first evaluate if the colony has enough money to make their bets
-                if (silverList.Sum(thing => thing.stackCount) >= wagerList.Sum(bet => bet.stakeBufferInt) + silverDiff)
+                if (silverList.Sum(thing => thing.stackCount) >= -silverDiff)
                 {
                     // update the stakes
                     foreach( var wager in wagerList)
