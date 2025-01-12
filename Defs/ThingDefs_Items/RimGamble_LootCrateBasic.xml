@@ -16,12 +16,12 @@
             <item>Silver</item>
             <itemQuantMin>50</itemQuantMin>
             <itemQuantMax>400</itemQuantMax>
-            <itemWeight>100</itemWeight>
+            <itemWeight>70</itemWeight>
           </li>
           <li Class="RimGamble.LootItem_SingleDef">
             <item>Gold</item>
             <itemQuantMin>20</itemQuantMin>
-            <itemQuantMax>75</itemQuantMax>
+            <itemQuantMax>50</itemQuantMax>
             <itemWeight>25</itemWeight>
           </li>
           <li Class="RimGamble.LootItem_SingleDef">
