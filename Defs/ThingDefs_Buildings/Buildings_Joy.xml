@@ -15,6 +15,8 @@
         <volume>(0.5,0.35,0.4)</volume>
       </shadowData>
     </graphicData>
+    <uiIconOffset>(0, 0.08)</uiIconOffset>
+    <uiIconScale>0.75</uiIconScale>
     <defaultPlacingRot>South</defaultPlacingRot>
     <fillPercent>0.40</fillPercent>
     <altitudeLayer>Building</altitudeLayer>
@@ -78,6 +80,8 @@
         <volume>(0.5,0.35,0.4)</volume>
       </shadowData>
     </graphicData>
+    <uiIconOffset>(0, 0.08)</uiIconOffset>
+    <uiIconScale>0.75</uiIconScale>
     <defaultPlacingRot>South</defaultPlacingRot>
     <fillPercent>0.40</fillPercent>
     <altitudeLayer>Building</altitudeLayer>
