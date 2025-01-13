@@ -17,4 +17,6 @@
     <RimGamble.BetReturnedDesc>Since you have updated your bets, some silver has been returned to you.</RimGamble.BetReturnedDesc>
     <RimGamble.WagerLost>Wager Lost</RimGamble.WagerLost>
     <RimGamble.WagerLostDesc>You lost a bet you placed money on. No money will be returned.</RimGamble.WagerLostDesc>
+    <RimGamble.GambleWith>Gamble with</RimGamble.GambleWith>
+    <RimGamble.CannotGambleWith>Cannot gamble with</RimGamble.CannotGambleWith>
 </LanguageData>

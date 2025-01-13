@@ -31,6 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -57,14 +62,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaravanGambling\JobDriver_StartCaravanGambling.cs" />
     <Compile Include="GachaMachine\Refuel\CompGachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\CompProperties_GachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\GachaRefuelWorkGiverUtility.cs" />
     <Compile Include="GachaMachine\JobDriver_PlayGachaMachine.cs" />
     <Compile Include="GachaMachine\Refuel\JobDriver_RefuelGachaMachines.cs" />
     <Compile Include="GachaMachine\JoyGiver_PlayGachaMachine.cs" />
+    <Compile Include="HarmonyPatches.cs" />
     <Compile Include="SlotMachine\JobDriver_PlaySlotMachine.cs" />
     <Compile Include="SlotMachine\JoyGiver_PlaySlotMachine.cs" />
+    <Compile Include="UI\Window_CaravanGambling.cs" />
     <Compile Include="Utils\RimGamble_StaticCollections.cs" />
     <Compile Include="GachaMachine\Refuel\WorkGiver_RefuelGachaMachines.cs" />
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />

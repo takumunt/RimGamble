@@ -9,7 +9,6 @@ using RimGamble.OnlineGambling;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using static RimWorld.IdeoFoundation_Deity;
 
 namespace RimGamble
 {
