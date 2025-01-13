@@ -8,9 +8,9 @@ using Verse;
 
 namespace RimGamble.OnlineGambling
 {
-    public class RimGambleScheduler : GameComponent
+    public class RimGambleManager : GameComponent
     {
-        public static RimGambleScheduler Instance;
+        public static RimGambleManager Instance;
 
         // list of all current bets
         public List<Bet> bets;
@@ -19,7 +19,7 @@ namespace RimGamble.OnlineGambling
         public override void GameComponentTick()
         {
             // we will generate a new betting event occasionally as long as there are less than 20 bets
-            if (Rand.MTBEventOccurs(1f, 60000f, 1f) && bets.Count < 20)
+            if (Rand.MTBEventOccurs(.01f, 60000f, 1f) && bets.Count < 20)
             {
                 // when a new betting event occurs
                 // randomly pick one of the gambling organizations and generate an event
@@ -46,7 +46,7 @@ namespace RimGamble.OnlineGambling
                         foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
                         {
                             // Check if the pawn has a mood need
-                            if (pawn.needs?.mood != null)
+                            if (pawn.needs?.mood != null && !pawn.story.traits.HasTrait(TraitDefOf.Ascetic))
                             {
                                 // Try adding the "RimGamble_WonWager" thought
                                 ThoughtDef thoughtDef = ThoughtDef.Named("RimGamble_WonWager");
@@ -60,10 +60,12 @@ namespace RimGamble.OnlineGambling
                     // a payout of zero means the player lost the wager
                     else if (payout == 0)
                     {
+                        // tell the player
+                        Find.LetterStack.ReceiveLetter("RimGamble.WagerLost".Translate(), "RimGamble.WagerLostDesc".Translate(), LetterDefOf.NeutralEvent);
                         foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
                         {
                             // Check if the pawn has a mood need
-                            if (pawn.needs?.mood != null)
+                            if (pawn.needs?.mood != null && !pawn.story.traits.HasTrait(TraitDefOf.Ascetic))
                             {
                                 // Try adding the "RimGamble_WonWager" thought
                                 ThoughtDef thoughtDef = ThoughtDef.Named("RimGamble_LostWager");
@@ -124,11 +126,11 @@ namespace RimGamble.OnlineGambling
         }
 
         // constructor
-        public RimGambleScheduler()
+        public RimGambleManager()
         {
             Instance = this;
         }
-        public RimGambleScheduler(Game game)
+        public RimGambleManager(Game game)
         {
             Instance = this;
         }

@@ -76,7 +76,7 @@
     <Compile Include="OnlineGambling\Building_GamblingTerminal.cs" />
     <Compile Include="OnlineGambling\GambleSiteDef.cs" />
     <Compile Include="OnlineGambling\JobDriver_StartOnlineGambling.cs" />
-    <Compile Include="OnlineGambling\RimGambleScheduler.cs" />
+    <Compile Include="RimGambleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Window_OnlineGambling.cs" />
     <Compile Include="Utils\RimGamble_DefOf.cs" />

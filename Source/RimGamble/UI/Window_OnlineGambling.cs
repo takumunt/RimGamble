@@ -88,7 +88,7 @@ namespace RimGamble
             pos.y += 10;
 
             GUI.color = Color.white;
-            var wagerList = RimGambleScheduler.Instance.bets;
+            var wagerList = RimGambleManager.Instance.bets;
             float listHeight = wagerList.Count * 24;
             Rect viewRect = new Rect(pos.x, pos.y, inRect.width - 10, 400);
             Rect scrollRect = new Rect(pos.x, pos.y, viewRect.width - 16f, listHeight);
@@ -159,19 +159,21 @@ namespace RimGamble
             Rect placeBetsButtonRect = new Rect(inRect.width * 0.35f, 540, inRect.width * 0.3f, 40);
             if (Widgets.ButtonText(placeBetsButtonRect, "Place Bets"))
             {
-                // first evaluate if the colony has enough money to make their bets
-                if (silverList.Sum(thing => thing.stackCount) >= wagerList.Sum(bet => bet.stakeBufferInt))
+                // add up the difference in total silver bet
+                int silverDiff = 0;
+                foreach (var wager in wagerList)
                 {
-                    // Update the stakes from the buffers (number fields)
-                    // Remove or add silver from our stockpiles if necessary
-                    int silverDiff = 0;
-                    foreach (var wager in wagerList)
+                    silverDiff += (wager.stake - wager.stakeBufferInt);
+                }
+                // first evaluate if the colony has enough money to make their bets
+                if (silverList.Sum(thing => thing.stackCount) >= -silverDiff)
+                {
+                    // update the stakes
+                    foreach( var wager in wagerList)
                     {
-                        silverDiff += (wager.stake - wager.stakeBufferInt);
-
                         wager.stake = wager.stakeBufferInt;
                     }
-
+                    // Remove or add silver from our stockpiles if necessary
                     // based on the value of silverToReturn, remove or add silver from our stockpiles
                     if (silverDiff > 0)
                     {
@@ -237,7 +239,7 @@ namespace RimGamble
 
         private void stakeBufferReset()
         {
-            foreach (Bet wager in RimGambleScheduler.Instance.bets)
+            foreach (Bet wager in RimGambleManager.Instance.bets)
             {
                 if (wager.stake == 0)
                 {
