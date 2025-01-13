@@ -8,9 +8,9 @@ using Verse;
 
 namespace RimGamble.OnlineGambling
 {
-    public class RimGambleScheduler : GameComponent
+    public class RimGambleManager : GameComponent
     {
-        public static RimGambleScheduler Instance;
+        public static RimGambleManager Instance;
 
         // list of all current bets
         public List<Bet> bets;
@@ -126,11 +126,11 @@ namespace RimGamble.OnlineGambling
         }
 
         // constructor
-        public RimGambleScheduler()
+        public RimGambleManager()
         {
             Instance = this;
         }
-        public RimGambleScheduler(Game game)
+        public RimGambleManager(Game game)
         {
             Instance = this;
         }

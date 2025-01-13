@@ -88,7 +88,7 @@ namespace RimGamble
             pos.y += 10;
 
             GUI.color = Color.white;
-            var wagerList = RimGambleScheduler.Instance.bets;
+            var wagerList = RimGambleManager.Instance.bets;
             float listHeight = wagerList.Count * 24;
             Rect viewRect = new Rect(pos.x, pos.y, inRect.width - 10, 400);
             Rect scrollRect = new Rect(pos.x, pos.y, viewRect.width - 16f, listHeight);
@@ -239,7 +239,7 @@ namespace RimGamble
 
         private void stakeBufferReset()
         {
-            foreach (Bet wager in RimGambleScheduler.Instance.bets)
+            foreach (Bet wager in RimGambleManager.Instance.bets)
             {
                 if (wager.stake == 0)
                 {
