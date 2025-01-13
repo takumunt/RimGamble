@@ -95,5 +95,14 @@ namespace RimGamble
 
             yield return playSlotToil;
         }
+
+        public override object[] TaleParameters()
+        {
+            return new object[2]
+            {
+            pawn,
+            base.TargetA.Thing.def
+            };
+        }
     }
 }

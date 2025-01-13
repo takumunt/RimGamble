@@ -14,8 +14,7 @@ namespace RimGamble
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            bool result = this.pawn.Reserve(this.job.targetA, this.job, this.job.def.joyMaxParticipants, 0, null, errorOnFailed);
-            return result;
+            return this.pawn.Reserve(this.job.targetA, this.job, this.job.def.joyMaxParticipants, 0, null, errorOnFailed);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -46,6 +45,15 @@ namespace RimGamble
             });
 
             yield return playSlotToil;
+        }
+
+        public override object[] TaleParameters()
+        {
+            return new object[2]
+            {
+            pawn,
+            base.TargetA.Thing.def
+            };
         }
     }
 }
