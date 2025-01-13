@@ -8,6 +8,7 @@
     <joyDuration>4000</joyDuration>
     <joyMaxParticipants>1</joyMaxParticipants>
     <joyKind>Gambling</joyKind>
+    <taleOnCompletion>PlayedGame</taleOnCompletion>
     <joyXpPerTick>0.004</joyXpPerTick>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
@@ -18,6 +19,7 @@
     <joyDuration>1000</joyDuration>
     <joyMaxParticipants>1</joyMaxParticipants>
     <joyKind>Gambling</joyKind>
+    <taleOnCompletion>PlayedGame</taleOnCompletion>
     <joyXpPerTick>0.004</joyXpPerTick>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
