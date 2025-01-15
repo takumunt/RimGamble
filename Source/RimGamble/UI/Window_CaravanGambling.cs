@@ -12,6 +12,7 @@ namespace RimGamble
     public class Window_CaravanGambling : Window
     {
         private bool gameStart = false;
+        private bool gameRoll = false;
         private List<Tradeable> tradeablesList;
         private Pawn traderPawn;
         private int colonyWagerVal;
@@ -73,8 +74,16 @@ namespace RimGamble
             // show the actual game once the button has been clicked
             else
             {
-                pos.y -= 60;
-                gamblingUI(inRect, pos);
+                if (!gameRoll) // gui to show while adding items to the item pool
+                {
+                    pos.y -= 60;
+                    gamblingUI(inRect, pos);
+                }
+                else // gui to show once adding phase is over, and dice roll begins
+                {
+
+                }
+
             }
         }
 
@@ -170,8 +179,6 @@ namespace RimGamble
                     {
                         numItems = Mathf.Max(0, numItems + (1 * GenUI.CurrentAdjustmentMultiplier()));
                     }
-
-
                     colonyItemsWagered[tradeItem].numItems = numItems;
                     colonyItemsWagered[tradeItem].numItemsBuffer = numItemsBuffer;
 
@@ -189,6 +196,7 @@ namespace RimGamble
                     pos.x += 26;
                     // name of item
                     Widgets.Label(new Rect(pos.x, pos.y + (traderRow * 26), inRect.width * 0.2f, 24), tradeItem.Label);
+                    pos.x += inRect.width * 0.2f;
                     // number of item
                     Widgets.Label(new Rect(pos.x, pos.y + (traderRow * 26), inRect.width * 0.05f, 24), tradeItem.CountHeldBy(Transactor.Trader).ToString());
 
@@ -201,8 +209,7 @@ namespace RimGamble
             // end of scrolling section
             Widgets.EndScrollView();
 
-            // begin gamble button
-
+            // timer for betting
 
 
             // must be set back to default
@@ -220,7 +227,7 @@ namespace RimGamble
                 {
                     //if (tradeable.thingsTrader.Count > 0)
                     //{
-                    //    tradeable.AdjustTo(1); // Remove 1 TEMP
+                    //    tradeable.AdjustTo(1); // give 1 from trader and give to colony
 
                     //    tradeable.ResolveTrade(); // Adjust stock
                     //}
