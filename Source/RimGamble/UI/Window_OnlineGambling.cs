@@ -148,7 +148,7 @@ namespace RimGamble
                 var increaseButton = new Rect(stakeEntry.xMax + 5, pos.y, 24, 24);
                 if (Widgets.ButtonText(increaseButton, ">"))
                 {
-                    wager.stakeBufferInt = Mathf.Max(0, wager.stakeBufferInt - (1 * GenUI.CurrentAdjustmentMultiplier()));
+                    wager.stakeBufferInt = Mathf.Max(0, wager.stakeBufferInt + (1 * GenUI.CurrentAdjustmentMultiplier()));
                 }
 
                 pos.y += 26;

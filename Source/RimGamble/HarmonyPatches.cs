@@ -7,6 +7,7 @@ using Verse;
 using HarmonyLib;
 using RimWorld;
 using Verse.AI;
+using System.Reflection;
 
 namespace RimGamble
 {
@@ -23,7 +24,7 @@ namespace RimGamble
     /*
      * Patch that modifies the Pawn.GetFloatMenuOptions to allow colonists to gamble with traders
      */
-    [HarmonyPatch(typeof(Thing), "GetFloatMenuOptions")]
+    [HarmonyPatch(typeof(Pawn), "GetFloatMenuOptions")]
     public static class Thing_GetFloatMenuOptions_Patch
     {
         public static void Postfix(Pawn __instance, Pawn selPawn, ref IEnumerable<FloatMenuOption> __result)
@@ -34,7 +35,7 @@ namespace RimGamble
                 List<FloatMenuOption> modifiedOptions = new List<FloatMenuOption>(__result);
 
                 // Add custom float menu option
-                FloatMenuOption option;
+                FloatMenuOption option = null;
                 // we first check if the pawn we target is a trader
                 if (__instance.TraderKind != null)
                 {
@@ -54,14 +55,12 @@ namespace RimGamble
                     else
                     {
                         option = new FloatMenuOption("RimGamble.CannotGambleWith".Translate() + " " + __instance.LabelShort + ": " + "Incapable".Translate().CapitalizeFirst(), null);
-
-
                     }
                     modifiedOptions.Add(option);
+
                 }
                 __result = modifiedOptions;
             }
         }
     }
-
 }
