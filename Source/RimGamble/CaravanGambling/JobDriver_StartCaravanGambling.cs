@@ -34,7 +34,6 @@ namespace RimGamble
         {
             // start a trade session
             TradeSession.SetupWith(TargetA.Pawn, this.pawn, false);
-            TradeSession.deal = new GamblingDeal();
             Find.WindowStack.Add(new Window_CaravanGambling(TargetA.Pawn));
         }
     }

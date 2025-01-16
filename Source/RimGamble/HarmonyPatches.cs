@@ -43,6 +43,10 @@ namespace RimGamble
                     {
                         option = new FloatMenuOption(__instance.LabelShort + ": " + "NoPath".Translate().CapitalizeFirst(), null);
                     }
+                    else if (selPawn.story != null && selPawn.story.DisabledWorkTagsBackstoryAndTraits.HasFlag(WorkTags.Social))
+                    {
+                        option = new FloatMenuOption("CannotPrioritizeWorkTypeDisabled".Translate("Social"), null);
+                    }
                     else if (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
                     {
                         option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("RimGamble.GambleWith".Translate() + " " + __instance.LabelShort, delegate
