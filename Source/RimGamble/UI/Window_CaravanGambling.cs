@@ -342,7 +342,7 @@ namespace RimGamble
                 GUI.DrawTexture(new Rect(0, inRect.height * 0.5f - 25, inRect.width, 50), rectangleTexture);
                 // draw the moving pointer
                 Widgets.DrawBoxSolid(new Rect(PositionX - (PointerWidth / 2), inRect.height * 0.5f - 25, PointerWidth, PointerHeight), Color.black);
-                UpdateAnimation();
+                UpdateAnimation(odds, inRect);
             }
             // display the result
             else
@@ -360,41 +360,54 @@ namespace RimGamble
         }
 
         private float pointerSpeed = 1f;
+        private float pointerSpeedUpperLimit = 20f;
+        private float decelLowerBound = 0.5f;
         private bool accelerating = true;
-        private static float animationTimeTotal = 10f;
-        private void UpdateAnimation()
+        private void UpdateAnimation(float odds, Rect inRect)
         {
-            if (pointerSpeed <= 0) // once the pointer stops, the animation is finished
+            if (pointerSpeed <= 0)
             {
                 animationFinished = true;
             }
 
-            // change acceleration state based on how much time has elapsed
-            if (animationTimer < (animationTimeTotal / 2))
+            if (pointerSpeed >= pointerSpeedUpperLimit)
             {
                 accelerating = false;
             }
 
-            // change pointerspeed to accelerate or deccelerate
-            if (accelerating)
+
+            float targetLeftBound;
+            float targetRightBound;
+            if (won)
             {
-                pointerSpeed += Time.deltaTime;
+                targetLeftBound = 0f;
+                targetRightBound = odds * inRect.width;
             } else
             {
-                pointerSpeed -= Time.deltaTime;
+                targetLeftBound = odds * inRect.width;
+                targetRightBound = inRect.width;
             }
 
-            // Update the animation progress
+            if (accelerating)
+            {
+                pointerSpeed += 0.05f;
+            }
+            else if (!accelerating && !(!(PositionX >= targetLeftBound && PositionX <= targetRightBound) && pointerSpeed <= decelLowerBound))
+            {
+                pointerSpeed -= 0.05f;
+            }
+
+
+            // Update the pointer's position
+            PositionX += pointerSpeed;
+
+            // Wrap around if the pointer goes past the right edge
             if (PositionX >= InitialSize.x)
             {
                 PositionX = 0;
             }
-            else
-            {
-                PositionX += pointerSpeed;
 
-            }
-
+            // Decrease the animation timer
             animationTimer -= Time.deltaTime;
         }
 
