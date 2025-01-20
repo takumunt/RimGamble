@@ -22,4 +22,8 @@
     <RimGamble.CaravanGamblingLabel>Caravan Jackpot</RimGamble.CaravanGamblingLabel>
     <RimGamble.CaravanGamblingDesc>Add items to the betting pool. The greater the value of your items compared to that of your opponent, the greater the odds of winning. The winner takes all the items from the pool.</RimGamble.CaravanGamblingDesc>
     <RimGamble.StartGame>Start Caravan Jackpot</RimGamble.StartGame>
+    <RimGamble.ColonyItems>Colony's Items</RimGamble.ColonyItems>
+    <RimGamble.TraderItems>Trader's Items</RimGamble.TraderItems>
+    <RimGamble.TraderItemCount>Amount</RimGamble.TraderItemCount>
+    <RimGamble.TraderItemWagered>Wagered</RimGamble.TraderItemWagered>
 </LanguageData>
