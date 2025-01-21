@@ -16,9 +16,10 @@ namespace RimGamble
         private bool gameRoll;
         private bool timerStarted;
         private bool animationFinished;
-        private bool animFinWait;
         private bool concluded;
         private bool won;
+        private bool accelerating;
+
 
         private List<Tradeable> tradeablesList;
         private Pawn traderPawn;
@@ -27,11 +28,12 @@ namespace RimGamble
         private int colonyWagerVal;
         private int traderWagerVal;
         private float timeRemaining;
-        private float animFinWaitTimer;
         private float traderWagerUpdateInterval;
         private float traderWagerUpdateTimer;
         private float odds;
-
+        private float pointerSpeed;
+        private float accelRate;
+        private float decelRate;
         /**
          * 
          * Constants for heights and widths of GUI elements
@@ -44,6 +46,10 @@ namespace RimGamble
         private static float entryFieldWidth = 60;
         private static float cancelButtonWidth = 100;
         private static float cancelButtonHeight = 30;
+        private static float exitButtonWidth = 100;
+        private static float exitButtonHeight = 30;
+        private static float retryButtonWidth = 100;
+        private static float retryButtonHeight = 30;
         public override Vector2 InitialSize => new Vector2(UI.screenWidth * 0.6f, UI.screenHeight * 0.6f);
 
         public Window_CaravanGambling(Pawn trader)
@@ -51,30 +57,32 @@ namespace RimGamble
             this.forcePause = true;
             this.closeOnClickedOutside = true;
             this.traderPawn = trader;
-            tradeablesList = TradeSession.deal.AllTradeables;
             Initialize();
         }
 
         // initializes some values that may need to be reset upon cancellation
         private void Initialize()
         {
+            tradeablesList = TradeSession.deal.AllTradeables;
             colonyItemsWagered = new Dictionary<Tradeable, WagerItem>();
             traderItemsWagered = new Dictionary<Tradeable, WagerItem>();
             gameStart = false;
             gameRoll = false;
             timerStarted = false;
             animationFinished = false;
-            animFinWait = true;
             concluded = false;
             won = false;
+            accelerating = true;
             timeRemaining = 20f;
-            animFinWaitTimer = 10f;
             colonyWagerVal = 0;
             traderWagerVal = 0;
             traderWagerUpdateInterval = 5f;
             traderWagerUpdateTimer = traderWagerUpdateInterval;
             odds = 0;
             pointerX = InitialSize.x / 2;
+            pointerSpeed = 1f;
+            accelRate = 0.1f;
+            decelRate = 0.05f;
         }
 
 
@@ -149,9 +157,10 @@ namespace RimGamble
             Rect scrollRect = new Rect(pos.x, pos.y + rowTextHeight, viewRect.width - 16f, listHeight); // the list's length is the number of items in it that can be traded/wagered
             // top header labels
             Widgets.Label(new Rect(0, pos.y, viewRect.width * 0.1f, rowTextHeight), "RimGamble.ColonyItems".Translate());
+            Widgets.Label(new Rect(viewRect.width * 0.45f - rowTextHeight - rowTextHeight - numWidth - entryFieldWidth - 15, pos.y, viewRect.width * 0.1f, rowTextHeight), "RimGamble.ColonyAmtHeld".Translate());
             Widgets.Label(new Rect(viewRect.width * 0.55f, pos.y, viewRect.width * 0.2f, rowTextHeight), "RimGamble.TraderItems".Translate());
-            Widgets.Label(new Rect(scrollRect.width - (numWidth * 2), pos.y, numWidth, rowTextHeight), "RimGamble.TraderItemCount".Translate());
-            Widgets.Label(new Rect(scrollRect.width - numWidth, pos.y, numWidth, rowTextHeight), "RimGamble.TraderItemWagered".Translate());
+            Widgets.Label(new Rect(viewRect.width - 20f - numWidth - numWidth, pos.y, numWidth, rowTextHeight), "RimGamble.TraderItemCount".Translate());
+            Widgets.Label(new Rect(viewRect.width - 10f - numWidth, pos.y, numWidth, rowTextHeight), "RimGamble.TraderItemWagered".Translate());
             pos.y += rowTextHeight;
 
             Widgets.BeginScrollView(viewRect, ref scrollPos, scrollRect);
@@ -196,7 +205,7 @@ namespace RimGamble
                     colonyWagerVal -= (int)(numItems * tradeItem.BaseMarketValue); // subtract the current value of the items we are working on, we will update this later
 
                     // increase button
-                    var increaseButtonRect = new Rect(width - rowTextHeight, 0, rowTextHeight, rowHeight);
+                    Rect increaseButtonRect = new Rect(width - rowTextHeight, 0, rowTextHeight, rowHeight);
                     if (Widgets.ButtonText(increaseButtonRect, ">") && numItems <= ctHeldBy)
                     {
                         numItems = Mathf.Max(0, numItems + (1 * GenUI.CurrentAdjustmentMultiplier()));
@@ -213,7 +222,7 @@ namespace RimGamble
                     {
                         numItemsBuffer = numItems.ToString();
                     }
-                    var entryFieldRect = new Rect(increaseButtonRect.xMin - 5 - entryFieldWidth, 0, entryFieldWidth, rowHeight);
+                    Rect entryFieldRect = new Rect(increaseButtonRect.xMin - 5 - entryFieldWidth, 0, entryFieldWidth, rowHeight);
                     Widgets.TextFieldNumeric<int>(entryFieldRect, ref numItems, ref numItemsBuffer);
                     if (numItems > ctHeldBy) // ensures the entry is valid (between 0 and the number of the item held by the colony)
                     {
@@ -226,18 +235,21 @@ namespace RimGamble
                     }
 
                     // decrease button
-                    var decreaseButtonRect = new Rect(entryFieldRect.xMin - 5 - rowTextHeight, 0, rowTextHeight, rowHeight);
+                    Rect decreaseButtonRect = new Rect(entryFieldRect.xMin - 5 - rowTextHeight, 0, rowTextHeight, rowHeight);
                     if (Widgets.ButtonText(decreaseButtonRect, "<") && numItems > 0)
                     {
                         numItems = Mathf.Max(0, numItems - (1 * GenUI.CurrentAdjustmentMultiplier()));
                     }
+
+                    Rect colonyItemAmtRect = new Rect(decreaseButtonRect.xMin - 5 - numWidth, 0, rowTextHeight, rowHeight);
+                    Widgets.Label(colonyItemAmtRect, ctHeldBy.ToString());
 
                     colonyItemsWagered[tradeItem].numItems = numItems;
                     colonyItemsWagered[tradeItem].numItemsBuffer = numItemsBuffer;
                     // update the total value of the wager
                     colonyWagerVal += (int)(numItems * tradeItem.BaseMarketValue);
 
-                    Rect infoRect = new Rect(0, 0, decreaseButtonRect.xMin - 5, rowHeight);
+                    Rect infoRect = new Rect(0, 0, colonyItemAmtRect.xMin - 5, rowHeight);
                     TransferableUIUtility.DrawTransferableInfo(tradeItem, infoRect, Color.white); // now draw the icon and descriptions
                     Widgets.EndGroup();
                     colonyRow++;
@@ -310,7 +322,7 @@ namespace RimGamble
             }
             Text.Anchor = TextAnchor.MiddleLeft;
             pos.x = 0;
-            Widgets.Label(new Rect(pos.x, pos.y, innerRect.width * 0.2f, rowHeight), "Time Remaining: " + timeRemaining);
+            Widgets.Label(new Rect(pos.x, pos.y, innerRect.width * 0.2f, rowHeight), "RimGamble.TimeRemaining".Translate() + timeRemaining);
             pos.y -= rowHeight;
 
             // label to show our current odds
@@ -324,11 +336,11 @@ namespace RimGamble
                 odds = (float)colonyWagerVal / (colonyWagerVal + traderWagerVal);
             }
             Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect((innerRect.width / 2) - (innerRect.width * 0.1f), pos.y, innerRect.width * 0.2f, rowHeight), "Odds of Winning: " + odds.ToString("P2"));
+            Widgets.Label(new Rect((innerRect.width / 2) - (innerRect.width * 0.1f), pos.y, innerRect.width * 0.2f, rowHeight), "RimGamble.OddsofWinning".Translate() + odds.ToString("P2"));
             pos.y += rowHeight;
 
             // button to cancel, which just sends you back to the first screen
-            if (Widgets.ButtonText(new Rect(innerRect.width / 2 - (cancelButtonWidth / 2), pos.y, cancelButtonWidth, cancelButtonHeight), "Cancel"))
+            if (Widgets.ButtonText(new Rect(innerRect.width / 2 - (cancelButtonWidth / 2), pos.y, cancelButtonWidth, cancelButtonHeight), "RimGamble.Cancel".Translate()))
             {
                 Initialize();
             }
@@ -386,6 +398,13 @@ namespace RimGamble
                     Text.Anchor = TextAnchor.MiddleCenter;
                     Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "You Lost...");
                 }
+
+                // once the roll ends, create a button to exit
+                if (Widgets.ButtonText(new Rect(inRect.width / 2 - (exitButtonWidth / 2), barRect.yMax + 50f, exitButtonWidth, exitButtonHeight), "RimGamble.Exit".Translate()))
+                {
+                    this.Close();
+                }
+
             }
             GenUI.ResetLabelAlign();
         }
@@ -394,12 +413,8 @@ namespace RimGamble
         /**
          * Method to update the position of the moving pointer in the final rolling animation
          */
-        private float pointerSpeed = 1f;
         private float pointerSpeedUpperLimit = 30f;
         private float pointerSpeedLowerBound = 2f;
-        private bool accelerating = true;
-        private float accelRate = 0.1f;
-        private float decelRate = 0.05f;
         private void UpdateAnimation(float odds, Rect inRect)
         {
             float targetLeftBound;
@@ -414,7 +429,7 @@ namespace RimGamble
                 targetRightBound = inRect.width;
             }
 
-            // Handle acceleration and deceleration
+            // Handle acceleration and deceleration=-
             if (accelerating)
             {
                 // Gradually increase pointer speed

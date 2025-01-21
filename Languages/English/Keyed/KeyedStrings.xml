@@ -26,4 +26,10 @@
     <RimGamble.TraderItems>Trader's Items</RimGamble.TraderItems>
     <RimGamble.TraderItemCount>Amount</RimGamble.TraderItemCount>
     <RimGamble.TraderItemWagered>Wagered</RimGamble.TraderItemWagered>
+    <RimGamble.ColonyAmtHeld>Amount</RimGamble.ColonyAmtHeld>
+    <RimGamble.TimeRemaining>Time Remaining: </RimGamble.TimeRemaining>
+    <RimGamble.OddsofWinning>Odds of Winning: </RimGamble.OddsofWinning>
+    <RimGamble.Cancel>Cancel</RimGamble.Cancel>
+    <RimGamble.ReGamble>Retry</RimGamble.ReGamble>
+    <RimGamble.Exit>Exit</RimGamble.Exit>
 </LanguageData>
