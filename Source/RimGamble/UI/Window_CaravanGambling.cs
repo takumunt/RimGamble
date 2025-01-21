@@ -16,6 +16,7 @@ namespace RimGamble
         private bool gameRoll;
         private bool timerStarted;
         private bool animationFinished;
+        private bool animFinWait;
         private bool concluded;
         private bool won;
 
@@ -26,6 +27,7 @@ namespace RimGamble
         private int colonyWagerVal;
         private int traderWagerVal;
         private float timeRemaining;
+        private float animFinWaitTimer;
         private float traderWagerUpdateInterval;
         private float traderWagerUpdateTimer;
         private float odds;
@@ -62,9 +64,11 @@ namespace RimGamble
             gameRoll = false;
             timerStarted = false;
             animationFinished = false;
+            animFinWait = true;
             concluded = false;
             won = false;
             timeRemaining = 20f;
+            animFinWaitTimer = 10f;
             colonyWagerVal = 0;
             traderWagerVal = 0;
             traderWagerUpdateInterval = 5f;
@@ -342,7 +346,7 @@ namespace RimGamble
         private Texture2D rectangleTexture;
         private void DrawRollUI(Rect inRect, Vector2 pos, float odds)
         {
-            if (!concluded)
+            if (!concluded) // calculation of odds and payout *this runs before and separate from the animation so that players cannot exploit the system
             {
                 rectangleTexture = CreateRectangularBox(odds, inRect);
                 concluded = true;
@@ -353,58 +357,51 @@ namespace RimGamble
                 ConcludeDeal();
             }
 
-            if (!animationFinished)// if the wager has not concluded yet, play the animation and calculate the odds
-            {
-                // draw the background box and outlines
-                Rect barRect = new Rect(0, inRect.height * 0.5f - 25, inRect.width - 2, 50);
-                GUI.DrawTexture(barRect, rectangleTexture);
-                int outlineWidth = 1;
-                GUI.color = new Color(1f, 1f, 1f, 0.2f);
-                Widgets.DrawLineHorizontal(barRect.xMin, barRect.yMax - outlineWidth, barRect.width);
-                Widgets.DrawLineHorizontal(barRect.xMin, barRect.yMin, barRect.width);
-                Widgets.DrawLineVertical(barRect.xMin, barRect.yMin, barRect.height);
-                Widgets.DrawLineVertical(barRect.xMax - outlineWidth, barRect.yMin, barRect.height);
-                GUI.color = Color.white;
+            // draw the background box and outlines
+            Rect barRect = new Rect(0, inRect.height * 0.5f - 25, inRect.width - 2, 50);
+            GUI.DrawTexture(barRect, rectangleTexture);
+            int outlineWidth = 1;
+            GUI.color = new Color(1f, 1f, 1f, 0.2f);
+            Widgets.DrawLineHorizontal(barRect.xMin, barRect.yMax - outlineWidth, barRect.width);
+            Widgets.DrawLineHorizontal(barRect.xMin, barRect.yMin, barRect.width);
+            Widgets.DrawLineVertical(barRect.xMin, barRect.yMin, barRect.height);
+            Widgets.DrawLineVertical(barRect.xMax - outlineWidth, barRect.yMin, barRect.height);
+            GUI.color = Color.white;
 
-                // draw the moving pointer
-                Widgets.DrawBoxSolid(new Rect(pointerX - (PointerWidth / 2), inRect.height * 0.5f - 25, PointerWidth, PointerHeight), new Color(0.29f, 0.25f, 0.18f));
+            // draw the moving pointer
+            Widgets.DrawBoxSolid(new Rect(pointerX - (PointerWidth / 2), inRect.height * 0.5f - 25, PointerWidth, PointerHeight), new Color(0.82f, 0.61f, 0.21f));
+            if (!animationFinished)
+            {
                 UpdateAnimation(odds, inRect);
             }
-            // display the result
             else
             {
                 if (won)
                 {
-                    Widgets.Label(new Rect(pos.x, pos.y, inRect.width * 0.2f, rowHeight), "You Won!");
-
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "You Won!");
                 }
                 else
                 {
-                    Widgets.Label(new Rect(pos.x, pos.y, inRect.width * 0.2f, rowHeight), "You Lost...");
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "You Lost...");
                 }
             }
+            GenUI.ResetLabelAlign();
         }
+
 
         /**
          * Method to update the position of the moving pointer in the final rolling animation
          */
         private float pointerSpeed = 1f;
-        private float pointerSpeedUpperLimit = 20f;
-        private float decelLowerBound = 0.5f;
+        private float pointerSpeedUpperLimit = 30f;
+        private float pointerSpeedLowerBound = 2f;
         private bool accelerating = true;
+        private float accelRate = 0.1f;
+        private float decelRate = 0.05f;
         private void UpdateAnimation(float odds, Rect inRect)
         {
-            if (pointerSpeed <= 0)
-            {
-                animationFinished = true;
-            }
-
-            if (pointerSpeed >= pointerSpeedUpperLimit)
-            {
-                accelerating = false;
-            }
-
-
             float targetLeftBound;
             float targetRightBound;
             if (won)
@@ -417,13 +414,36 @@ namespace RimGamble
                 targetRightBound = inRect.width;
             }
 
+            // Handle acceleration and deceleration
             if (accelerating)
             {
-                pointerSpeed += 0.05f;
+                // Gradually increase pointer speed
+                pointerSpeed += accelRate;
+                accelRate += 0.001f; // Gradually increase the acceleration rate
+
+                if (pointerSpeed >= pointerSpeedUpperLimit)
+                {
+                    accelerating = false; // Stop accelerating when max speed is reached
+                }
             }
-            else if (!accelerating && !(!(pointerX >= targetLeftBound && pointerX <= targetRightBound) && pointerSpeed <= decelLowerBound))
+            else
             {
-                pointerSpeed -= 0.05f;
+                // Gradually decrease pointer speed for smooth deceleration
+                if (!(!(pointerX >= targetLeftBound && pointerX <= targetRightBound) && pointerSpeed <= pointerSpeedLowerBound))
+                {
+                    pointerSpeed -= decelRate;
+                    if (decelRate >= 0.05) // Gradually increase the deceleration rate
+                    {
+                        decelRate -= 0.001f;
+                    }
+                }
+
+                // Ensure the pointer slows down smoothly before stopping
+                if (pointerSpeed <= 0)
+                {
+                    pointerSpeed = 0f;
+                    animationFinished = true; // End the animation
+                }
             }
 
             // Update the pointer's position
