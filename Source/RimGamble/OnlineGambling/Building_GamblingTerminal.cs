@@ -83,7 +83,7 @@ namespace RimGamble
 
             // custom gambling menu option
             yield return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("RimGamble.ConnectNetworkGamble".Translate(), 
-                () => OpenOnlineGamblingMenuJob(myPawn), MenuOptionPriority.Default), myPawn, this); ;
+                () => OpenOnlineGamblingMenuJob(myPawn), MenuOptionPriority.Default), myPawn, this);
         }
 
         // opens up the online gambling menu

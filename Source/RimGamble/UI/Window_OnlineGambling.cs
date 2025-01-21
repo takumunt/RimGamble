@@ -9,7 +9,6 @@ using RimGamble.OnlineGambling;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using static RimWorld.IdeoFoundation_Deity;
 
 namespace RimGamble
 {
@@ -147,9 +146,9 @@ namespace RimGamble
                 }
                 // increase button
                 var increaseButton = new Rect(stakeEntry.xMax + 5, pos.y, 24, 24);
-                if (Widgets.ButtonText(increaseButton, ">"))
+                if (Widgets.ButtonText(increaseButton, ">") && checkEnoughSilver(wagerList, out int silverDiff))
                 {
-                    wager.stakeBufferInt = Mathf.Max(0, wager.stakeBufferInt - (1 * GenUI.CurrentAdjustmentMultiplier()));
+                    wager.stakeBufferInt = Mathf.Max(0, wager.stakeBufferInt + (1 * GenUI.CurrentAdjustmentMultiplier()));
                 }
 
                 pos.y += 26;
@@ -160,16 +159,11 @@ namespace RimGamble
             if (Widgets.ButtonText(placeBetsButtonRect, "Place Bets"))
             {
                 // add up the difference in total silver bet
-                int silverDiff = 0;
-                foreach (var wager in wagerList)
-                {
-                    silverDiff += (wager.stake - wager.stakeBufferInt);
-                }
-                // first evaluate if the colony has enough money to make their bets
-                if (silverList.Sum(thing => thing.stackCount) >= -silverDiff)
+
+                if (checkEnoughSilver(wagerList, out int silverDiff))
                 {
                     // update the stakes
-                    foreach( var wager in wagerList)
+                    foreach (var wager in wagerList)
                     {
                         wager.stake = wager.stakeBufferInt;
                     }
@@ -193,7 +187,7 @@ namespace RimGamble
                             Thing silverIndividual = silverList.RandomElement();
                             silverList.Remove(silverIndividual);
                             int amtTakenFromIndividual = Math.Min(silverDiff, silverIndividual.stackCount);
-                            silverIndividual.SplitOff(amtTakenFromIndividual).Destroy();   
+                            silverIndividual.SplitOff(amtTakenFromIndividual).Destroy();
                             silverDiff -= amtTakenFromIndividual;
                         }
                         // update the silver ct
@@ -205,6 +199,21 @@ namespace RimGamble
             // must be set back to default
             Text.Anchor = TextAnchor.UpperLeft;
         }
+
+        private bool checkEnoughSilver(List<Bet> wagerList, out int silverDiff)
+        {
+            silverDiff = 0;
+            foreach (var wager in wagerList)
+            {
+                silverDiff += (wager.stake - wager.stakeBufferInt);
+            }
+            // first evaluate if the colony has enough money to make their bets
+            if (silverList.Sum(thing => thing.stackCount) >= -silverDiff)
+            {
+                return true;
+            }
+            return false;
+         }
 
         /*
          * Find all accessible silver on the map (must be in range of a powered trade beacon)
