@@ -19,7 +19,7 @@ namespace RimGamble.OnlineGambling
         public override void GameComponentTick()
         {
             // we will generate a new betting event occasionally as long as there are less than 20 bets
-            if (Rand.MTBEventOccurs(0.001f, 60000f, 1f) && bets.Count < 20)
+            if (Rand.MTBEventOccurs(1f, 60000f, 1f) && bets.Count < 20)
             {
                 // when a new betting event occurs
                 // randomly pick one of the gambling organizations and generate an event
