@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using RimGamble.OnlineGambling;
+using RimGamble;
 using RimWorld;
 using UnityEngine;
 using Verse;

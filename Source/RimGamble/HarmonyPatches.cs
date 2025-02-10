@@ -39,30 +39,27 @@ namespace RimGamble
                 // we first check if the pawn we target is a trader
                 if (__instance.TraderKind != null)
                 {
-                    if (!selPawn.CanReach(__instance, PathEndMode.OnCell, Danger.Deadly))
+                    option = (!selPawn.CanReach(__instance, PathEndMode.OnCell, Danger.Deadly)) ? new FloatMenuOption("RimGamble.CannotGambleWith".Translate(__instance) + ": " + "NoPath".Translate().CapitalizeFirst(), null) : (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking) ? FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("RimGamble.GambleWith".Translate(__instance), delegate
                     {
-                        option = new FloatMenuOption(__instance.LabelShort + ": " + "NoPath".Translate().CapitalizeFirst(), null);
-                    }
-                    else if (selPawn.story != null && selPawn.story.DisabledWorkTagsBackstoryAndTraits.HasFlag(WorkTags.Social))
-                    {
-                        option = new FloatMenuOption("CannotPrioritizeWorkTypeDisabled".Translate("Social"), null);
-                    }
-                    else if (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
-                    {
-                        option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("RimGamble.GambleWith".Translate() + " " + __instance.LabelShort, delegate
-                        {
-                            Job job = JobMaker.MakeJob(RimGamble_DefOf.RimGamble_StartCaravanGambling, __instance);
-                            job.playerForced = true;
-                            selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                        }), selPawn, __instance);
-                    }
-                    else
-                    {
-                        option = new FloatMenuOption("RimGamble.CannotGambleWith".Translate() + " " + __instance.LabelShort + ": " + "Incapable".Translate().CapitalizeFirst(), null);
-                    }
+                        Job job = JobMaker.MakeJob(RimGamble_DefOf.RimGamble_StartCaravanGambling, __instance);
+                        job.playerForced = true;
+                        selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                    }), selPawn, __instance) : new FloatMenuOption("RimGamble.CannotGambleWith".Translate(__instance) + ": " + "Incapable".Translate().CapitalizeFirst(), null));
                     modifiedOptions.Add(option);
-
                 }
+
+                // check if the pawn is a warningpawn
+                if (__instance.kindDef == PawnKindDef.Named("RimGamble_WarningPawn"))
+                {
+                    option = (!selPawn.CanReach(__instance, PathEndMode.OnCell, Danger.Deadly)) ? new FloatMenuOption("CannotTalkTo".Translate(__instance) + ": " + "NoPath".Translate().CapitalizeFirst(), null) : (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking) ? FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("TalkTo".Translate(__instance), delegate
+                    {
+                        Job job = JobMaker.MakeJob(RimGamble_DefOf.RimGamble_TalkWarningPawn, __instance);
+                        job.playerForced = true;
+                        selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                    }), selPawn, __instance) : new FloatMenuOption("CannotTalkTo".Translate(__instance) + ": " + "Incapable".Translate().CapitalizeFirst(), null));
+                    modifiedOptions.Add(option);
+                }
+
                 __result = modifiedOptions;
             }
         }
