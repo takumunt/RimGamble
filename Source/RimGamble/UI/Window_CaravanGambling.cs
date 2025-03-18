@@ -29,12 +29,21 @@ namespace RimGamble
         private int colonyWagerVal;
         private int traderWagerVal;
         private float timeRemaining;
-        private float traderWagerUpdateInterval;
+        private static float timeInitial = 20f;
         private float traderWagerUpdateTimer;
         private float odds;
         private float pointerSpeed;
         private float accelRate;
         private float decelRate;
+
+        /**
+         * AI related stuff
+         */
+        private float traderWagerUpdateInterval;
+        private CaravanGambleAI aiType;
+        private float aiBias;
+        private float variance = 0.1f; // stdDev to be used for gaussian distribution of updateintervals
+
         /**
          * 
          * Constants for heights and widths of GUI elements
@@ -81,16 +90,21 @@ namespace RimGamble
             concluded = false;
             won = false;
             accelerating = true;
-            timeRemaining = 20f;
+            timeRemaining = timeInitial;
             colonyWagerVal = 0;
             traderWagerVal = 0;
-            traderWagerUpdateInterval = 5f;
-            traderWagerUpdateTimer = traderWagerUpdateInterval;
             odds = 0;
             pointerX = InitialSize.x / 2;
             pointerSpeed = 1f;
             accelRate = 0.1f;
             decelRate = 0.05f;
+
+            // pick an ai behavior
+            aiType = AIPicker.PickRandomAI();
+
+            aiBias = aiType.wagerBias;
+            traderWagerUpdateInterval = aiType.wagerInterval;
+            traderWagerUpdateTimer = wagerIntervalAdjust();
         }
 
 
@@ -327,7 +341,7 @@ namespace RimGamble
                 if (traderWagerUpdateTimer <= 0)
                 {
                     UpdateTraderWager();
-                    traderWagerUpdateTimer = traderWagerUpdateInterval;
+                    traderWagerUpdateTimer = wagerIntervalAdjust();
                 }
             }
             Text.Anchor = TextAnchor.MiddleLeft;
@@ -547,22 +561,17 @@ namespace RimGamble
         }
 
         /**
-         * Simple AI behavior for the AI to choose random items to add to the wager pool
+         * Behavior for the AI to choose items to add to the wager pool
+         * This method handles an addition of a new item to the wager (or not, if the chosen behavior decides against it)
          */
         private void UpdateTraderWager()
         {
-            // make sure we only try to update as long as there is an item we can wager
             if (traderItemsWagered.Count > 0)
             {
-                // select a random key from the dictionary
-                var keys = traderItemsWagered.Keys.ToList();
-                var randomSelectedItem = keys[UnityEngine.Random.Range(0, keys.Count)];
+                StakeItem itemToWager = aiType.UpdateTraderWager(traderItemsWagered.Keys.ToList());
 
-                // update that key with a random amount, with the maximum possible value being the amount the trader posesses
-                int newWagerCt = UnityEngine.Random.Range(1, randomSelectedItem.CountHeldBy(Transactor.Trader));
-                float itemMarketVal = randomSelectedItem.BaseMarketValue;
-                traderWagerVal += ((int)(newWagerCt * itemMarketVal) - (int)(traderItemsWagered[randomSelectedItem].numItems * itemMarketVal));
-                traderItemsWagered[randomSelectedItem].numItems = newWagerCt;
+                traderWagerVal += ((int)(itemToWager.wagerCt * itemToWager.marketVal) - (int)(traderItemsWagered[itemToWager.item].numItems * itemToWager.marketVal));
+                traderItemsWagered[itemToWager.item].numItems = itemToWager.wagerCt;
             }
         }
 
@@ -579,6 +588,15 @@ namespace RimGamble
                 item.Key.AdjustTo(item.Value.numItemsColony - item.Key.CountHeldBy(Transactor.Colony));
                 item.Key.ResolveTrade();
             }
+        }
+
+        /**
+         * Helper method that adjusts the time intervals between AI wager updates
+         */
+        private float wagerIntervalAdjust()
+        {
+            float adjustedInterval = traderWagerUpdateInterval * (aiBias + 1 * (timeRemaining / timeInitial));
+            return Mathf.Max(variance, Rand.Gaussian(adjustedInterval, adjustedInterval * variance));
         }
 
         /**
