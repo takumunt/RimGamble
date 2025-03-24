@@ -21,19 +21,29 @@ namespace RimGamble
         private bool accelerating;
 
 
-        private List<Tradeable> tradeablesList;
+        private List<Tradeable> tradeablesListInit;
+        private Dictionary<Tradeable, SingleItem> itemList;
         private Pawn traderPawn;
         private Dictionary<Tradeable, WagerItem> colonyItemsWagered;
         private Dictionary<Tradeable, WagerItem> traderItemsWagered;
         private int colonyWagerVal;
         private int traderWagerVal;
         private float timeRemaining;
-        private float traderWagerUpdateInterval;
+        private static float timeInitial = 20f;
         private float traderWagerUpdateTimer;
         private float odds;
         private float pointerSpeed;
         private float accelRate;
         private float decelRate;
+
+        /**
+         * AI related stuff
+         */
+        private float traderWagerUpdateInterval;
+        private CaravanGambleAI aiType;
+        private float aiBias;
+        private float variance = 0.1f; // stdDev to be used for gaussian distribution of updateintervals
+
         /**
          * 
          * Constants for heights and widths of GUI elements
@@ -57,13 +67,20 @@ namespace RimGamble
             this.forcePause = true;
             this.closeOnClickedOutside = true;
             this.traderPawn = trader;
+            tradeablesListInit = TradeSession.deal.AllTradeables.Where(t => traderPawn.TraderKind.WillTrade(t.ThingDef)).ToList();
+            itemList = new Dictionary<Tradeable, SingleItem>();
+            // initialize the itemList by going through tradeableslistinit and adding each unqiue entry
+            foreach (Tradeable item in tradeablesListInit)
+            {
+                itemList[item] = new SingleItem(item.CountHeldBy(Transactor.Colony), item.CountHeldBy(Transactor.Trader));
+            }
+
             Initialize();
         }
 
         // initializes some values that may need to be reset upon cancellation
         private void Initialize()
         {
-            tradeablesList = TradeSession.deal.AllTradeables;
             colonyItemsWagered = new Dictionary<Tradeable, WagerItem>();
             traderItemsWagered = new Dictionary<Tradeable, WagerItem>();
             gameStart = false;
@@ -73,16 +90,21 @@ namespace RimGamble
             concluded = false;
             won = false;
             accelerating = true;
-            timeRemaining = 20f;
+            timeRemaining = timeInitial;
             colonyWagerVal = 0;
             traderWagerVal = 0;
-            traderWagerUpdateInterval = 5f;
-            traderWagerUpdateTimer = traderWagerUpdateInterval;
             odds = 0;
             pointerX = InitialSize.x / 2;
             pointerSpeed = 1f;
             accelRate = 0.1f;
             decelRate = 0.05f;
+
+            // pick an ai behavior
+            aiType = AIPicker.PickRandomAI();
+
+            aiBias = aiType.wagerBias;
+            traderWagerUpdateInterval = aiType.wagerInterval;
+            traderWagerUpdateTimer = wagerIntervalAdjust();
         }
 
 
@@ -139,6 +161,8 @@ namespace RimGamble
 
         public override void PreClose()
         {
+            // conclude all wagers
+            ConcludeDeal();
             // close the trade session
             TradeSession.Close();
         }
@@ -152,7 +176,7 @@ namespace RimGamble
             pos.x = 0;
 
             // create scroll
-            float listHeight = Math.Max(tradeablesList.Count(t => t.thingsTrader.Count > 0 && traderPawn.TraderKind.WillTrade(t.ThingDef)), tradeablesList.Count(t => t.thingsColony.Count > 0 && traderPawn.TraderKind.WillTrade(t.ThingDef))) * rowHeight;
+            float listHeight = itemList.Count * rowHeight;
             Rect viewRect = new Rect(pos.x, pos.y + rowTextHeight, innerRect.width - 10f, scrollableAreaHeight);
             Rect scrollRect = new Rect(pos.x, pos.y + rowTextHeight, viewRect.width - 16f, listHeight); // the list's length is the number of items in it that can be traded/wagered
             // top header labels
@@ -170,7 +194,7 @@ namespace RimGamble
             int row = 0;
             int colonyRow = 0;
             int traderRow = 0;
-            foreach (var tradeItem in tradeablesList.Where(t => traderPawn.TraderKind.WillTrade(t.ThingDef))) // only draw rows for items that can be traded/wagered
+            foreach (var tradeItem in itemList) // only draw rows for items that can be traded/wagered
             {
                 pos.x = 0;
 
@@ -184,13 +208,13 @@ namespace RimGamble
                  * Left side (player side)
                  */
                 
-                if (tradeItem.thingsColony.Count > 0)
-                {           
-                    int ctHeldBy = tradeItem.CountHeldBy(Transactor.Colony);
+                if (tradeItem.Value.numItemsColony > 0)
+                {
+                    int ctHeldBy = tradeItem.Value.numItemsColony;
                     // add this to the dictionary if it doesnt already exist
-                    if (!colonyItemsWagered.ContainsKey(tradeItem))
+                    if (!colonyItemsWagered.ContainsKey(tradeItem.Key))
                     {
-                        colonyItemsWagered[tradeItem] = new WagerItem(0); // the initial value of any entry is the number of that item the colony has in its possession
+                        colonyItemsWagered[tradeItem.Key] = new WagerItem(0); // the initial value of any entry is the number of that item the colony has in its possession
                     }
 
                     Rect colonyRowRect = new Rect(0, pos.y + (colonyRow * rowHeight), viewRect.width * 0.45f, rowHeight);
@@ -200,9 +224,9 @@ namespace RimGamble
                     /**
                      * Entry Field
                      */
-                    int numItems = colonyItemsWagered[tradeItem].numItems;
-                    String numItemsBuffer = colonyItemsWagered[tradeItem].numItemsBuffer;
-                    colonyWagerVal -= (int)(numItems * tradeItem.BaseMarketValue); // subtract the current value of the items we are working on, we will update this later
+                    int numItems = colonyItemsWagered[tradeItem.Key].numItems;
+                    String numItemsBuffer = colonyItemsWagered[tradeItem.Key].numItemsBuffer;
+                    colonyWagerVal -= (int)(numItems * tradeItem.Key.BaseMarketValue); // subtract the current value of the items we are working on, we will update this later
 
                     // increase button
                     Rect increaseButtonRect = new Rect(width - rowTextHeight, 0, rowTextHeight, rowHeight);
@@ -244,13 +268,13 @@ namespace RimGamble
                     Rect colonyItemAmtRect = new Rect(decreaseButtonRect.xMin - 5 - numWidth, 0, rowTextHeight, rowHeight);
                     Widgets.Label(colonyItemAmtRect, ctHeldBy.ToString());
 
-                    colonyItemsWagered[tradeItem].numItems = numItems;
-                    colonyItemsWagered[tradeItem].numItemsBuffer = numItemsBuffer;
+                    colonyItemsWagered[tradeItem.Key].numItems = numItems;
+                    colonyItemsWagered[tradeItem.Key].numItemsBuffer = numItemsBuffer;
                     // update the total value of the wager
-                    colonyWagerVal += (int)(numItems * tradeItem.BaseMarketValue);
+                    colonyWagerVal += (int)(numItems * tradeItem.Key.BaseMarketValue);
 
                     Rect infoRect = new Rect(0, 0, colonyItemAmtRect.xMin - 5, rowHeight);
-                    TransferableUIUtility.DrawTransferableInfo(tradeItem, infoRect, Color.white); // now draw the icon and descriptions
+                    TransferableUIUtility.DrawTransferableInfo(tradeItem.Key, infoRect, Color.white); // now draw the icon and descriptions
                     Widgets.EndGroup();
                     colonyRow++;
                 }
@@ -258,12 +282,12 @@ namespace RimGamble
                 /**
                  * Right side (trader side)
                  */
-                if (tradeItem.thingsTrader.Count > 0)
+                if (tradeItem.Value.numItemsTrader > 0)
                 {
                     // add this to the dictionary if it doesnt already exist
-                    if (!traderItemsWagered.ContainsKey(tradeItem))
+                    if (!traderItemsWagered.ContainsKey(tradeItem.Key))
                     {
-                        traderItemsWagered[tradeItem] = new WagerItem(0); // the initial value of any entry is the number of that item the colony has in its possession
+                        traderItemsWagered[tradeItem.Key] = new WagerItem(0); // the initial value of any entry is the number of that item the colony has in its possession
                     }
 
                     Rect traderRowRect = new Rect(viewRect.width * 0.55f, pos.y + (traderRow * rowHeight), viewRect.width * 0.45f - 10f, rowHeight);
@@ -272,16 +296,16 @@ namespace RimGamble
 
                     // number of item being wagered
                     Rect numItemWageredRect = new Rect(width - numWidth, 0, numWidth, rowHeight);
-                    Widgets.Label(numItemWageredRect, traderItemsWagered[tradeItem].numItems.ToString());
+                    Widgets.Label(numItemWageredRect, traderItemsWagered[tradeItem.Key].numItems.ToString());
                     width -= numWidth;
                     // number of item
                     Rect numTotItemLabelRect = new Rect(width - numWidth - 10, 0, numWidth, rowHeight);
-                    Widgets.Label(numTotItemLabelRect, tradeItem.CountHeldBy(Transactor.Trader).ToString());
+                    Widgets.Label(numTotItemLabelRect, tradeItem.Value.numItemsTrader.ToString());
 
 
                     // information and description about the item
                     Rect infoRect = new Rect(0, 0, numTotItemLabelRect.xMin - 5, rowHeight);
-                    TransferableUIUtility.DrawTransferableInfo(tradeItem, infoRect, Color.white);
+                    TransferableUIUtility.DrawTransferableInfo(tradeItem.Key, infoRect, Color.white);
                     Widgets.EndGroup();
                     traderRow++;
                 }
@@ -317,7 +341,7 @@ namespace RimGamble
                 if (traderWagerUpdateTimer <= 0)
                 {
                     UpdateTraderWager();
-                    traderWagerUpdateTimer = traderWagerUpdateInterval;
+                    traderWagerUpdateTimer = wagerIntervalAdjust();
                 }
             }
             Text.Anchor = TextAnchor.MiddleLeft;
@@ -366,7 +390,26 @@ namespace RimGamble
                 {
                     won = true;
                 }
-                ConcludeDeal();
+
+                // update itemList
+                if (won)
+                {
+                    foreach (var item in traderItemsWagered.Where(t => t.Value.numItems > 0))
+                    {
+                        itemList[item.Key].numItemsColony += item.Value.numItems;
+                        itemList[item.Key].numItemsTrader -= item.Value.numItems;
+                    } 
+                }
+                else
+                {
+                    foreach (var item in colonyItemsWagered.Where(t => t.Value.numItems > 0))
+                    {
+                        itemList[item.Key].numItemsTrader += item.Value.numItems;
+                        itemList[item.Key].numItemsColony -= item.Value.numItems;
+
+                    }
+                }
+
             }
 
             // draw the background box and outlines
@@ -391,18 +434,24 @@ namespace RimGamble
                 if (won)
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "You Won!");
+                    Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "RimGamble.Win".Translate());
                 }
                 else
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "You Lost...");
+                    Widgets.Label(new Rect(inRect.width * 0.4f, barRect.yMin - 50f, inRect.width * 0.2f, rowHeight), "RimGamble.Loss".Translate());
                 }
 
                 // once the roll ends, create a button to exit
-                if (Widgets.ButtonText(new Rect(inRect.width / 2 - (exitButtonWidth / 2), barRect.yMax + 50f, exitButtonWidth, exitButtonHeight), "RimGamble.Exit".Translate()))
+                if (Widgets.ButtonText(new Rect(inRect.width / 2 - exitButtonWidth - 5, barRect.yMax + 50f, exitButtonWidth, exitButtonHeight), "RimGamble.Exit".Translate()))
                 {
                     this.Close();
+                }
+
+                // retry button
+                if (Widgets.ButtonText(new Rect(inRect.width / 2 + 5, barRect.yMax + 50f, retryButtonWidth, retryButtonHeight), "RimGamble.ReGamble".Translate()))
+                {
+                    this.Initialize();
                 }
 
             }
@@ -512,22 +561,23 @@ namespace RimGamble
         }
 
         /**
-         * Simple AI behavior for the AI to choose random items to add to the wager pool
+         * Behavior for the AI to choose items to add to the wager pool
+         * This method handles an addition of a new item(s) to the wager (or not, if the chosen behavior decides against it)
          */
         private void UpdateTraderWager()
         {
-            // make sure we only try to update as long as there is an item we can wager
             if (traderItemsWagered.Count > 0)
             {
-                // select a random key from the dictionary
-                var keys = traderItemsWagered.Keys.ToList();
-                var randomSelectedItem = keys[UnityEngine.Random.Range(0, keys.Count)];
+                List<StakeItem> itemsToWager = aiType.addTraderWager(traderItemsWagered.Keys.ToList(), colonyWagerVal, traderWagerVal, traderItemsWagered);
 
-                // update that key with a random amount, with the maximum possible value being the amount the trader posesses
-                int newWagerCt = UnityEngine.Random.Range(1, randomSelectedItem.CountHeldBy(Transactor.Trader));
-                float itemMarketVal = randomSelectedItem.BaseMarketValue;
-                traderWagerVal += ((int)(newWagerCt * itemMarketVal) - (int)(traderItemsWagered[randomSelectedItem].numItems * itemMarketVal));
-                traderItemsWagered[randomSelectedItem].numItems = newWagerCt;
+                if (itemsToWager != null)
+                {
+                    foreach (StakeItem itemToWagerInd in itemsToWager)
+                    {
+                        traderWagerVal += ((int)(itemToWagerInd.wagerCt * itemToWagerInd.item.BaseMarketValue) - (int)(traderItemsWagered[itemToWagerInd.item].numItems * itemToWagerInd.item.BaseMarketValue));
+                        traderItemsWagered[itemToWagerInd.item].numItems = itemToWagerInd.wagerCt;
+                    }
+                }
             }
         }
 
@@ -536,39 +586,35 @@ namespace RimGamble
          */
         private void ConcludeDeal()
         {
-            foreach (var tradeable in tradeablesList)
+            foreach (var item in itemList)
             {
-                if (won) // if the player won, transfer items from the trader to the player
-                {
-                    if (tradeable.thingsTrader.Count > 0 && traderItemsWagered.ContainsKey(tradeable))
-                    {
-                        tradeable.AdjustTo(traderItemsWagered[tradeable].numItems);
-                        tradeable.ResolveTrade();
-                    }
-                }
-                else // if the trader won, transfer items from the player to the trader
-                {
-                    if (tradeable.thingsColony.Count > 0 && colonyItemsWagered.ContainsKey(tradeable))
-                    {
-                        tradeable.AdjustTo(-(colonyItemsWagered[tradeable].numItems));
-                        tradeable.ResolveTrade();
-                    }
-                }
+                // figure out how much to transfer
+                // do this by comparing the original amount of the item found in the Tradeable object with the number that exists in the SingleItem object
+                // we will perform all transfers from the persepctive of the colony
+                item.Key.AdjustTo(item.Value.numItemsColony - item.Key.CountHeldBy(Transactor.Colony));
+                item.Key.ResolveTrade();
             }
         }
 
         /**
-         * Object used to store item information for the dictionaries< "colonyItemsWagered" and "traderItemsWagered"
+         * Helper method that adjusts the time intervals between AI wager updates
          */
-        private class WagerItem
+        private float wagerIntervalAdjust()
         {
-            public int numItems { get; set; }
-            public String numItemsBuffer { get; set; }
+            float adjustedInterval = traderWagerUpdateInterval * (aiBias + 1 * (timeRemaining / timeInitial));
+            return Mathf.Max(variance, Rand.Gaussian(adjustedInterval, adjustedInterval * variance));
+        }
 
-            public WagerItem(int numItems)
+
+        private class SingleItem
+        {
+            public int numItemsColony { get; set; }
+            public int numItemsTrader { get; set; }
+
+            public SingleItem(int numItemsColony, int numItemsTrader)
             {
-                this.numItems = numItems;
-                this.numItemsBuffer = "";
+                this.numItemsColony = numItemsColony;
+                this.numItemsTrader = numItemsTrader;
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using RimGamble.OnlineGambling;
+using RimGamble;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -24,12 +24,15 @@ namespace RimGamble
             stakeBufferReset();
             this.forcePause = true;
             this.closeOnClickedOutside = true;
+            currSilverUsed = 0;
         }
 
         public override Vector2 InitialSize => new Vector2(UI.screenWidth * 0.6f, UI.screenHeight * 0.6f);
 
         public static Vector2 scrollPos;
-        public static List<Thing> silverList;
+        public List<Thing> silverList;
+        public int silverHeld;
+        public int currSilverUsed;
         public override void DoWindowContents(Rect inRect)
         {
             Vector2 pos = Vector2.zero;
@@ -93,7 +96,6 @@ namespace RimGamble
             Rect scrollRect = new Rect(pos.x, pos.y, viewRect.width - 16f, listHeight);
             Widgets.BeginScrollView(viewRect, ref scrollPos, scrollRect);
             Text.Anchor = TextAnchor.MiddleLeft;
-            
 
             // actual entries start from here
             for (int i = 0; i < wagerList.Count; i++) // go through the list of wagers and put each of them up
@@ -105,7 +107,7 @@ namespace RimGamble
                     var oddRowRect = new Rect(pos.x, pos.y, inRect.width, 24);
                     Widgets.DrawLightHighlight(oddRowRect);
                 }
-
+                currSilverUsed -= wager.stakeBufferInt;
 
                 // gambling site name
                 Widgets.Label(new Rect(pos.x, pos.y, inRect.width * 0.2f, 24), wager.siteName);
@@ -119,6 +121,7 @@ namespace RimGamble
                 // expiry
                 Widgets.Label(new Rect(pos.x, pos.y, inRect.width * 0.2f, 24), (wager.endTimeInTicks - Find.TickManager.TicksGame).ToStringTicksToPeriod());
                 pos.x += inRect.width * 0.2f;
+
                 /*
                  * Stake entry
                  */
@@ -140,17 +143,26 @@ namespace RimGamble
                     wager.stakeBuffer = wager.stakeBufferInt.ToString();
                 }
                 Widgets.TextFieldNumeric<int>(stakeEntry, ref wager.stakeBufferInt, ref wager.stakeBuffer);
+                if (wager.stakeBufferInt > (silverHeld - currSilverUsed))
+                {
+                    wager.stakeBufferInt = (silverHeld - currSilverUsed);
+                }
                 if (string.IsNullOrEmpty(wager.stakeBuffer))
                 {
                     wager.stakeBufferInt = 0;
                 }
                 // increase button
                 var increaseButton = new Rect(stakeEntry.xMax + 5, pos.y, 24, 24);
-                if (Widgets.ButtonText(increaseButton, ">") && checkEnoughSilver(wagerList, out int silverDiff))
+                if (Widgets.ButtonText(increaseButton, ">"))
                 {
-                    wager.stakeBufferInt = Mathf.Max(0, wager.stakeBufferInt + (1 * GenUI.CurrentAdjustmentMultiplier()));
+                    int maxPossibleIncrease = silverHeld - currSilverUsed;
+                    if (maxPossibleIncrease > 0)
+                    {
+                        wager.stakeBufferInt = Mathf.Min(wager.stakeBufferInt + (1 * GenUI.CurrentAdjustmentMultiplier()), maxPossibleIncrease);
+                    }
                 }
 
+                currSilverUsed += wager.stakeBufferInt;
                 pos.y += 26;
             }
             Widgets.EndScrollView(); // end of scrollable betting window
@@ -208,12 +220,12 @@ namespace RimGamble
                 silverDiff += (wager.stake - wager.stakeBufferInt);
             }
             // first evaluate if the colony has enough money to make their bets
-            if (silverList.Sum(thing => thing.stackCount) >= -silverDiff)
+            if (silverHeld >= -silverDiff)
             {
                 return true;
             }
             return false;
-         }
+        }
 
         /*
          * Find all accessible silver on the map (must be in range of a powered trade beacon)
@@ -244,6 +256,7 @@ namespace RimGamble
 
             }
             silverList = newSilverList;
+            silverHeld = silverList.Sum(thing => thing.stackCount);
         }
 
         private void stakeBufferReset()

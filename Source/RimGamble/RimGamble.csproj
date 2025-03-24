@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaravanGambling\JobDriver_StartCaravanGambling.cs" />
+    <Compile Include="CaravanGambling\StakeItem.cs" />
     <Compile Include="GachaMachine\Refuel\CompGachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\CompProperties_GachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\GachaRefuelWorkGiverUtility.cs" />
@@ -72,6 +73,11 @@
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="SlotMachine\JobDriver_PlaySlotMachine.cs" />
     <Compile Include="SlotMachine\JoyGiver_PlaySlotMachine.cs" />
+    <Compile Include="Storyteller\IncidentWorker_WarningEvent.cs" />
+    <Compile Include="Storyteller\JobDriver_TalkWarningPawn.cs" />
+    <Compile Include="Storyteller\StorytellerCompProperties_MagEvents.cs" />
+    <Compile Include="Storyteller\StorytellerComp_MagEvents.cs" />
+    <Compile Include="Storyteller\WarningData.cs" />
     <Compile Include="Traveling Gambler\ChoiceLetter_AcceptTravelingGambler.cs" />
     <Compile Include="Traveling Gambler\JobDriver_TalkTravelingGambler.cs" />
     <Compile Include="Traveling Gambler\PawnTravelingGambler.cs" />
@@ -84,6 +90,7 @@
     <Compile Include="Traveling Gambler\TravelingGamblerWorkers.cs" />
     <Compile Include="UI\Window_CaravanGambling.cs" />
     <Compile Include="Utils\RimGamble_LetterDefOf.cs" />
+    <Compile Include="CaravanGambling\CaravanGambleAI.cs" />
     <Compile Include="Utils\RimGamble_StaticCollections.cs" />
     <Compile Include="GachaMachine\Refuel\WorkGiver_RefuelGachaMachines.cs" />
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />

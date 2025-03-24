@@ -32,5 +32,6 @@
     <RimGamble.Cancel>Cancel</RimGamble.Cancel>
     <RimGamble.ReGamble>Retry</RimGamble.ReGamble>
     <RimGamble.Exit>Exit</RimGamble.Exit>
-
+    <RimGamble.Win>You Win!</RimGamble.Win>
+    <RimGamble.Loss>You Lost!</RimGamble.Loss>
 </LanguageData>

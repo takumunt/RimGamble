@@ -6,7 +6,7 @@
     <reportString>using comms console to connect to Online Gambling Network</reportString>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
-  
+
   <JobDef>
     <defName>RimGamble_RefuelGachaMachines</defName>
     <driverClass>RimGamble.JobDriver_RefuelGachaMachines</driverClass>
@@ -18,6 +18,13 @@
     <defName>RimGamble_StartCaravanGambling</defName>
     <driverClass>RimGamble.JobDriver_StartCaravanGambling</driverClass>
     <reportString>starting gambling session</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
+  <JobDef>
+    <defName>RimGamble_TalkWarningPawn</defName>
+    <driverClass>RimGamble.JobDriver_TalkWarningPawn</driverClass>
+    <reportString>talking to mysterious pawn</reportString>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
 
