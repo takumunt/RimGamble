@@ -92,6 +92,7 @@
     <Compile Include="UI\Window_CaravanGambling.cs" />
     <Compile Include="Utils\RimGamble_LetterDefOf.cs" />
     <Compile Include="CaravanGambling\CaravanGambleAI.cs" />
+    <Compile Include="CaravanGambling\WagerItem.cs" />
     <Compile Include="Utils\RimGamble_StaticCollections.cs" />
     <Compile Include="GachaMachine\Refuel\WorkGiver_RefuelGachaMachines.cs" />
     <Compile Include="LootCrate\CompUseEffectLootCrate_Base.cs" />
