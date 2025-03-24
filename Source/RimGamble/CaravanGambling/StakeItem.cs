@@ -13,11 +13,9 @@ namespace RimGamble
     {
         public Tradeable item;
         public int wagerCt;
-        public float marketVal;
-        public StakeItem(Tradeable item, int wagerCt, float marketVal) {
+        public StakeItem(Tradeable item, int wagerCt) {
             this.item = item;
             this.wagerCt = wagerCt;
-            this.marketVal = marketVal;
         }
     }
 }

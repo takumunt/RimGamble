@@ -562,16 +562,22 @@ namespace RimGamble
 
         /**
          * Behavior for the AI to choose items to add to the wager pool
-         * This method handles an addition of a new item to the wager (or not, if the chosen behavior decides against it)
+         * This method handles an addition of a new item(s) to the wager (or not, if the chosen behavior decides against it)
          */
         private void UpdateTraderWager()
         {
             if (traderItemsWagered.Count > 0)
             {
-                StakeItem itemToWager = aiType.UpdateTraderWager(traderItemsWagered.Keys.ToList());
+                List<StakeItem> itemsToWager = aiType.addTraderWager(traderItemsWagered.Keys.ToList(), colonyWagerVal, traderWagerVal, traderItemsWagered);
 
-                traderWagerVal += ((int)(itemToWager.wagerCt * itemToWager.marketVal) - (int)(traderItemsWagered[itemToWager.item].numItems * itemToWager.marketVal));
-                traderItemsWagered[itemToWager.item].numItems = itemToWager.wagerCt;
+                if (itemsToWager != null)
+                {
+                    foreach (StakeItem itemToWagerInd in itemsToWager)
+                    {
+                        traderWagerVal += ((int)(itemToWagerInd.wagerCt * itemToWagerInd.item.BaseMarketValue) - (int)(traderItemsWagered[itemToWagerInd.item].numItems * itemToWagerInd.item.BaseMarketValue));
+                        traderItemsWagered[itemToWagerInd.item].numItems = itemToWagerInd.wagerCt;
+                    }
+                }
             }
         }
 
@@ -597,21 +603,6 @@ namespace RimGamble
         {
             float adjustedInterval = traderWagerUpdateInterval * (aiBias + 1 * (timeRemaining / timeInitial));
             return Mathf.Max(variance, Rand.Gaussian(adjustedInterval, adjustedInterval * variance));
-        }
-
-        /**
-         * Object used to store item information for the dictionaries< "colonyItemsWagered" and "traderItemsWagered"
-         */
-        private class WagerItem
-        {
-            public int numItems { get; set; }
-            public String numItemsBuffer { get; set; }
-
-            public WagerItem(int numItems)
-            {
-                this.numItems = numItems;
-                this.numItemsBuffer = "";
-            }
         }
 
 

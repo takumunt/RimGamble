@@ -22,7 +22,17 @@ namespace RimGamble
         // how biased item additions are: closer to 0 makes items more common at the beginning, closer to 1 makes them more common at the end
         public float wagerBias = 0.5f;
 
-        public abstract StakeItem UpdateTraderWager(List<Tradeable> keys);
+        public virtual List<StakeItem> addTraderWager(List<Tradeable> keys, int colonyWagerVal, int traderWagerVal, Dictionary<Tradeable, WagerItem> traderItemsWagered)
+        {
+            var randomSelectedItem = keys[UnityEngine.Random.Range(0, keys.Count)];
+
+            int newWagerCt = UnityEngine.Random.Range(1, randomSelectedItem.CountHeldBy(Transactor.Trader));
+
+            List<StakeItem> itemsToWager = new List<StakeItem>();
+            itemsToWager.Add(new StakeItem(randomSelectedItem, newWagerCt));
+
+            return itemsToWager;
+        }
 
         /*
          * Randomly selects an item and quantity every 5 time units
@@ -35,16 +45,6 @@ namespace RimGamble
                 wagerInterval = 5f;
                 wagerBias = 0.5f;
             }
-
-            public override StakeItem UpdateTraderWager(List<Tradeable> keys)
-            {
-                var randomSelectedItem = keys[UnityEngine.Random.Range(0, keys.Count)];
-
-                int newWagerCt = UnityEngine.Random.Range(1, randomSelectedItem.CountHeldBy(Transactor.Trader));
-                float itemMarketVal = randomSelectedItem.BaseMarketValue;
-
-                return new StakeItem(randomSelectedItem, newWagerCt, itemMarketVal);
-            }
         }
 
         public class AggressiveGambler : CaravanGambleAI
@@ -55,14 +55,20 @@ namespace RimGamble
                 wagerBias = 0.1f;
             }
 
-            public override StakeItem UpdateTraderWager(List<Tradeable> keys)
+            public override List<StakeItem> addTraderWager(List<Tradeable> keys, int colonyWagerVal, int traderWagerVal, Dictionary<Tradeable, WagerItem> traderItemsWagered)
             {
-                var randomSelectedItem = keys[UnityEngine.Random.Range(0, keys.Count)];
-
-                int newWagerCt = UnityEngine.Random.Range(1, randomSelectedItem.CountHeldBy(Transactor.Trader));
-                float itemMarketVal = randomSelectedItem.BaseMarketValue;
-
-                return new StakeItem(randomSelectedItem, newWagerCt, itemMarketVal);
+                // if at any point when we want to add more items, the colony's wager is larger, we will try and make our wager as large as possible.
+                if (colonyWagerVal > traderWagerVal)
+                {
+                    List<StakeItem> itemsToWager = new List<StakeItem>();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        itemsToWager.AddRange(base.addTraderWager(keys, colonyWagerVal, traderWagerVal, traderItemsWagered));
+                    }
+                    return itemsToWager;
+                }
+                // otherwise just do a normal random wager
+                return base.addTraderWager(keys, colonyWagerVal, traderWagerVal, traderItemsWagered);
             }
         }
 
@@ -72,19 +78,37 @@ namespace RimGamble
             {
                 wagerInterval = 5f;
                 wagerBias = 0.9f;
+           }
+        }
+
+        public class CowardGambler : CaravanGambleAI
+        {
+            public CowardGambler()
+            {
+                wagerInterval = 5f;
+                wagerBias = 0.5f;
             }
 
-            public override StakeItem UpdateTraderWager(List<Tradeable> keys)
+            public override List<StakeItem> addTraderWager(List<Tradeable> keys, int colonyWagerVal, int traderWagerVal, Dictionary<Tradeable, WagerItem> traderItemsWagered)
             {
-                var randomSelectedItem = keys[UnityEngine.Random.Range(0, keys.Count)];
+                // if the colony appears to be in a good position to win, the ai folds and tries to revoke some bets
+                if (colonyWagerVal > 1000 && colonyWagerVal > traderWagerVal)
+                {
+                    List<StakeItem> itemsToWager = new List<StakeItem>();
 
-                int newWagerCt = UnityEngine.Random.Range(1, randomSelectedItem.CountHeldBy(Transactor.Trader));
-                float itemMarketVal = randomSelectedItem.BaseMarketValue;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Tradeable itemToRevoke = traderItemsWagered.Keys.ToList()[UnityEngine.Random.Range(0, traderItemsWagered.Count)];
+                        itemsToWager.Add(new StakeItem(itemToRevoke, 0));
+                    }
+                    return itemsToWager;
+                }
 
-                return new StakeItem(randomSelectedItem, newWagerCt, itemMarketVal);
+                return base.addTraderWager(keys, colonyWagerVal, traderWagerVal, traderItemsWagered);
+
             }
         }
-    }
+    }   
 
     public static class AIPicker
     {
@@ -93,6 +117,7 @@ namespace RimGamble
             () => new RandomGambler(),
             () => new AggressiveGambler(),
             () => new LastMinuteGambler(),
+            () => new CowardGambler(),
         };
 
         public static CaravanGambleAI PickRandomAI()
