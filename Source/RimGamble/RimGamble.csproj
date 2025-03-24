@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CaravanGambling\JobDriver_StartCaravanGambling.cs" />
     <Compile Include="CaravanGambling\StakeItem.cs" />
+    <Compile Include="CaravanGambling\WagerItem.cs" />
     <Compile Include="GachaMachine\Refuel\CompGachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\CompProperties_GachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\GachaRefuelWorkGiverUtility.cs" />
