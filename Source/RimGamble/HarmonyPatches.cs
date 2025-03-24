@@ -63,7 +63,104 @@ namespace RimGamble
                     modifiedOptions.Add(option);
 
                 }
+
+                if (TravelingGamblerTrackerManager.HasTracker(__instance)) 
+                {
+                    var tracker = TravelingGamblerTrackerManager.GetTracker(__instance);
+                    if (tracker != null)
+                    {
+                        foreach (FloatMenuOption floatMenuOption in tracker.GetFloatMenuOptions(selPawn))
+                        {
+                            modifiedOptions.Add(floatMenuOption);
+                        }
+                    }
+                }
                 __result = modifiedOptions;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(PawnGenerator), "GeneratePawn", new Type[] { typeof(PawnGenerationRequest) })]
+    public static class Patch_PawnGenerator_GeneratePawn
+    {
+        [HarmonyPostfix]
+        public static void Postfix(ref Pawn __result, PawnGenerationRequest request)
+        {
+            if (__result != null && TravelingGamblerDefLoader.IsTravelingGambler(request.KindDef))
+            {
+                TravelingGamblerTrackerManager.AddTracker(__result);
+            }
+        }
+
+        [HarmonyPatch(typeof(Pawn), "GetInspectString")]
+        public static class Patch_Pawn_GetInspectString
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Pawn __instance, ref string __result)
+            {
+                if (TravelingGamblerTrackerManager.HasTracker(__instance))
+                {
+                    var tracker = TravelingGamblerTrackerManager.GetTracker(__instance);
+                    if (tracker != null)
+                    {
+                        __result += "\n" + tracker.GetInspectString();
+                    }
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Pawn), "GetGizmos")]
+        public static class Patch_Pawn_GetGizmos
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Pawn __instance, ref IEnumerable<Gizmo> __result)
+            {
+                if (TravelingGamblerTrackerManager.HasTracker(__instance))
+                {
+                    List<Gizmo> gizmos = new List<Gizmo>(__result);
+                    gizmos.AddRange(TravelingGamblerTrackerManager.GetTracker(__instance).GetGizmos());
+                    __result = gizmos;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Pawn), "Tick")]
+        public static class Patch_Pawn_Tick
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Pawn __instance)
+            {
+                if (!__instance.Suspended && __instance.Spawned && TravelingGamblerTrackerManager.HasTracker(__instance))
+                {
+                    TravelingGamblerTrackerManager.GetTracker(__instance)?.Tick();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Pawn), "Kill")]
+        public static class Patch_Pawn_Kill
+        {
+            [HarmonyPrefix]
+            public static void Prefix(Pawn __instance)
+            {
+                if (TravelingGamblerTrackerManager.HasTracker(__instance))
+                {
+                    TravelingGamblerTrackerManager.GetTracker(__instance)?.Notify_TravelingGamblerKilled();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Pawn), "ExposeData")]
+        public static class Patch_Pawn_ExposeData
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Pawn __instance)
+            {
+                if (Scribe.mode == LoadSaveMode.Saving || Scribe.mode == LoadSaveMode.LoadingVars)
+                {
+                    Pawn_TravelingGamblerTracker tracker = TravelingGamblerTrackerManager.GetTracker(__instance);
+                    Scribe_Deep.Look(ref tracker, "travelinggambler", __instance);
+                }
             }
         }
     }

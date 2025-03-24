@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IncidentDef>
+    <defName>TravelingGamblerJoin</defName>
+    <label>travelinggambler join</label>  
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>IncidentWorker_GiveQuest</workerClass>
+    <questScriptDef>TravelingGamblerArrival</questScriptDef>
+    <earliestDay>10</earliestDay>
+    <baseChance>1</baseChance>
+    <minRefireDays>30</minRefireDays>
+    <requireColonistsPresent>True</requireColonistsPresent>
+  </IncidentDef>
+</Defs>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- Traveling Gambler -->
+  <LetterTravelingGamblerAppearedAppended>{PAWN_pronoun} wants to talk. You can send a colonist to hear what {PAWN_pronoun} has to say.</LetterTravelingGamblerAppearedAppended>
+  <LetterTravelingGamblerInviteJoins>{PAWN_nameDef} wants to hang around for a bit</LetterTravelingGamblerInviteJoins>
+  <LetterTravelingGamblerInviteStart>A strange traveler named {PAWN_nameDef} has arrived, looking to stay for a bit.</LetterTravelingGamblerInviteStart>
+  <LetterTravelingGamblerInviteAppend>You feel like there is something about {PAWN_nameDef} that {PAWN_pronoun} is not telling you.</LetterTravelingGamblerInviteAppend>
+  
+  <AcceptTravelingGambler>Allow {PAWN_nameDef} to stay</AcceptTravelingGambler>
+  <CaptureTravelingGambler>Send {SPEAKER_nameDef} to capture {PAWN_nameDef}</CaptureTravelingGambler>
+  <RejectTravelingGambler>Send {PAWN_nameDef} away</RejectTravelingGambler>
+</LanguageData>

@@ -21,4 +21,11 @@
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
 
+  <JobDef>
+    <defName>RimGamble_TalkTravelingGamblerJoiner</defName>
+    <driverClass>RimGamble.JobDriver_TalkTravelingGambler</driverClass>
+    <reportString>talking to TargetA.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
 </Defs>

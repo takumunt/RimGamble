@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_Assault</defName>
+    <label>basic assault</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_AggressionBasic</workerType>
+    <hasMessage>true</hasMessage>
+    <message>{PAWN_nameDef} has become hostile!</message>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_Raid</defName>
+    <label>raid</label>
+    <weight>7</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_Raid</workerType>
+    <hasMessage>true</hasMessage>
+    <message>{PAWN_nameDef} has called in reinforcements for revenge!</message>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+</Defs>
