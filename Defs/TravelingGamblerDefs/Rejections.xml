@@ -3,7 +3,7 @@
     <RimGamble.TravelingGamblerRejectionDef>
         <defName>RimGamble_Departure</defName>
         <label>departure</label>
-        <weight>1</weight>
+        <weight>2</weight>
         <hasLetter>true</hasLetter>
         <letterLabel>{PAWN_nameDef} departure</letterLabel>
         <letterDesc>{PAWN_nameDef} is disappointed by the way that you have treated {PAWN_objective}. {PAWN_pronoun} has decided to leave.</letterDesc>

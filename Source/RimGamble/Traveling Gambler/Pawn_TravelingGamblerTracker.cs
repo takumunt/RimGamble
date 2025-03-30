@@ -12,11 +12,17 @@ namespace RimGamble
     {
         private static readonly IntRange ReleaseRejectionDelayTicks = new IntRange(60, 180);
 
+        private const int CheckAcceptanceInterval = 15000;
+
+        private bool IsAccepted;
+
         public TravelingGamblerFormKindDef form;
 
         public TravelingGamblerRejectionDef rejection;
 
         public TravelingGamblerAggressiveDef aggressive;
+
+        public TravelingGamblerAcceptanceDef acceptance;
 
         public Pawn speaker;
 
@@ -28,9 +34,13 @@ namespace RimGamble
 
         public int joinedTick;
 
+        private int acceptanceTriggersAt;
+
         private bool triggeredRejection;
 
         private bool triggeredAggressive;
+
+        private bool triggeredAcceptance;
 
         private bool hasLeft;
 
@@ -40,15 +50,21 @@ namespace RimGamble
 
         private int triggerPrisonerAggressiveAt;
 
+        private int canTriggerAcceptanceAfter;
+
         private bool duplicated;
 
         private BaseTravelingGamblerWorker rejectionWorkerInt;
 
         private BaseTravelingGamblerWorker aggressiveWorkerInt;
 
+        private BaseTravelingGamblerAcceptanceWorker acceptanceWorkerInt;
+
         private BaseTravelingGamblerWorker RejectionWorker => GetWorker(rejection.workerType, ref rejectionWorkerInt);
 
         private BaseTravelingGamblerWorker AggressiveWorker => GetWorker(aggressive.workerType, ref aggressiveWorkerInt);
+
+        private BaseTravelingGamblerAcceptanceWorker AcceptanceWorker => GetWorker(acceptance.workerType, ref acceptanceWorkerInt);
 
         public bool IsOnEntryLord
         {
@@ -105,20 +121,36 @@ namespace RimGamble
         {
             Pawn = pawn;
         }
+
+        public void AcceptTravleingGambler()
+        {
+            IsAccepted = true;
+        }
+
         public void Notify_Created()
         {
             ResolveGraphics();
             AggressiveWorker?.OnCreated();
             RejectionWorker?.OnCreated();
+            AcceptanceWorker?.OnCreated();
+
+            if (acceptance != null && acceptance.triggerMinDays != FloatRange.Zero && canTriggerAcceptanceAfter == 0)
+            {
+                canTriggerAcceptanceAfter = GenTicks.TicksGame + (int)(acceptance.triggerMinDays.RandomInRange * 60000f);
+            }
+
+            if (acceptance != null && acceptance.triggersAfterDays != FloatRange.Zero && acceptanceTriggersAt == 0)
+            {
+                acceptanceTriggersAt = GenTicks.TicksGame + (int)(acceptance.triggersAfterDays.RandomInRange * 60000f);
+            }
         }
 
         public void Tick()
         {
-            if (Pawn == null || Disabled)
+            if (IsAccepted)
             {
-                return;
+                AcceptedTick();
             }
-
             else
             {
                 CheckTriggersTick();
@@ -134,6 +166,32 @@ namespace RimGamble
             else if (triggerPrisonerRejectionAt != 0 && GenTicks.TicksGame >= triggerPrisonerRejectionAt && !triggeredRejection)
             {
                 DoRejection();
+            }
+
+            if (triggerPrisonerAggressiveAt == 0 && triggerPrisonerRejectionAt == 0 && acceptance.canOccurWhenImprisoned && Pawn.IsPrisonerOfColony && Pawn.IsHashIntervalTick(15000))
+            {
+                CheckAcceptanceOccurs();
+            }
+        }
+
+        private void AcceptedTick()
+        {
+            if(Pawn.IsHashIntervalTick(15000))
+            {
+                CheckAcceptanceOccurs();
+            }
+        }
+
+        private void CheckAcceptanceOccurs()
+        {
+            if (acceptance != null && (acceptance.repeats || !triggeredAcceptance) && (acceptance.canOccurWhenImprisoned || (!Pawn.IsPrisoner && !Pawn.IsSlave)) && (!(acceptance.triggerMinDays != FloatRange.Zero) || GenTicks.TicksGame >= canTriggerAcceptanceAfter) && (acceptance.canOccurWhileDowned || !Pawn.Downed) && Pawn.SpawnedOrAnyParentSpawned && (!acceptance.mustBeConscious || Pawn.health.capacities.CanBeAwake))
+            {
+                bool num = acceptance.triggerMtbDays != 0f && Rand.MTBEventOccurs(acceptance.triggerMtbDays, 60000f, 15000f);
+                bool flag = acceptanceTriggersAt != 0 && GenTicks.TicksGame >= acceptanceTriggersAt;
+                if ((num || flag) && (AcceptanceWorker == null || AcceptanceWorker.CanOccur()))
+                {
+                    DoAcceptance();
+                }
             }
         }
 
@@ -189,6 +247,33 @@ namespace RimGamble
                 yield break;
             }
 
+            if (canTriggerAcceptanceAfter != 0 && !triggeredAcceptance && GenTicks.TicksGame < canTriggerAcceptanceAfter && (acceptance.canOccurWhenImprisoned || !Pawn.IsPrisoner))
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Unlock acceptance trigger",
+                    action = delegate
+                    {
+                        canTriggerAcceptanceAfter = GenTicks.TicksGame;
+                    }
+                };
+            }
+            else if ((acceptanceTriggersAt != 0 || acceptance.triggerMtbDays != 0f) && (!triggeredAcceptance || acceptance.repeats) && (acceptance.canOccurWhenImprisoned || !Pawn.IsPrisoner))
+            {
+                Command_Action command_Action = new Command_Action
+                {
+                    defaultLabel = "DEV: Trigger timed downside",
+                    action = DoAcceptance
+                };
+                BaseTravelingGamblerAcceptanceWorker acceptanceWorker = AcceptanceWorker;
+                if (acceptanceWorker != null && !acceptanceWorker.CanOccur())
+                {
+                    command_Action.Disable("Worker is blocking this trigger from occuring.");
+                }
+
+                yield return command_Action;
+            }
+
             yield return new Command_Action
             {
                 defaultLabel = "DEV: Do aggressive",
@@ -209,6 +294,19 @@ namespace RimGamble
             }
 
             StringBuilder stringBuilder = new StringBuilder();
+            if (acceptance != null)
+            {
+                string text = "DEV Acceptance: " + acceptance?.label;
+                if (canTriggerAcceptanceAfter != 0 && !triggeredAcceptance && GenTicks.TicksGame < canTriggerAcceptanceAfter && (acceptance.canOccurWhenImprisoned || !Pawn.IsPrisoner))
+                {
+                    text = text + " (can after: " + (canTriggerAcceptanceAfter - GenTicks.TicksGame).ToStringTicksToPeriod() + ")";
+                }
+                else if (acceptanceTriggersAt != 0 && !triggeredAcceptance && (acceptance.canOccurWhenImprisoned || !Pawn.IsPrisoner))
+                {
+                    text = text + " (triggers: " + (acceptanceTriggersAt - GenTicks.TicksGame).ToStringTicksToPeriod() + ")";
+                }
+                stringBuilder.AppendLine(text);
+            }
             if (rejection != null)
             {
                 stringBuilder.AppendLine("DEV Rejection: " + rejection?.label);
@@ -249,6 +347,39 @@ namespace RimGamble
         public void Notify_TravelingGamblerRejected()
         {
             DoRejection();
+        }
+
+        public void DoAcceptance()
+        {
+            if (Disabled)
+            {
+                return;
+            }
+
+            ClearLord();
+            triggeredAcceptance = true;
+            if (acceptance.triggerMinDays != FloatRange.Zero)
+            {
+                canTriggerAcceptanceAfter = GenTicks.TicksGame + (int)(acceptance.triggerMinDays.RandomInRange * 60000f);
+            }
+
+            List<TargetInfo> list = new List<TargetInfo> { Pawn };
+            List<NamedArgument> list2 = new List<NamedArgument> { Pawn.Named("PAWN") };
+            //foreach (HediffDef hediff2 in acceptance.hediffs)
+            //{
+            //    if (Pawn.health.hediffSet.TryGetHediff(hediff2, out var hediff) && hediff.TryGetComp<HediffComp_ReplaceHediff>(out var comp))
+            //    {
+            //        comp.Trigger();
+            //    }
+            //}
+
+            AcceptanceWorker?.DoResponse(list, list2);
+            if (acceptance.hasLetter)
+            {
+                TaggedString label = acceptance.letterLabel.Formatted(list2);
+                TaggedString text = acceptance.letterDesc.Formatted(list2);
+                Find.LetterStack.ReceiveLetter(label, text, acceptance.letterDef, list);
+            }
         }
 
         public void DoRejection()
@@ -292,58 +423,30 @@ namespace RimGamble
             }
         }
 
+        // Do Functions
+
         public void DoLeave()
         {
             if (!Disabled && !hasLeft)
             {
                 ClearLord();
-                if (Pawn.Faction != null && Pawn.Faction.IsPlayer)
-                {
-                    Pawn.SetFaction(null);
-                }
-
-                LordMaker.MakeNewLord(Pawn.Faction, new LordJob_ExitMapBest(LocomotionUrgency.Jog), Pawn.Map).AddPawn(Pawn);
-                hasLeft = true;
+                TravelingGambler_DoFunctions.DoLeave(Pawn, ref hasLeft);
             }
         }
 
         public void DoRaid(Faction faction)
         {
-            Map map = Find.AnyPlayerHomeMap;
-            if (map == null || faction == null)
-            {
-                Log.Error("DoRaid failed: No valid map or faction.");
-                return;
-            }
-
-            IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
-            parms.faction = faction;
-            parms.raidStrategy = RaidStrategyDefOf.ImmediateAttack;
-            parms.raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkIn;
-            parms.points = StorytellerUtility.DefaultThreatPointsNow(map);
-
-            if (parms.points < faction.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat))
-            {
-                parms.points = faction.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat);
-            }
-
-            // Directly trigger the raid without checking CanFireNow()
-            if (!IncidentDefOf.RaidEnemy.Worker.TryExecute(parms))
-            {
-                Log.Warning("Raid incident execution failed!");
-            }
-
-            this.DoFight();
+            TravelingGambler_DoFunctions.DoRaid(Pawn, faction);
         }
 
         public void DoFight()
         {
-            Pawn.guest.Recruitable = false;
-            Pawn.GetLord()?.RemovePawn(Pawn);
-            Pawn.SetFaction(null);
-            Pawn.mindState.mentalStateHandler.TryStartMentalState(MentalStateDefOf.Berserk);
-            Pawn.mindState.enemyTarget = Find.AnyPlayerHomeMap.mapPawns.FreeColonists.RandomElement();
-            Pawn.mindState.duty = new PawnDuty(DutyDefOf.AssaultColony);
+            TravelingGambler_DoFunctions.DoFight(Pawn);
+        }
+
+        public void DoTheft(int totalPlayerSilver)
+        {
+            TravelingGambler_DoFunctions.DoTheft(Pawn, totalPlayerSilver);
         }
 
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
@@ -425,13 +528,18 @@ namespace RimGamble
             Scribe_Defs.Look(ref form, "form");
             Scribe_Defs.Look(ref rejection, "rejection");
             Scribe_Defs.Look(ref aggressive, "aggressive");
+            Scribe_Defs.Look(ref acceptance, "acceptance");
             Scribe_Values.Look(ref timeoutAt, "timeoutAt", 0);
             Scribe_Values.Look(ref duplicated, "duplicated", defaultValue: false);
             Scribe_Values.Look(ref joinedTick, "joinedTick", 0);
+            Scribe_Values.Look(ref IsAccepted, "IsAccepted", defaultValue: false);
             Scribe_Values.Look(ref spokeToSignal, "spokeToSignal");
             Scribe_Values.Look(ref triggeredAggressive, "triggeredAggressive", defaultValue: false);
             Scribe_Values.Look(ref triggeredRejection, "triggeredRejection", defaultValue: false);
+            Scribe_Values.Look(ref triggeredAcceptance, "triggeredAcceptance", defaultValue: false);
             Scribe_Values.Look(ref hasLeft, "hasLeft", defaultValue: false);
+            Scribe_Values.Look(ref canTriggerAcceptanceAfter, "canTriggerDownsideAfter", 0);
+            Scribe_Values.Look(ref acceptanceTriggersAt, "downsideTriggersAt", 0);
             Scribe_Values.Look(ref entryLordEnded, "entryLordEnded", defaultValue: false);
             Scribe_References.Look(ref quest, "quest");
             Scribe_References.Look(ref speaker, "speaker");

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <TalkTo>Talk to {0_nameDef}</TalkTo>
+  <CannotTalkTo>Cannot talk to {0_nameDef}</CannotTalkTo>
+  
+</LanguageData>

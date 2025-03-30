@@ -43,7 +43,6 @@ namespace RimGamble
             quest.AddPart(part);
             quest.Signal(text, delegate
             {
-                quest.SetFaction(Gen.YieldSingle(pawn), Faction.OfPlayer);
                 QuestGen_End.End(quest, QuestEndOutcome.Success);
             });
             quest.Signal(text2, delegate
@@ -84,9 +83,9 @@ namespace RimGamble
         private Pawn SpawnPawn(float combatPoints = 0f)
         {
             Slate slate = QuestGen.slate;
-            if (slate.TryGet<TravelingGamblerFormKindDef>("form", out var var) && slate.TryGet<TravelingGamblerAggressiveDef>("aggressive", out var var2) && slate.TryGet<TravelingGamblerRejectionDef>("rejection", out var var3))
+            if (slate.TryGet<TravelingGamblerFormKindDef>("form", out var var) && slate.TryGet<TravelingGamblerAggressiveDef>("aggressive", out var var2) && slate.TryGet<TravelingGamblerRejectionDef>("rejection", out var var3) && slate.TryGet<TravelingGamblerAcceptanceDef>("acceptance", out var var4))
             {
-                return TravelingGamblerUtility.GenerateAndSpawn(var, var2, var3, QuestGen_Get.GetMap());
+                return TravelingGamblerUtility.GenerateAndSpawn(var, var2, var3, var4, QuestGen_Get.GetMap());
             }
 
             return TravelingGamblerUtility.GenerateAndSpawn(QuestGen_Get.GetMap(), combatPoints);

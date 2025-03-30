@@ -15,7 +15,7 @@ namespace RimGamble
 
         private static readonly List<ITravelingGamblerDef> temp = new List<ITravelingGamblerDef>();
 
-        public static void GetTravelingGamblerSpecifics(Map map, ref TravelingGamblerFormKindDef form, ref TravelingGamblerAggressiveDef aggressive, ref TravelingGamblerRejectionDef rejection)
+        public static void GetTravelingGamblerSpecifics(Map map, ref TravelingGamblerFormKindDef form, ref TravelingGamblerAggressiveDef aggressive, ref TravelingGamblerRejectionDef rejection, ref TravelingGamblerAcceptanceDef acceptance)
         {
             float combatPoints = StorytellerUtility.DefaultThreatPointsNow(map);
 
@@ -36,6 +36,11 @@ namespace RimGamble
                 rejection = GetRandom(DefDatabase<TravelingGamblerRejectionDef>.AllDefsListForReading, combatPoints, requires, exclude);
             }
 
+            if (acceptance == null)
+            {
+                acceptance = GetRandom(DefDatabase<TravelingGamblerAcceptanceDef>.AllDefsListForReading, combatPoints, requires, exclude);
+            }
+
             exclude.Clear();
             requires.Clear();
         }
@@ -47,12 +52,13 @@ namespace RimGamble
             exclude.AddRange(travelingGamblerFormKindDef.Excludes);
             TravelingGamblerAggressiveDef aggressive = GetRandom(DefDatabase<TravelingGamblerAggressiveDef>.AllDefsListForReading, combatPoints, requires, exclude);
             TravelingGamblerRejectionDef rejection = GetRandom(DefDatabase<TravelingGamblerRejectionDef>.AllDefsListForReading, combatPoints, requires, exclude);
+            TravelingGamblerAcceptanceDef acceptance = GetRandom(DefDatabase<TravelingGamblerAcceptanceDef>.AllDefsListForReading, combatPoints, requires, exclude);
             exclude.Clear();
             requires.Clear();
-            return GenerateAndSpawn(travelingGamblerFormKindDef, aggressive, rejection, map);
+            return GenerateAndSpawn(travelingGamblerFormKindDef, aggressive, rejection, acceptance, map);
         }
 
-        public static Pawn GenerateAndSpawn(TravelingGamblerFormKindDef form, TravelingGamblerAggressiveDef aggressive, TravelingGamblerRejectionDef rejection, Map map)
+        public static Pawn GenerateAndSpawn(TravelingGamblerFormKindDef form, TravelingGamblerAggressiveDef aggressive, TravelingGamblerRejectionDef rejection, TravelingGamblerAcceptanceDef acceptance, Map map)
         {
             PawnGenerationRequest request = new PawnGenerationRequest(form, null, PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: true, allowDead: false, allowDowned: false, canGeneratePawnRelations: true, mustBeCapableOfViolence: false, 1f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: true, allowFood: true, allowAddictions: true, inhabitant: false, certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false, worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, null, null, null, null, null, null, forceNoIdeo: false, forceNoBackstory: false, forbidAnyTitle: false, forceDead: false, null, null, null, null, null, 0f, DevelopmentalStage.Adult, null, null, null, forceRecruitable: true);
             request.AllowedDevelopmentalStages = DevelopmentalStage.Adult;
@@ -69,6 +75,7 @@ namespace RimGamble
             travelinggambler.form = form;
             travelinggambler.aggressive = aggressive;
             travelinggambler.rejection = rejection;
+            travelinggambler.acceptance = acceptance;
             pawn.guest.Recruitable = false;
 
             if (!RCellFinder.TryFindRandomPawnEntryCell(out var result, map, CellFinder.EdgeRoadChance_Friendly, allowFogged: false, (IntVec3 cell) => map.reachability.CanReachMapEdge(cell, TraverseParms.For(TraverseMode.PassDoors))))

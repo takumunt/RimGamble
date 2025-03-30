@@ -89,7 +89,9 @@
     <Compile Include="Traveling Gambler\TravelingGamblerTrackerManager.cs" />
     <Compile Include="Traveling Gambler\TravelingGamblerUtility.cs" />
     <Compile Include="Traveling Gambler\TravelingGamblerWorkers.cs" />
+    <Compile Include="Traveling Gambler\TravelingGambler_DoFunctions.cs" />
     <Compile Include="UI\Window_CaravanGambling.cs" />
+    <Compile Include="DebugActionRimGamble.cs" />
     <Compile Include="Utils\RimGamble_LetterDefOf.cs" />
     <Compile Include="CaravanGambling\CaravanGambleAI.cs" />
     <Compile Include="CaravanGambling\WagerItem.cs" />

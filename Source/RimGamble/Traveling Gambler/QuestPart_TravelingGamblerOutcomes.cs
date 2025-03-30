@@ -58,6 +58,10 @@ namespace RimGamble
                     signal.args.TryGetArg("INSTIGATOR", out Pawn arg);
                     pawn_TravelingGamblerTracker.Notify_TravelingGamblerAttacked(arg);
                 }
+                else if (signal.tag == signalAccept)
+                {
+                    pawn_TravelingGamblerTracker.AcceptTravleingGambler();
+                }
                 else if (signal.tag == signalReject)
                 {
                     pawn_TravelingGamblerTracker.Notify_TravelingGamblerRejected();

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>Leaves</defName>
+    <label>leaves</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGambler_DepartAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} thanks you for your hospitality, but says that it is time for {PAWN_objective} to move on.</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+  </RimGamble.TravelingGamblerAcceptanceDef>
+</Defs>
