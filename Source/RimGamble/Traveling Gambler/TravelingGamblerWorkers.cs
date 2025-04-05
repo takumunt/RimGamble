@@ -113,7 +113,14 @@ namespace RimGamble
             }
 
             base.Tracker.DoLeave();
-            base.Tracker.DoTheft(totalPlayerSilver);
+            int stolenSilver = base.Tracker.DoTheft(totalPlayerSilver);
+
+            if (stolenSilver == 0)
+            {
+                base.Tracker.SetAlternativeLetter(true);
+            }
+
+            namedArgs.Add(stolenSilver);
         }
     }
 

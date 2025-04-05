@@ -34,7 +34,7 @@ namespace RimGamble
         public float Weight => weight;
 
         public List<TravelingGamblerBaseDef> Excludes => excludes;
-
+        
         public List<TravelingGamblerBaseDef> Requires => requires;
 
         public float MinCombatPoints => minCombatPoints;
@@ -50,6 +50,11 @@ namespace RimGamble
         public string message;
 
         public bool hasLetter;
+
+        public bool hasAlternativeLetter;
+
+        [MustTranslate]
+        public string alternativeLetterDesc;
 
         [MustTranslate]
         public string letterLabel;

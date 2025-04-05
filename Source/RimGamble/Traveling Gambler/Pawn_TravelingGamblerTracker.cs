@@ -14,6 +14,8 @@ namespace RimGamble
 
         private const int CheckAcceptanceInterval = 15000;
 
+        private bool useAlternativeLetter;
+
         private bool IsAccepted;
 
         public TravelingGamblerFormKindDef form;
@@ -125,6 +127,18 @@ namespace RimGamble
         public void AcceptTravleingGambler()
         {
             IsAccepted = true;
+        }
+
+        public void SetAlternativeLetter(bool setAlternativeLetter)
+        {
+            if (setAlternativeLetter)
+            {
+                useAlternativeLetter = true;
+            }
+            else
+            {
+                useAlternativeLetter = false;
+            }
         }
 
         public void Notify_Created()
@@ -414,10 +428,17 @@ namespace RimGamble
                     Messages.Message(aggressive.message.Formatted(list2), list, MessageTypeDefOf.NegativeEvent);
                 }
 
-                if (aggressive.hasLetter)
+                if (aggressive.hasAlternativeLetter && useAlternativeLetter)
                 {
-                    TaggedString label = aggressive.letterLabel.Formatted(list2);
-                    TaggedString text = aggressive.letterDesc.Formatted(list2);
+                    SetAlternativeLetter(false);
+                    TaggedString label = aggressive.letterLabel.Formatted(list2.ToArray());
+                    TaggedString text = aggressive.alternativeLetterDesc.Formatted(list2.ToArray());
+                    Find.LetterStack.ReceiveLetter(label, text, aggressive.letterDef, list);
+                }
+                else if (aggressive.hasLetter)
+                {
+                    TaggedString label = aggressive.letterLabel.Formatted(list2.ToArray());
+                    TaggedString text = aggressive.letterDesc.Formatted(list2.ToArray());
                     Find.LetterStack.ReceiveLetter(label, text, aggressive.letterDef, list);
                 }
             }
@@ -444,9 +465,9 @@ namespace RimGamble
             TravelingGambler_DoFunctions.DoFight(Pawn);
         }
 
-        public void DoTheft(int totalPlayerSilver)
+        public int DoTheft(int totalPlayerSilver)
         {
-            TravelingGambler_DoFunctions.DoTheft(Pawn, totalPlayerSilver);
+            return TravelingGambler_DoFunctions.DoTheft(Pawn, totalPlayerSilver);
         }
 
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
@@ -533,6 +554,7 @@ namespace RimGamble
             Scribe_Values.Look(ref duplicated, "duplicated", defaultValue: false);
             Scribe_Values.Look(ref joinedTick, "joinedTick", 0);
             Scribe_Values.Look(ref IsAccepted, "IsAccepted", defaultValue: false);
+            Scribe_Values.Look(ref useAlternativeLetter, "useAlternativeLetter", defaultValue: false);
             Scribe_Values.Look(ref spokeToSignal, "spokeToSignal");
             Scribe_Values.Look(ref triggeredAggressive, "triggeredAggressive", defaultValue: false);
             Scribe_Values.Look(ref triggeredRejection, "triggeredRejection", defaultValue: false);

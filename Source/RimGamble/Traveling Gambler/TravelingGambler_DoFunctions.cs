@@ -65,13 +65,13 @@ namespace RimGamble
             DoFight(pawn);
         }
 
-        public static void DoTheft(Pawn pawn, int totalPlayerSilver)
+        public static int DoTheft(Pawn pawn, int totalPlayerSilver)
         {
-            if (pawn == null || pawn.Map == null || pawn.inventory == null) return;
-            if (totalPlayerSilver <= 0) return;
+            if (pawn == null || pawn.Map == null || pawn.inventory == null) return -1;
+            if (totalPlayerSilver <= 0) return 0;
 
             int stolenSilver = Rand.Range(1, totalPlayerSilver);
-            if (stolenSilver <= 0) return;
+            if (stolenSilver <= 0) return 0;
 
             // Remove silver from colony storage
             int remaining = stolenSilver;
@@ -102,6 +102,8 @@ namespace RimGamble
             {
                 silver.Destroy(); // fallback: don't spawn on ground
             }
+
+            return stolenSilver;
         }
 
     }

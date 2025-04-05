@@ -15,10 +15,6 @@
         <defName>RimGamble_AggressiveRejection</defName>
         <label>aggressive</label>
         <weight>1</weight>
-        <hasLetter>true</hasLetter>
-        <letterLabel>{PAWN_nameDef} hostile</letterLabel>
-        <letterDesc>Upon being rejected, {PAWN_nameDef} flew into a murderous rage and began to attack!</letterDesc>
-        <letterDef>ThreatBig</letterDef>
         <workerType>RimGamble.TravelingGamblerWorker_DoAggressive</workerType>
     </RimGamble.TravelingGamblerRejectionDef>
 </Defs>

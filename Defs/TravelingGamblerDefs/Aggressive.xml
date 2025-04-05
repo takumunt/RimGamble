@@ -6,8 +6,10 @@
     <label>basic assault</label>
     <weight>4</weight>
     <workerType>RimGamble.TravelingGamblerWorker_AggressionBasic</workerType>
-    <hasMessage>true</hasMessage>
-    <message>{PAWN_nameDef} has become hostile!</message>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} hostile</letterLabel>
+    <letterDesc>Upon being rejected, {PAWN_nameDef} flew into a murderous rage and began to attack!</letterDesc>
+    <letterDef>ThreatBig</letterDef>
   </RimGamble.TravelingGamblerAggressiveDef>
 
   <RimGamble.TravelingGamblerAggressiveDef>
@@ -15,8 +17,10 @@
     <label>raid</label>
     <weight>2</weight>
     <workerType>RimGamble.TravelingGamblerWorker_Raid</workerType>
-    <hasMessage>true</hasMessage>
-    <message>{PAWN_nameDef} has called in reinforcements for revenge!</message>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} hostile</letterLabel>
+    <letterDesc>Upon being rejected, {PAWN_nameDef} called in reinforcements to teach you a lesson!</letterDesc>
+    <letterDef>ThreatBig</letterDef>
   </RimGamble.TravelingGamblerAggressiveDef>
 
   <RimGamble.TravelingGamblerAggressiveDef>
@@ -24,9 +28,13 @@
     <label>theft</label>
     <weight>2</weight>
     <workerType>RimGamble.TravelingGamblerWorker_Theft</workerType>
-    <hasMessage>true</hasMessage>
-    <message>After {PAWN_nameDef} has left - you see there is some silver missing!</message>
-    <letterDef>NegativeEvent</letterDef>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} Left</letterLabel>
+    <letterDesc>Upon being rejected, {PAWN_nameDef} left angerly - it seems {1} silver has gone missing!</letterDesc>
+    <letterDef>ThreatSmall</letterDef>
+
+    <hasAlternativeLetter>true</hasAlternativeLetter>
+    <alternativeLetterDesc>Upon being rejected, {PAWN_nameDef} left angerly - they wanted to steal from you but instead left upset as they could not find any silver to steal.</alternativeLetterDesc>
   </RimGamble.TravelingGamblerAggressiveDef>
 
 </Defs>
