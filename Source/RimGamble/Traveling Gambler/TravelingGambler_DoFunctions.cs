@@ -11,34 +11,51 @@ namespace RimGamble
 {
     public static class TravelingGambler_DoFunctions
     {
-        public static void DoLeave(Pawn pawn, ref bool hasLeft, LocomotionUrgency speed = LocomotionUrgency.Jog)
+        public static void DoLeave(Pawn pawn, ref bool hasLeft, LocomotionUrgency speed = LocomotionUrgency.Sprint)
         {
             if (pawn == null || hasLeft) return;
 
+            // Remove any existing Lord
+            Lord oldLord = pawn.GetLord();
+            if (oldLord != null)
+            {
+                oldLord.Notify_PawnLost(pawn, PawnLostCondition.ForcedToJoinOtherLord);
+            }
+
+            // Clear any job the pawn is doing
+            pawn.jobs?.StopAll();
+
+            // Set faction to null (optional depending on your mod)
             if (pawn.Faction != null && pawn.Faction.IsPlayer)
             {
                 pawn.SetFaction(null);
             }
 
-            LordMaker.MakeNewLord(pawn.Faction, new LordJob_ExitMapBest(speed), pawn.Map).AddPawn(pawn);
+            // Send pawn to map edge
+            IntVec3 exitCell = CellFinder.RandomEdgeCell(pawn.Map);
+            var lordJob = new LordJob_ExitMapNear(exitCell, speed);
+            LordMaker.MakeNewLord(pawn.Faction, lordJob, pawn.Map).AddPawn(pawn);
+
             hasLeft = true;
         }
 
         public static void DoFight(Pawn pawn)
         {
-            if (pawn == null || pawn.guest == null || pawn.Map == null) return;
+            if (pawn == null || pawn.Map == null || !pawn.Spawned) return;
 
-            pawn.guest.Recruitable = false;
-            pawn.GetLord()?.RemovePawn(pawn);
-            pawn.SetFaction(null);
-            pawn.mindState.mentalStateHandler.TryStartMentalState(MentalStateDefOf.Berserk);
+            pawn.GetLord()?.Notify_PawnLost(pawn, PawnLostCondition.ForcedToJoinOtherLord);
+            pawn.jobs?.StopAll();
+            pawn.SetFaction(FactionUtility.DefaultFactionFrom(FactionDefOf.Pirate));
 
-            if (pawn.Map.mapPawns.FreeColonists.Any())
+            if (pawn.InMentalState && pawn.mindState.mentalStateHandler.CurState != null)
             {
-                pawn.mindState.enemyTarget = pawn.Map.mapPawns.FreeColonists.RandomElement();
+                pawn.mindState.mentalStateHandler.CurState.RecoverFromState();
             }
 
-            pawn.mindState.duty = new PawnDuty(DutyDefOf.AssaultColony);
+            LordMaker.MakeNewLord(pawn.Faction,
+                new LordJob_AssaultColony(pawn.Faction),
+                pawn.Map,
+                new List<Pawn> { pawn });
         }
 
         public static void DoRaid(Pawn pawn, Faction faction)
@@ -73,7 +90,7 @@ namespace RimGamble
             int stolenSilver = Rand.Range(1, totalPlayerSilver);
             if (stolenSilver <= 0) return 0;
 
-            // Remove silver from colony storage
+            // Remove silver from colony storage  
             int remaining = stolenSilver;
             foreach (SlotGroup group in pawn.Map.haulDestinationManager.AllGroupsListForReading)
             {
@@ -95,15 +112,56 @@ namespace RimGamble
                 }
             }
 
-            // Add stolen silver to the gambler's inventory
+            // Add stolen silver to the gambler's inventory  
             Thing silver = ThingMaker.MakeThing(ThingDefOf.Silver);
             silver.stackCount = stolenSilver;
             if (!pawn.inventory.innerContainer.TryAdd(silver))
             {
-                silver.Destroy(); // fallback: don't spawn on ground
+                silver.Destroy(); // fallback: don't spawn on ground  
             }
 
             return stolenSilver;
+        }
+
+        public static void DoHumanBomb(Pawn pawn)
+        {
+            if (pawn == null || !pawn.Spawned || pawn.Map == null)
+            {
+                Log.Warning("OrbitalStrikeUtility: Invalid pawn or pawn not spawned.");
+                return;
+            }
+
+            Map map = pawn.Map;
+            IntVec3 center = pawn.Position;
+            int numberOfStrikes = Rand.RangeInclusive(3, 5);
+
+            for (int i = 0; i < numberOfStrikes; i++)
+            {
+                IntVec3 strikePos = center + GenRadial.RadialPattern[i];
+                if (strikePos.InBounds(map))
+                {
+                    GenExplosion.DoExplosion(
+                        strikePos,
+                        map,
+                        2.75f,
+                        DamageDefOf.Bomb,
+                        pawn, 
+                        -1,
+                        -1f,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        1f,
+                        1,
+                        null,
+                        false,
+                        null,
+                        1
+                    );
+                }
+            }
         }
 
     }

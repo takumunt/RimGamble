@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <RimGamble.TravelingGamblerAcceptanceDef>
-    <defName>Leaves</defName>
+    <defName>RimGamble_Leaves</defName>
     <label>leaves</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGambler_DepartAcceptance</workerType>
@@ -10,5 +10,17 @@
     <letterLabel>{PAWN_nameDef} departure</letterLabel>
     <letterDesc>{PAWN_nameDef} thanks you for your hospitality, but says that it is time for {PAWN_objective} to move on.</letterDesc>
     <letterDef>NeutralEvent</letterDef>
+  </RimGamble.TravelingGamblerAcceptanceDef>
+  
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_HumanBomb</defName>
+    <label>human bomb</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGambler_HumanBombAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} hostile</letterLabel>
+    <letterDesc>{PAWN_nameDef} whispered something about cleansing the impure. {PAWN_pronoun} burst apart in a flash.</letterDesc>
+    <letterDef>NegativeEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
 </Defs>

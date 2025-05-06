@@ -14,6 +14,7 @@ public class RimGambleManager : GameComponent
     // Follow-up event tracking
     private List<WarningData> warningEventTick; // Tick when the warning event happened
 
+    private List<DelayedRaidEntry> delayedRaids = new List<DelayedRaidEntry>();
 
     /**
      * 
@@ -67,7 +68,53 @@ public class RimGambleManager : GameComponent
                 bets.RemoveAt(i);
             }
         }
+
+        for (int i = delayedRaids.Count - 1; i >= 0; i--)
+        {
+            var entry = delayedRaids[i];
+            var tracker = TravelingGamblerTrackerManager.GetTracker(entry.pawn);
+
+            if (entry.pawn == null || tracker == null || tracker.Disabled || tracker.Pawn.Dead || tracker.Pawn.DestroyedOrNull())
+            {
+                delayedRaids.RemoveAt(i);
+                continue;
+            }
+
+            // Check if pawn has left and delay has passed
+            bool pawnLeft = tracker.Pawn.MapHeld == null || tracker.Pawn.Dead || !tracker.Pawn.Spawned;
+            if (pawnLeft && Find.TickManager.TicksGame >= entry.triggerAfterTick)
+            {
+                // Show custom raid letter
+                TaggedString label = entry.raidLetterLabel.Formatted(entry.pawn.Named("PAWN"));
+                TaggedString desc = entry.raidLetterDesc.Formatted(entry.pawn.Named("PAWN"));
+                Find.LetterStack.ReceiveLetter(label, desc, entry.raidLetterDef ?? LetterDefOf.ThreatBig);
+
+                // Trigger the raid
+                tracker.DoRaid(entry.faction);
+                delayedRaids.RemoveAt(i);
+            }
+        }
     }
+
+    public void QueueDelayedRaid(Pawn pawn, Faction faction)
+    {
+        var tracker = TravelingGamblerTrackerManager.GetTracker(pawn);
+        var def = tracker?.aggressive;
+
+        int delayTicks = def?.raidDelayTicks ?? 0;
+        int triggerAt = Find.TickManager.TicksGame + delayTicks;
+
+        delayedRaids.Add(new DelayedRaidEntry
+        {
+            pawn = pawn,
+            faction = faction,
+            triggerAfterTick = triggerAt,
+            raidLetterLabel = def?.raidLetterLabel,
+            raidLetterDesc = def?.raidLetterDesc,
+            raidLetterDef = def?.raidLetterDef
+        });
+    }
+
 
     private void givePayout(int payout)
     {
@@ -148,5 +195,6 @@ public class RimGambleManager : GameComponent
         base.ExposeData();
         Scribe_Collections.Look(ref bets, "bets", LookMode.Deep);
         Scribe_Collections.Look(ref warningEventTick, "warningEventTick", LookMode.Deep);
+        Scribe_Collections.Look(ref delayedRaids, "delayedRaids", LookMode.Deep);
     }
 }

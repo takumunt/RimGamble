@@ -470,6 +470,11 @@ namespace RimGamble
             return TravelingGambler_DoFunctions.DoTheft(Pawn, totalPlayerSilver);
         }
 
+        public void DoHumanBomb()
+        {
+            TravelingGambler_DoFunctions.DoHumanBomb(Pawn);
+        }
+
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
             if (!Disabled && IsOnEntryLord)

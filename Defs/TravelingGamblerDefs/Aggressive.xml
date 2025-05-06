@@ -24,6 +24,22 @@
   </RimGamble.TravelingGamblerAggressiveDef>
 
   <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_DelayedRaid</defName>
+    <label>delayed raid</label>
+    <weight>2</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_DelayedRaid</workerType>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} left</letterLabel>
+    <letterDesc>Upon being rejected, {PAWN_nameDef} left, but as they leave you can tell they are not happy you denied them.</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+
+    <raidLetterLabel>{PAWN_nameDef} strikes back</raidLetterLabel>
+    <raidLetterDesc>{PAWN_nameDef} has returned the favor with a full-scale raid!</raidLetterDesc>
+    <raidLetterDef>ThreatBig</raidLetterDef>
+    <raidDelayTicks>6500</raidDelayTicks>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
     <defName>RimGamble_Theft</defName>
     <label>theft</label>
     <weight>2</weight>

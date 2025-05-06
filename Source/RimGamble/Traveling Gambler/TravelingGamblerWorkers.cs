@@ -48,6 +48,14 @@ namespace RimGamble
         }
     }
 
+    public class TravelingGambler_HumanBombAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            base.Tracker.DoHumanBomb();
+        }
+    }
+
     // Rejection Workers
 
     public class TravelingGamblerWorker_DoDepart : BaseTravelingGamblerWorker
@@ -80,8 +88,19 @@ namespace RimGamble
         public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
         {
             Faction faction = Find.FactionManager.RandomEnemyFaction();
-            Log.Message("Raiding " + faction.Name);
             base.Tracker.DoRaid(faction);
+        }
+    }
+
+    public class TravelingGamblerWorker_DelayedRaid : BaseTravelingGamblerWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            Pawn pawn = base.Tracker.Pawn;
+            Faction faction = Find.FactionManager.RandomEnemyFaction();
+            
+            base.Tracker.DoLeave();
+            RimGambleManager.Instance.QueueDelayedRaid(pawn, faction);
         }
     }
 

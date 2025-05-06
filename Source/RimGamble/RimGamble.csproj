@@ -79,7 +79,9 @@
     <Compile Include="Storyteller\StorytellerCompProperties_MagEvents.cs" />
     <Compile Include="Storyteller\StorytellerComp_MagEvents.cs" />
     <Compile Include="Storyteller\WarningData.cs" />
+    <Compile Include="Traveling Gambler\Alert_TravelingGamblerTimeout.cs" />
     <Compile Include="Traveling Gambler\ChoiceLetter_AcceptTravelingGambler.cs" />
+    <Compile Include="Traveling Gambler\DelayedRaidEntry.cs" />
     <Compile Include="Traveling Gambler\JobDriver_TalkTravelingGambler.cs" />
     <Compile Include="Traveling Gambler\PawnTravelingGambler.cs" />
     <Compile Include="Traveling Gambler\Pawn_TravelingGamblerTracker.cs" />

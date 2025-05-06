@@ -65,6 +65,16 @@ namespace RimGamble
         public LetterDef letterDef;
 
         public Type workerType;
+
+        [MustTranslate]
+        public string raidLetterLabel;
+
+        [MustTranslate]
+        public string raidLetterDesc;
+
+        public LetterDef raidLetterDef;
+
+        public int raidDelayTicks;
     }
 
     public class TravelingGamblerRejectionDef : TravelingGamblerBaseDef
