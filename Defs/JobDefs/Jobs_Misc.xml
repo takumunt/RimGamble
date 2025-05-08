@@ -35,4 +35,9 @@
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
 
+  <JobDef>
+    <defName>RimGamble_LeaveAfterSabotage</defName>
+    <driverClass>RimGamble.JobDriver_LeaveAfterSabotage</driverClass>
+  </JobDef>   
+
 </Defs>

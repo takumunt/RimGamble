@@ -124,6 +124,17 @@ namespace RimGamble
 
         public Type workerType;
 
+        // Sabotage-specific config
+        public int sabotageMinTargets = 2;
+        public int sabotageMaxTargets = 4;
+        public int sabotageDelayTicks = 6000;
+
+        [MustTranslate]
+        public string sabotageResultLetterLabel;
+
+        [MustTranslate]
+        public string sabotageResultLetterDesc;
+
         public override IEnumerable<string> ConfigErrors()
         {
             foreach (string item in base.ConfigErrors())

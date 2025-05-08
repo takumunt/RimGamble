@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -53,6 +54,61 @@ namespace RimGamble
         public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
         {
             base.Tracker.DoHumanBomb();
+        }
+    }
+
+    public class TravelingGamblerWorker_SabotageAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            var pawn = base.Tracker.Pawn;
+            var def = base.Tracker.acceptance;
+            var map = pawn.Map;
+
+            if (pawn == null || map == null || def == null)
+            {
+                Log.Warning("[RimGamble] DoResponse: Invalid pawn, map, or def.");
+                return;
+            }
+
+            pawn.jobs?.StopAll();
+
+            int count = Rand.RangeInclusive(def.sabotageMinTargets, def.sabotageMaxTargets);
+
+            var powered = map.listerBuildings.allBuildingsColonist
+                .Where(b => b.GetComp<CompPowerTrader>()?.PowerOn == true).ToList();
+            var others = map.listerBuildings.allBuildingsColonist
+                .Where(b => b.GetComp<CompPowerTrader>() == null).ToList();
+
+            var targets = new List<Thing>();
+            targets.AddRange(powered.InRandomOrder().Take(count));
+            if (targets.Count < count)
+                targets.AddRange(others.InRandomOrder().Take(count - targets.Count));
+
+            base.Tracker.sabotageTargets = targets;
+
+            foreach (var t in targets)
+            {
+                pawn.jobs.jobQueue.EnqueueLast(new Job(JobDefOf.Goto, t)
+                {
+                    expiryInterval = 1500,
+                    playerForced = true
+                });
+
+                pawn.jobs.jobQueue.EnqueueLast(new Job(JobDefOf.Wait, 180)
+                {
+                    playerForced = true
+                });
+            }
+
+            pawn.jobs.jobQueue.EnqueueLast(new Job(JobDefOf.Wait, 60)
+            {
+                playerForced = true
+            });
+
+            pawn.jobs.jobQueue.EnqueueLast(new Job(DefDatabase<JobDef>.GetNamed("RimGamble_LeaveAfterSabotage")));
+
+            RimGambleManager.Instance.QueueDelayedSabotage(pawn);
         }
     }
 

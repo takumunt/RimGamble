@@ -1,6 +1,7 @@
 ﻿using RimGamble;
 using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using static UnityEngine.GraphicsBuffer;
 
@@ -15,6 +16,8 @@ public class RimGambleManager : GameComponent
     private List<WarningData> warningEventTick; // Tick when the warning event happened
 
     private List<DelayedRaidEntry> delayedRaids = new List<DelayedRaidEntry>();
+
+    private List<DelayedSabotageEntry> sabotageEntries = new List<DelayedSabotageEntry>();
 
     /**
      * 
@@ -69,6 +72,7 @@ public class RimGambleManager : GameComponent
             }
         }
 
+        // Delayed raids
         for (int i = delayedRaids.Count - 1; i >= 0; i--)
         {
             var entry = delayedRaids[i];
@@ -94,6 +98,35 @@ public class RimGambleManager : GameComponent
                 delayedRaids.RemoveAt(i);
             }
         }
+
+        // Delayed sabotage
+        for (int i = sabotageEntries.Count - 1; i >= 0; i--)
+        {
+            var entry = sabotageEntries[i];
+            if (Find.TickManager.TicksGame >= entry.triggerTick)
+            {
+                foreach (var thing in entry.targets)
+                {
+                    var building = thing as Building;
+                    if (building == null || !building.Spawned) continue;
+
+                    var power = building.TryGetComp<CompPowerTrader>();
+                    var breakdown = building.TryGetComp<CompBreakdownable>();
+
+                    if (power != null)
+                    {
+                        breakdown?.DoBreakdown();
+                    }
+                    else
+                    {
+                        FireUtility.TryStartFireIn(building.Position, building.Map, 0.5f, null);
+                    }
+                }
+
+                Find.LetterStack.ReceiveLetter(entry.label, entry.desc, LetterDefOf.NegativeEvent);
+                sabotageEntries.RemoveAt(i);
+            }
+        }
     }
 
     public void QueueDelayedRaid(Pawn pawn, Faction faction)
@@ -115,6 +148,20 @@ public class RimGambleManager : GameComponent
         });
     }
 
+    public void QueueDelayedSabotage(Pawn pawn)
+    {
+        var tracker = TravelingGamblerTrackerManager.GetTracker(pawn);
+        var def = tracker?.acceptance;
+        if (tracker == null || def == null || tracker.sabotageTargets.NullOrEmpty()) return;
+
+        sabotageEntries.Add(new DelayedSabotageEntry
+        {
+            targets = tracker.sabotageTargets,
+            triggerTick = Find.TickManager.TicksGame + def.sabotageDelayTicks,
+            label = def.sabotageResultLetterLabel?.Translate(pawn.Named("PAWN")) ?? "Sabotage!",
+            desc = def.sabotageResultLetterDesc?.Translate(pawn.Named("PAWN")) ?? "Something was sabotaged."
+        });
+    }
 
     private void givePayout(int payout)
     {
@@ -196,5 +243,6 @@ public class RimGambleManager : GameComponent
         Scribe_Collections.Look(ref bets, "bets", LookMode.Deep);
         Scribe_Collections.Look(ref warningEventTick, "warningEventTick", LookMode.Deep);
         Scribe_Collections.Look(ref delayedRaids, "delayedRaids", LookMode.Deep);
+        Scribe_Collections.Look(ref sabotageEntries, "sabotageEntries", LookMode.Deep);
     }
 }

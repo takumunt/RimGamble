@@ -127,7 +127,7 @@ namespace RimGamble
         {
             if (pawn == null || !pawn.Spawned || pawn.Map == null)
             {
-                Log.Warning("OrbitalStrikeUtility: Invalid pawn or pawn not spawned.");
+                Log.Warning("HumanBombUtility: Invalid pawn or pawn not spawned.");
                 return;
             }
 
@@ -162,6 +162,17 @@ namespace RimGamble
                     );
                 }
             }
+        }
+
+        public static void DoSabotage(Pawn pawn, TravelingGamblerAcceptanceDef acceptance)
+        {
+            if (pawn == null || pawn.Map == null || acceptance == null) return;
+
+            // Initiate the pawn's exit
+            TravelingGamblerTrackerManager.GetTracker(pawn)?.DoLeave();
+
+            // Queue the sabotage via the central manager
+            RimGambleManager.Instance.QueueDelayedSabotage(pawn);
         }
 
     }

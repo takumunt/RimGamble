@@ -68,6 +68,9 @@ namespace RimGamble
 
         private BaseTravelingGamblerAcceptanceWorker AcceptanceWorker => GetWorker(acceptance.workerType, ref acceptanceWorkerInt);
 
+        // Building targets used in sabotage acceptance
+        public List<Thing> sabotageTargets = new List<Thing>();
+
         public bool IsOnEntryLord
         {
             get
@@ -475,6 +478,11 @@ namespace RimGamble
             TravelingGambler_DoFunctions.DoHumanBomb(Pawn);
         }
 
+        public void DoSabotage()
+        {
+            TravelingGambler_DoFunctions.DoSabotage(Pawn, acceptance);
+        }
+
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
             if (!Disabled && IsOnEntryLord)
@@ -570,6 +578,7 @@ namespace RimGamble
             Scribe_Values.Look(ref entryLordEnded, "entryLordEnded", defaultValue: false);
             Scribe_References.Look(ref quest, "quest");
             Scribe_References.Look(ref speaker, "speaker");
+            Scribe_Collections.Look(ref sabotageTargets, "sabotageTargets", LookMode.Reference);
         }
     }
 }

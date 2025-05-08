@@ -23,4 +23,23 @@
     <letterDesc>{PAWN_nameDef} whispered something about cleansing the impure. {PAWN_pronoun} burst apart in a flash.</letterDesc>
     <letterDef>NegativeEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_Sabotage</defName>
+    <label>sabotage</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_SabotageAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} is now leaving, but they seem to be acting strangely before leaving...</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+  
+    <sabotageMinTargets>2</sabotageMinTargets>
+    <sabotageMaxTargets>5</sabotageMaxTargets>
+    <sabotageDelayTicks>6000</sabotageDelayTicks>
+    <sabotageResultLetterLabel>RimGamble_SabotageResultLabel</sabotageResultLetterLabel>
+    <sabotageResultLetterDesc>RimGamble_SabotageResultDesc</sabotageResultLetterDesc>    
+  </RimGamble.TravelingGamblerAcceptanceDef>
+  
 </Defs>

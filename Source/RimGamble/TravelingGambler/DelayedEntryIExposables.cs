@@ -28,4 +28,20 @@ namespace RimGamble
             Scribe_Defs.Look(ref raidLetterDef, "raidLetterDef");
         }
     }
+
+    public class DelayedSabotageEntry : IExposable
+    {
+        public List<Thing> targets;
+        public int triggerTick;
+        public string label;
+        public string desc;
+
+        public void ExposeData()
+        {
+            Scribe_Collections.Look(ref targets, "targets", LookMode.Reference);
+            Scribe_Values.Look(ref triggerTick, "triggerTick");
+            Scribe_Values.Look(ref label, "label");
+            Scribe_Values.Look(ref desc, "desc");
+        }
+    }
 }

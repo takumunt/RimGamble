@@ -12,4 +12,7 @@
 
   <TravelingGamblerTimeout>Traveling gambler about to leave</TravelingGamblerTimeout>
   <TravelingGamblerTimeoutDesc>A traveling gambler is about to leave your map. Speak to them or interact before they go.</TravelingGamblerTimeoutDesc>
+
+  <RimGamble_SabotageResultLabel>Sabotage</RimGamble_SabotageResultLabel>
+  <RimGamble_SabotageResultDesc>After {PAWN_nameDef} left, signs of sabotage were discovered...</RimGamble_SabotageResultDesc>
 </LanguageData>
