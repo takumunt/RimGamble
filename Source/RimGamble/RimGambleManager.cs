@@ -1,5 +1,6 @@
 ﻿using RimGamble;
 using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -225,6 +226,26 @@ public class RimGambleManager : GameComponent
         }
 
         return eventsToFire;
+    }
+
+    public void ApplyThoughtToColony(string thoughtDefName, Predicate<Pawn> filter = null)
+    {
+        ThoughtDef thoughtDef = ThoughtDef.Named(thoughtDefName);
+        if (thoughtDef == null)
+        {
+            Log.Warning($"[RimGamble] ThoughtDef '{thoughtDefName}' not found.");
+            return;
+        }
+
+        if (Find.CurrentMap == null) return;
+
+        foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
+        {
+            if (pawn.needs?.mood == null || pawn.Dead) continue;
+            if (filter != null && !filter(pawn)) continue;
+
+            pawn.needs.mood.thoughts.memories.TryGainMemory(thoughtDef);
+        }
     }
 
     public RimGambleManager()

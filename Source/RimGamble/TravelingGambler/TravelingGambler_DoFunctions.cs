@@ -87,7 +87,8 @@ namespace RimGamble
             if (pawn == null || pawn.Map == null || pawn.inventory == null) return -1;
             if (totalPlayerSilver <= 0) return 0;
 
-            int stolenSilver = Rand.Range(1, totalPlayerSilver);
+            int maxStealable = (int)(totalPlayerSilver * 0.75f);
+            int stolenSilver = Rand.Range(1, Math.Max(1, maxStealable));
             if (stolenSilver <= 0) return 0;
 
             // Remove silver from colony storage  
@@ -145,7 +146,7 @@ namespace RimGamble
                         map,
                         2.75f,
                         DamageDefOf.Bomb,
-                        pawn, 
+                        pawn,
                         -1,
                         -1f,
                         null,
@@ -164,16 +165,12 @@ namespace RimGamble
             }
         }
 
-        public static void DoSabotage(Pawn pawn, TravelingGamblerAcceptanceDef acceptance)
+        public static void DoStatusEffect(Pawn pawn, TravelingGamblerAcceptanceDef acceptance, string thoughtDefName)
         {
             if (pawn == null || pawn.Map == null || acceptance == null) return;
 
-            // Initiate the pawn's exit
-            TravelingGamblerTrackerManager.GetTracker(pawn)?.DoLeave();
-
-            // Queue the sabotage via the central manager
-            RimGambleManager.Instance.QueueDelayedSabotage(pawn);
+            RimGambleManager.Instance?.ApplyThoughtToColony(thoughtDefName);
         }
-
+    
     }
 }

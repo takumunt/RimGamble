@@ -41,5 +41,48 @@
     <sabotageResultLetterLabel>RimGamble_SabotageResultLabel</sabotageResultLetterLabel>
     <sabotageResultLetterDesc>RimGamble_SabotageResultDesc</sabotageResultLetterDesc>    
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_LifeOfTheParty</defName>
+    <label>life of the party</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_MoodAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} is now leaving, and the colony feels a little quieter without them. Their charm and energy brought joy to many, and their absence is already felt.</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+
+    <moodEffect>RimGamble_LifeOfTheParty</moodEffect>
+  </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_RumorSpread</defName>
+    <label>rumor spread</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_MoodAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} has departed, but something feels off. The rumors they seeded continue to stir tension, and the air is thick with unspoken doubts.</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+
+    <moodEffect>RimGamble_RumorSpread</moodEffect>
+  </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_TheftAccept</defName>
+    <label>theft accept</label>
+    <weight>2</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_TheftAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - it seems some silver has gone missing!</letterDesc>
+    <letterDef>ThreatSmall</letterDef>
+
+    <hasAlternativeLetter>true</hasAlternativeLetter>
+    <alternativeLetterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - they wanted to steal from you but instead left upset as they could not find any silver to steal.</alternativeLetterDesc>
+  </RimGamble.TravelingGamblerAcceptanceDef>
   
 </Defs>

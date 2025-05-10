@@ -279,7 +279,7 @@ namespace RimGamble
             {
                 Command_Action command_Action = new Command_Action
                 {
-                    defaultLabel = "DEV: Trigger timed downside",
+                    defaultLabel = "DEV: Trigger timed acceptance",
                     action = DoAcceptance
                 };
                 BaseTravelingGamblerAcceptanceWorker acceptanceWorker = AcceptanceWorker;
@@ -391,10 +391,17 @@ namespace RimGamble
             //}
 
             AcceptanceWorker?.DoResponse(list, list2);
-            if (acceptance.hasLetter)
+            if (acceptance.hasAlternativeLetter && useAlternativeLetter)
             {
-                TaggedString label = acceptance.letterLabel.Formatted(list2);
-                TaggedString text = acceptance.letterDesc.Formatted(list2);
+                SetAlternativeLetter(false);
+                TaggedString label = acceptance.letterLabel.Formatted(list2.ToArray());
+                TaggedString text = acceptance.alternativeLetterDesc.Formatted(list2.ToArray());
+                Find.LetterStack.ReceiveLetter(label, text, acceptance.letterDef, list);
+            }
+            else if (acceptance.hasLetter)
+            {
+                TaggedString label = acceptance.letterLabel.Formatted(list2.ToArray());
+                TaggedString text = acceptance.letterDesc.Formatted(list2.ToArray());
                 Find.LetterStack.ReceiveLetter(label, text, acceptance.letterDef, list);
             }
         }
@@ -478,9 +485,9 @@ namespace RimGamble
             TravelingGambler_DoFunctions.DoHumanBomb(Pawn);
         }
 
-        public void DoSabotage()
+        public void DoMoodEffect(string thoughtDefName)
         {
-            TravelingGambler_DoFunctions.DoSabotage(Pawn, acceptance);
+            TravelingGambler_DoFunctions.DoStatusEffect(Pawn, acceptance, thoughtDefName);
         }
 
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)

@@ -46,7 +46,7 @@
     <workerType>RimGamble.TravelingGamblerWorker_Theft</workerType>
     <hasLetter>true</hasLetter>
     <letterLabel>{PAWN_nameDef} Left</letterLabel>
-    <letterDesc>Upon being rejected, {PAWN_nameDef} left angerly - it seems {1} silver has gone missing!</letterDesc>
+    <letterDesc>Upon being rejected, {PAWN_nameDef} left angerly - it seems some silver has gone missing!</letterDesc>
     <letterDef>ThreatSmall</letterDef>
 
     <hasAlternativeLetter>true</hasAlternativeLetter>

@@ -82,13 +82,12 @@
     <Compile Include="TravelingGambler\Alert_TravelingGamblerTimeout.cs" />
     <Compile Include="TravelingGambler\ChoiceLetter_AcceptTravelingGambler.cs" />
     <Compile Include="TravelingGambler\DelayedEntryIExposables.cs" />
-    <Compile Include="TravelingGambler\JobDriver_LeaveAfterSabotage.cs" />
-    <Compile Include="TravelingGambler\JobDriver_TalkTravelingGambler.cs" />
     <Compile Include="TravelingGambler\PawnTravelingGambler.cs" />
     <Compile Include="TravelingGambler\Pawn_TravelingGamblerTracker.cs" />
     <Compile Include="TravelingGambler\QuestNode_Root_TravelingGambler_Arrival.cs" />
     <Compile Include="TravelingGambler\QuestPart_TravelingGamblerOutcomes.cs" />
     <Compile Include="TravelingGambler\TravelingGamblerDefs.cs" />
+    <Compile Include="TravelingGambler\TravelingGamblerJobDrivers.cs" />
     <Compile Include="TravelingGambler\TravelingGamblerTrackerManager.cs" />
     <Compile Include="TravelingGambler\TravelingGamblerUtility.cs" />
     <Compile Include="TravelingGambler\TravelingGamblerWorkers.cs" />

@@ -135,6 +135,13 @@ namespace RimGamble
         [MustTranslate]
         public string sabotageResultLetterDesc;
 
+        public string moodEffect;
+
+        public bool hasAlternativeLetter;
+
+        [MustTranslate]
+        public string alternativeLetterDesc;
+
         public override IEnumerable<string> ConfigErrors()
         {
             foreach (string item in base.ConfigErrors())

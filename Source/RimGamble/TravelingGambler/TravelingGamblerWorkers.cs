@@ -112,6 +112,69 @@ namespace RimGamble
         }
     }
 
+    public class TravelingGamblerWorker_MoodAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            var def = base.Tracker.acceptance;
+
+            base.Tracker.DoMoodEffect(def.moodEffect);
+        }
+    }
+
+    public class TravelingGamblerWorker_TheftAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            Pawn pawn = base.Tracker.Pawn;
+            Map map = pawn.Map;
+
+            int totalPlayerSilver = 0;
+            List<SlotGroup> slotGroups = map.haulDestinationManager.AllGroupsListForReading;
+            HashSet<Thing> countedThings = new HashSet<Thing>();
+
+            foreach (SlotGroup slotGroup in slotGroups)
+            {
+                foreach (IntVec3 cell in slotGroup.CellsList)
+                {
+                    foreach (Thing thing in cell.GetThingList(map))
+                    {
+                        if (thing.def == ThingDefOf.Silver && !countedThings.Contains(thing))
+                        {
+                            totalPlayerSilver += thing.stackCount;
+                            countedThings.Add(thing);
+                        }
+                    }
+                }
+            }
+
+            if (countedThings.Count == 0 || totalPlayerSilver <= 0)
+            {
+                base.Tracker.SetAlternativeLetter(true);
+                base.Tracker.DoLeave();
+                namedArgs.Add(pawn.Named("PAWN"));
+                return;
+            }
+
+            Thing targetSilver = countedThings.FirstOrDefault();
+            if (targetSilver != null)
+            {
+                Job job = JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("RimGamble_StealSilver"), targetSilver);
+                job.count = totalPlayerSilver; // Pass actual silver total
+                job.playerForced = true;
+                pawn.jobs.TryTakeOrderedJob(job);
+
+                namedArgs.Add(pawn.Named("PAWN"));
+            }
+            else
+            {
+                base.Tracker.SetAlternativeLetter(true);
+                base.Tracker.DoLeave();
+                namedArgs.Add(pawn.Named("PAWN"));
+            }
+        }
+    }
+
     // Rejection Workers
 
     public class TravelingGamblerWorker_DoDepart : BaseTravelingGamblerWorker
@@ -164,10 +227,10 @@ namespace RimGamble
     {
         public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
         {
-            Map map = base.Tracker.Pawn.Map;
+            Pawn pawn = base.Tracker.Pawn;
+            Map map = pawn.Map;
 
             int totalPlayerSilver = 0;
-
             List<SlotGroup> slotGroups = map.haulDestinationManager.AllGroupsListForReading;
             HashSet<Thing> countedThings = new HashSet<Thing>();
 
@@ -175,8 +238,7 @@ namespace RimGamble
             {
                 foreach (IntVec3 cell in slotGroup.CellsList)
                 {
-                    List<Thing> things = cell.GetThingList(map);
-                    foreach (Thing thing in things)
+                    foreach (Thing thing in cell.GetThingList(map))
                     {
                         if (thing.def == ThingDefOf.Silver && !countedThings.Contains(thing))
                         {
@@ -187,15 +249,30 @@ namespace RimGamble
                 }
             }
 
-            base.Tracker.DoLeave();
-            int stolenSilver = base.Tracker.DoTheft(totalPlayerSilver);
-
-            if (stolenSilver == 0)
+            if (countedThings.Count == 0 || totalPlayerSilver <= 0)
             {
                 base.Tracker.SetAlternativeLetter(true);
+                base.Tracker.DoLeave();
+                namedArgs.Add(pawn.Named("PAWN"));
+                return;
             }
 
-            namedArgs.Add(stolenSilver);
+            Thing targetSilver = countedThings.FirstOrDefault();
+            if (targetSilver != null)
+            {
+                Job job = JobMaker.MakeJob(DefDatabase<JobDef>.GetNamed("RimGamble_StealSilver"), targetSilver);
+                job.count = totalPlayerSilver; // Pass actual silver total
+                job.playerForced = true;
+                pawn.jobs.TryTakeOrderedJob(job);
+
+                namedArgs.Add(pawn.Named("PAWN"));
+            }
+            else
+            {
+                base.Tracker.SetAlternativeLetter(true);
+                base.Tracker.DoLeave();
+                namedArgs.Add(pawn.Named("PAWN"));
+            }
         }
     }
 
