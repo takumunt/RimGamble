@@ -142,6 +142,8 @@ namespace RimGamble
         [MustTranslate]
         public string alternativeLetterDesc;
 
+        public bool isTeachSkill = false;
+
         public override IEnumerable<string> ConfigErrors()
         {
             foreach (string item in base.ConfigErrors())

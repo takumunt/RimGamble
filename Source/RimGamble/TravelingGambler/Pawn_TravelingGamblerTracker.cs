@@ -494,6 +494,11 @@ namespace RimGamble
             TravelingGambler_DoFunctions.DoSpawnDropPod();
         }
 
+        public (Pawn learner, SkillDef skill) DoTeachSkill()
+        {
+            return TravelingGambler_DoFunctions.DoTeachSkill();
+        }
+
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
             if (!Disabled && IsOnEntryLord)

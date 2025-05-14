@@ -190,7 +190,7 @@ namespace RimGamble
         }
 
         // Weighted random helper using tuples for compactness
-        public static ThingDef GetRandomCrate(List<(ThingDef def, float weight)> options)
+        private static ThingDef GetRandomCrate(List<(ThingDef def, float weight)> options)
         {
             float total = options.Sum(o => o.weight);
             float rand = Rand.Range(0f, total);
@@ -206,7 +206,33 @@ namespace RimGamble
             return options.Last().def; // Fallback
         }
 
+        public static (Pawn learner, SkillDef skill) DoTeachSkill()
+        {
+            // Get all free colonists on the map
+            List<Pawn> colonists = Find.CurrentMap.mapPawns.FreeColonistsSpawned;
+            if (colonists.NullOrEmpty())
+            {
+                Log.Warning("No colonists available to boost.");
+                return (null, null); // return valid empty tuple
+            }
 
+            // Pick a random colonist
+            Pawn chosen = colonists.RandomElement();
+            if (chosen.skills == null || chosen.skills.skills.NullOrEmpty())
+            {
+                Log.Warning($"Pawn {chosen.Name} has no skills.");
+                return (null, null);
+            }
+
+            // Pick a random skill from their skills
+            SkillRecord skill = chosen.skills.skills.RandomElement();
+
+            // Boost it
+            int xpGain = Rand.RangeInclusive(3000, 7000);
+            skill.Learn(xpGain, direct: true);
+
+            return (chosen, skill.def);
+        }
 
     }
 }

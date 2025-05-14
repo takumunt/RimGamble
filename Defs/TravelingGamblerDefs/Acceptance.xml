@@ -108,5 +108,17 @@
     <!-- <letterDesc>{PAWN_nameDef} thanks you for having them, they contacted someone to drop off some loot crates.</letterDesc> -->
     <!-- <letterDef>NeutralEvent</letterDef> -->
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_TeachSkill</defName>
+    <label>teach skill</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_TeachSkillAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} shares a moment of insight. {LEARNER_nameDef} has gained skill in {SKILL}.</letterDesc>
+    <letterDef>PositiveEvent</letterDef>
+  </RimGamble.TravelingGamblerAcceptanceDef>
   
 </Defs>

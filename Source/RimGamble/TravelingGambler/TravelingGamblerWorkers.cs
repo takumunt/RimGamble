@@ -230,6 +230,22 @@ namespace RimGamble
         }
     }
 
+    public class TravelingGamblerWorker_TeachSkillAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            base.Tracker.DoLeave();
+
+            var (learner, skill) = base.Tracker.DoTeachSkill();
+
+            if (learner != null && skill != null)
+            {
+                namedArgs.Add(learner.Named("LEARNER"));
+                namedArgs.Add(skill.skillLabel.CapitalizeFirst().Named("SKILL"));
+            }
+        }
+    }
+
     // Rejection Workers
 
     public class TravelingGamblerWorker_DoDepart : BaseTravelingGamblerWorker
