@@ -48,4 +48,9 @@
     <alwaysShowWeapon>false</alwaysShowWeapon>
   </JobDef>
 
+  <JobDef>
+    <defName>RimGamble_SpawnTradeCaravan</defName>
+    <driverClass>RimGamble.JobDriver_SpawnTradeCaravan</driverClass>
+  </JobDef>
+
 </Defs>

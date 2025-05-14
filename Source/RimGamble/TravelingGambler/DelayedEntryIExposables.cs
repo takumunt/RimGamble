@@ -44,4 +44,23 @@ namespace RimGamble
             Scribe_Values.Look(ref desc, "desc");
         }
     }
+
+    public class DelayedTradeCaravanEntry : IExposable
+    {
+        public Pawn pawn;
+        public Faction faction;
+        public Map map;
+        public TraderKindDef traderKind;
+        public int triggerAfterTick;
+
+        public void ExposeData()
+        {
+            Scribe_References.Look(ref pawn, "pawn");
+            Scribe_References.Look(ref faction, "faction");
+            Scribe_References.Look(ref map, "map");
+            Scribe_Defs.Look(ref traderKind, "traderKind");
+            Scribe_Values.Look(ref triggerAfterTick, "triggerAfterTick");
+        }
+    }
+
 }

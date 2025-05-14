@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using Verse.AI.Group;
 using static UnityEngine.GraphicsBuffer;
 
 public class RimGambleManager : GameComponent
@@ -19,6 +20,8 @@ public class RimGambleManager : GameComponent
     private List<DelayedRaidEntry> delayedRaids = new List<DelayedRaidEntry>();
 
     private List<DelayedSabotageEntry> sabotageEntries = new List<DelayedSabotageEntry>();
+
+    private List<DelayedTradeCaravanEntry> delayedTradeCaravans = new List<DelayedTradeCaravanEntry>();
 
     /**
      * 
@@ -128,6 +131,35 @@ public class RimGambleManager : GameComponent
                 sabotageEntries.RemoveAt(i);
             }
         }
+
+        // Delayed trade caravans
+        for (int i = delayedTradeCaravans.Count - 1; i >= 0; i--)
+        {
+            var entry = delayedTradeCaravans[i];
+
+            if (Find.TickManager.TicksGame >= entry.triggerAfterTick)
+            {
+                if (entry.map != null && entry.faction != null && entry.traderKind != null)
+                {
+                    IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(entry.pawn.Position, entry.pawn.Map, 10);
+
+                    IncidentParms parms = new IncidentParms
+                    {
+                        target = entry.map,
+                        faction = entry.faction,
+                        traderKind = entry.traderKind,
+                        spawnCenter = spawnCell,
+                        forced = true,
+                        points = 400f
+                    };
+
+                    IncidentDefOf.TraderCaravanArrival.Worker.TryExecute(parms);
+                }
+
+                delayedTradeCaravans.RemoveAt(i);
+            }
+        }
+
     }
 
     public void QueueDelayedRaid(Pawn pawn, Faction faction)
@@ -161,6 +193,22 @@ public class RimGambleManager : GameComponent
             triggerTick = Find.TickManager.TicksGame + def.sabotageDelayTicks,
             label = def.sabotageResultLetterLabel?.Translate(pawn.Named("PAWN")) ?? "Sabotage!",
             desc = def.sabotageResultLetterDesc?.Translate(pawn.Named("PAWN")) ?? "Something was sabotaged."
+        });
+    }
+
+    public void QueueDelayedTradeCaravan(Pawn pawn, Faction faction, TraderKindDef traderKind, int delayTicks)
+    {
+        if (pawn?.Map == null || pawn.Destroyed) return;
+
+        int triggerTick = Find.TickManager.TicksGame + delayTicks;
+
+        delayedTradeCaravans.Add(new DelayedTradeCaravanEntry
+        {
+            pawn = pawn,
+            faction = faction,
+            map = pawn.Map,
+            traderKind = traderKind,
+            triggerAfterTick = triggerTick
         });
     }
 
@@ -265,5 +313,6 @@ public class RimGambleManager : GameComponent
         Scribe_Collections.Look(ref warningEventTick, "warningEventTick", LookMode.Deep);
         Scribe_Collections.Look(ref delayedRaids, "delayedRaids", LookMode.Deep);
         Scribe_Collections.Look(ref sabotageEntries, "sabotageEntries", LookMode.Deep);
+        Scribe_Collections.Look(ref delayedTradeCaravans, "delayedTradeCaravans", LookMode.Deep);
     }
 }

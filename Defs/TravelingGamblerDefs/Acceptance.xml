@@ -84,5 +84,17 @@
     <hasAlternativeLetter>true</hasAlternativeLetter>
     <alternativeLetterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - they wanted to steal from you but instead left upset as they could not find any silver to steal.</alternativeLetterDesc>
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_TradeCaravan</defName>
+    <label>trade caravan</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGambler_TradeCaravanAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} is leaving, they have put in a good word with a trade caravan, they should be arriving soon.</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+  </RimGamble.TravelingGamblerAcceptanceDef>
   
 </Defs>

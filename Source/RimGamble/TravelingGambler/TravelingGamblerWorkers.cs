@@ -6,6 +6,7 @@ using Verse;
 using Verse.AI;
 using Verse.AI.Group;
 using Verse.Noise;
+using static RimWorld.ColonistBar;
 
 namespace RimGamble
 {
@@ -172,6 +173,51 @@ namespace RimGamble
                 base.Tracker.DoLeave();
                 namedArgs.Add(pawn.Named("PAWN"));
             }
+        }
+    }
+
+    public class TravelingGambler_TradeCaravanAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            Pawn pawn = base.Tracker.Pawn;
+            var def = base.Tracker.acceptance;
+            Map map = pawn?.Map;
+
+            if (pawn == null || map == null || def == null)
+            {
+                Log.Warning("[RimGamble] DoResponse: Invalid pawn, map, or acceptance def.");
+                return;
+            }
+
+            pawn.jobs?.StopAll();
+
+            pawn.jobs.jobQueue.EnqueueLast(new Job(JobDefOf.Wait, 60) { playerForced = true });
+            pawn.jobs.jobQueue.EnqueueLast(new Job(DefDatabase<JobDef>.GetNamed("RimGamble_SpawnTradeCaravan")));
+
+            // Pick a random valid trading faction
+            Faction faction = Find.FactionManager.AllFactions
+                .Where(f => !f.IsPlayer && f.def.caravanTraderKinds != null && f.def.caravanTraderKinds.Any())
+                .RandomElementWithFallback();
+
+            if (faction == null)
+            {
+                Log.Warning("[RimGamble] Could not find any faction with caravanTraderKinds.");
+                return;
+            }
+
+            TraderKindDef traderKind = faction.def.caravanTraderKinds
+                .Where(k => k != null)
+                .RandomElementWithFallback();
+
+            if (traderKind == null)
+            {
+                Log.Warning($"[RimGamble] Faction '{faction.Name}' has no usable TraderKindDefs.");
+                return;
+            }
+
+            // Queue the caravan
+            RimGambleManager.Instance.QueueDelayedTradeCaravan(pawn, faction, traderKind, 6000);
         }
     }
 
