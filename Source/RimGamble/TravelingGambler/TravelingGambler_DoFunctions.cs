@@ -171,6 +171,42 @@ namespace RimGamble
 
             RimGambleManager.Instance?.ApplyThoughtToColony(thoughtDefName);
         }
-    
+
+        public static void DoSpawnDropPod()
+        {
+            IntVec3 dropSpot = DropCellFinder.TradeDropSpot(Find.CurrentMap);
+
+            // Weighted selection
+            ThingDef crateDef = GetRandomCrate(new List<(ThingDef def, float weight)>
+            {
+                (ThingDef.Named("RimGamble_LootCrateBasic"), 60f),
+                (ThingDef.Named("RimGamble_LootCrateAdvanced"), 30f),
+                (ThingDef.Named("RimGamble_LootCrateMaster"), 10f)
+            });
+
+            Thing crate = ThingMaker.MakeThing(crateDef);
+            TradeUtility.SpawnDropPod(dropSpot, Find.CurrentMap, crate);
+            Find.LetterStack.ReceiveLetter("RimGamble.TravelingGamblerDropPod".Translate(), "RimGamble.TravelingGamblerDropPodDesc".Translate(), LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, Find.CurrentMap));
+        }
+
+        // Weighted random helper using tuples for compactness
+        public static ThingDef GetRandomCrate(List<(ThingDef def, float weight)> options)
+        {
+            float total = options.Sum(o => o.weight);
+            float rand = Rand.Range(0f, total);
+            float cumulative = 0f;
+
+            foreach (var (def, weight) in options)
+            {
+                cumulative += weight;
+                if (rand < cumulative)
+                    return def;
+            }
+
+            return options.Last().def; // Fallback
+        }
+
+
+
     }
 }

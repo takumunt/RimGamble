@@ -96,5 +96,17 @@
     <letterDesc>{PAWN_nameDef} is leaving, they have put in a good word with a trade caravan, they should be arriving soon.</letterDesc>
     <letterDef>NeutralEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_DropPod</defName>
+    <label>drop pod</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_DropPodAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>false</hasLetter>
+    <!-- <letterLabel>{PAWN_nameDef} departure</letterLabel> -->
+    <!-- <letterDesc>{PAWN_nameDef} thanks you for having them, they contacted someone to drop off some loot crates.</letterDesc> -->
+    <!-- <letterDef>NeutralEvent</letterDef> -->
+  </RimGamble.TravelingGamblerAcceptanceDef>
   
 </Defs>

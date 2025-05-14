@@ -455,7 +455,6 @@ namespace RimGamble
         }
 
         // Do Functions
-
         public void DoLeave()
         {
             if (!Disabled && !hasLeft)
@@ -488,6 +487,11 @@ namespace RimGamble
         public void DoMoodEffect(string thoughtDefName)
         {
             TravelingGambler_DoFunctions.DoStatusEffect(Pawn, acceptance, thoughtDefName);
+        }
+
+        public void DoSpawnDropPod()
+        {
+            TravelingGambler_DoFunctions.DoSpawnDropPod();
         }
 
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)

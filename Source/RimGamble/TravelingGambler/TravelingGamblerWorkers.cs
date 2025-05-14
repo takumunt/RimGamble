@@ -221,6 +221,15 @@ namespace RimGamble
         }
     }
 
+    public class TravelingGamblerWorker_DropPodAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            base.Tracker.DoLeave();
+            base.Tracker.DoSpawnDropPod();
+        }
+    }
+
     // Rejection Workers
 
     public class TravelingGamblerWorker_DoDepart : BaseTravelingGamblerWorker
