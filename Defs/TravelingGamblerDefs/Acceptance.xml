@@ -120,5 +120,17 @@
     <letterDesc>{PAWN_nameDef} shares a moment of insight. {LEARNER_nameDef} has gained skill in {SKILL}.</letterDesc>
     <letterDef>PositiveEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_GiveInspiration</defName>
+    <label>give inspiration</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_GiveInspirationAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+    <hasLetter>true</hasLetter>
+    <letterLabel>{PAWN_nameDef} departure</letterLabel>
+    <letterDesc>{PAWN_nameDef} shares a moment of inspiration. {LEARNER_nameDef} has gained the {INSPIRATION} inspiration.</letterDesc>
+    <letterDef>PositiveEvent</letterDef>
+  </RimGamble.TravelingGamblerAcceptanceDef>
   
 </Defs>

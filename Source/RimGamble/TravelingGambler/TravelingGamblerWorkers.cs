@@ -235,13 +235,27 @@ namespace RimGamble
         public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
         {
             base.Tracker.DoLeave();
-
             var (learner, skill) = base.Tracker.DoTeachSkill();
 
             if (learner != null && skill != null)
             {
                 namedArgs.Add(learner.Named("LEARNER"));
                 namedArgs.Add(skill.skillLabel.CapitalizeFirst().Named("SKILL"));
+            }
+        }
+    }
+
+    public class TravelingGamblerWorker_GiveInspirationAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            base.Tracker.DoLeave();
+            var (learner, inspiration) = base.Tracker.DoGiveInspiration();
+
+            if (learner != null && inspiration != null)
+            {
+                namedArgs.Add(learner.Named("LEARNER"));
+                namedArgs.Add(inspiration.Named("INSPIRATION"));
             }
         }
     }

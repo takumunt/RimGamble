@@ -234,5 +234,26 @@ namespace RimGamble
             return (chosen, skill.def);
         }
 
+        public static (Pawn learner, InspirationDef inspiration) DoGiveInspiration()
+        {
+            Pawn randomColonist = PawnsFinder.AllMaps_FreeColonists
+                .Where(p => p.mindState?.inspirationHandler != null && p.Awake())
+                .InRandomOrder()
+                .FirstOrDefault();
+
+            if (randomColonist != null)
+            {
+                InspirationDef inspiration = randomColonist.mindState.inspirationHandler.GetRandomAvailableInspirationDef();
+                if (inspiration != null)
+                {
+                    randomColonist.mindState.inspirationHandler.TryStartInspiration(inspiration);
+                    return (randomColonist, inspiration);
+                }
+            }
+
+            // Return default (null, null) if no valid pawn or inspiration was found
+            return (null, null);
+        }
+
     }
 }

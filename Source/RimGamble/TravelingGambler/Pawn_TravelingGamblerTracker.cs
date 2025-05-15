@@ -499,6 +499,11 @@ namespace RimGamble
             return TravelingGambler_DoFunctions.DoTeachSkill();
         }
 
+        public (Pawn learner, InspirationDef inspiration) DoGiveInspiration()
+        {
+            return TravelingGambler_DoFunctions.DoGiveInspiration();
+        }
+
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
             if (!Disabled && IsOnEntryLord)
