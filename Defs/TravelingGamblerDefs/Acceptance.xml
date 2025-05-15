@@ -117,7 +117,7 @@
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} shares a moment of insight. {LEARNER_nameDef} has gained skill in {SKILL}.</letterDesc>
+    <letterDesc>{PAWN_nameDef} leaves - sharing a moment of insight. {LEARNER_nameDef} has gained skill in {SKILL}.</letterDesc>
     <letterDef>PositiveEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
 
@@ -129,7 +129,7 @@
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} shares a moment of inspiration. {LEARNER_nameDef} has gained the {INSPIRATION} inspiration.</letterDesc>
+    <letterDesc>{PAWN_nameDef} leaves - sharing a moment of inspiration. {LEARNER_nameDef} has gained the {INSPIRATION} inspiration.</letterDesc>
     <letterDef>PositiveEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
   
