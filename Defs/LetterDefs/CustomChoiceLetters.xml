@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <LetterDef ParentName="CustomChoiceLetterBase">
+  <LetterDef ParentName="CustomChoiceLetterBase">
     <defName>RimGamble_AcceptTravelingGambler</defName>
     <letterClass>RimGamble.ChoiceLetter_AcceptTravelingGambler</letterClass>
+  </LetterDef>
+
+  <LetterDef ParentName="CustomChoiceLetterBase">
+    <defName>RimGamble_GamblerJoinDecision</defName>
+    <letterClass>RimGamble.ChoiceLetter_GamblerJoinDecision</letterClass>
   </LetterDef>
 </Defs>

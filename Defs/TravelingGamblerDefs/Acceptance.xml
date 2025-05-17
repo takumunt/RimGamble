@@ -132,5 +132,19 @@
     <letterDesc>{PAWN_nameDef} leaves - sharing a moment of inspiration. {LEARNER_nameDef} has gained the {INSPIRATION} inspiration.</letterDesc>
     <letterDef>PositiveEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
+
+  <RimGamble.TravelingGamblerAcceptanceDef>
+    <defName>RimGamble_AskJoin</defName>
+    <label>ask join</label>
+    <weight>3</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_AskJoinAcceptance</workerType>
+    <triggersAfterDays>2~3</triggersAfterDays>
+
+    <clearLord>false</clearLord>
+
+    <joinLetterLabel>Official Join Request</joinLetterLabel>
+    <joinLetterDesc>The traveler {PAWN} is ready to join your colony...</joinLetterDesc>
+    <joinLetterDef>RimGamble_GamblerJoinDecision</joinLetterDef>
+  </RimGamble.TravelingGamblerAcceptanceDef>
   
 </Defs>

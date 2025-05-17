@@ -193,7 +193,7 @@ namespace RimGamble
 
         private void AcceptedTick()
         {
-            if(Pawn.IsHashIntervalTick(15000))
+            if (Pawn.IsHashIntervalTick(15000))
             {
                 CheckAcceptanceOccurs();
             }
@@ -373,7 +373,11 @@ namespace RimGamble
                 return;
             }
 
-            ClearLord();
+            if (acceptance.clearLord)
+            {
+                ClearLord();
+            }
+            
             triggeredAcceptance = true;
             if (acceptance.triggerMinDays != FloatRange.Zero)
             {
@@ -502,6 +506,41 @@ namespace RimGamble
         public (Pawn learner, InspirationDef inspiration) DoGiveInspiration()
         {
             return TravelingGambler_DoFunctions.DoGiveInspiration();
+        }
+
+        public void JoinColony()
+        {
+            if (Disabled || Pawn == null || Pawn.Dead || Pawn.Faction == Faction.OfPlayer)
+            {
+                return;
+            }
+
+            // Remove from any existing lord (e.g., CreepJoiner)
+            ClearLord();
+
+            // Stop all current jobs
+            Pawn.jobs?.StopAll();
+
+            // Set to player's faction
+            Pawn.SetFaction(Faction.OfPlayer);
+
+            // Clear guest status
+            Pawn.guest?.SetGuestStatus(null);
+
+            // Ensure playerSettings exists
+            if (Pawn.playerSettings == null)
+            {
+                Pawn.playerSettings = new Pawn_PlayerSettings(Pawn);
+            }
+
+            // Record join time
+            Pawn.playerSettings.joinTick = GenTicks.TicksGame;
+
+            // Notify via message
+            Messages.Message($"{Pawn.NameShortColored} has officially joined your colony!", Pawn, MessageTypeDefOf.PositiveEvent);
+
+            // Optional: Notify for further systems
+            Notify_ChangedFaction();
         }
 
         public IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)

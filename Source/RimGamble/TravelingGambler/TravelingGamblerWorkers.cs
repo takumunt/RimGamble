@@ -1,12 +1,15 @@
 ﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using RimWorld;
+using RimWorld.QuestGen;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
 using Verse.Noise;
-using static RimWorld.ColonistBar;
 
 namespace RimGamble
 {
@@ -256,6 +259,36 @@ namespace RimGamble
             {
                 namedArgs.Add(learner.Named("LEARNER"));
                 namedArgs.Add(inspiration.Named("INSPIRATION"));
+            }
+        }
+    }
+
+    public class TravelingGamblerWorker_AskJoinAcceptance : BaseTravelingGamblerAcceptanceWorker
+    {
+        public override void DoResponse(List<TargetInfo> looktargets, List<NamedArgument> namedArgs)
+        {
+            var tracker = Tracker;
+            if (tracker == null || tracker.Pawn == null)
+            {
+                Log.Warning("[Gambler] JoinAcceptance failed: missing tracker or pawn.");
+                return;
+            }
+
+            Pawn pawn = tracker.Pawn;
+
+            var slate = new Slate();
+            slate.Set("pawn", pawn);
+
+            try
+            {
+                QuestUtility.GenerateQuestAndMakeAvailable(
+                    DefDatabase<QuestScriptDef>.GetNamed("GamblerJoinDecisionQuest"),
+                    slate
+                );
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[Gambler] Failed to start GamblerJoinDecisionQuest: {ex}");
             }
         }
     }

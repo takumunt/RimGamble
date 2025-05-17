@@ -15,4 +15,14 @@
 
   <RimGamble_SabotageResultLabel>Sabotage</RimGamble_SabotageResultLabel>
   <RimGamble_SabotageResultDesc>After {PAWN_nameDef} left, signs of sabotage were discovered...</RimGamble_SabotageResultDesc>
+
+  <LetterTravelingGamblerInviteJoinsAccept>{PAWN_nameDef} wants to join</LetterTravelingGamblerInviteJoinsAccept>
+  <LetterTravelingGamblerInviteStartAccept>{PAWN_nameDef} likes the colony, and would like the become a member.</LetterTravelingGamblerInviteStartAccept>
+  
+  <LetterTravelingGamblerJoinColonyLabelAccept>{PAWN_nameDef} joined the colony</LetterTravelingGamblerJoinColonyLabelAccept>
+  <LetterTravelingGamblerJoinColonyDescAccept>{PAWN_nameDef} thanks you! They have officially joined the colony!</LetterTravelingGamblerJoinColonyDescAccept>
+  <LetterTravelingGamblerJoinColonyLabelReject>{PAWN_nameDef} left the colony</LetterTravelingGamblerJoinColonyLabelReject>
+  <LetterTravelingGamblerJoinColonyDescReject>{PAWN_nameDef} understands, they thank you and leave.</LetterTravelingGamblerJoinColonyDescReject>
+  <LetterTravelingGamblerJoinColonyLabelTimeout>{PAWN_nameDef} left the colony</LetterTravelingGamblerJoinColonyLabelTimeout>
+  <LetterTravelingGamblerJoinColonyDescTimeout>{PAWN_nameDef} did not hear back from you and took that as a no. They thank you and leave.</LetterTravelingGamblerJoinColonyDescTimeout>
 </LanguageData>

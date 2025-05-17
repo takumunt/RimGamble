@@ -144,6 +144,16 @@ namespace RimGamble
 
         public bool isTeachSkill = false;
 
+        [MustTranslate]
+        public string joinLetterLabel;
+
+        [MustTranslate]
+        public string joinLetterDesc;
+
+        public LetterDef joinLetterDef;
+
+        public bool clearLord = true;
+
         public override IEnumerable<string> ConfigErrors()
         {
             foreach (string item in base.ConfigErrors())
