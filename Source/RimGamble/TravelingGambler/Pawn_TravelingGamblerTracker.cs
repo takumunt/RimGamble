@@ -398,14 +398,14 @@ namespace RimGamble
             if (acceptance.hasAlternativeLetter && useAlternativeLetter)
             {
                 SetAlternativeLetter(false);
-                TaggedString label = acceptance.letterLabel.Formatted(list2.ToArray());
-                TaggedString text = acceptance.alternativeLetterDesc.Formatted(list2.ToArray());
+                TaggedString label = acceptance.letterLabel.Translate(list2.ToArray());
+                TaggedString text = acceptance.alternativeLetterDesc.Translate(list2.ToArray());
                 Find.LetterStack.ReceiveLetter(label, text, acceptance.letterDef, list);
             }
             else if (acceptance.hasLetter)
             {
-                TaggedString label = acceptance.letterLabel.Formatted(list2.ToArray());
-                TaggedString text = acceptance.letterDesc.Formatted(list2.ToArray());
+                TaggedString label = acceptance.letterLabel.Translate(list2.ToArray());
+                TaggedString text = acceptance.letterDesc.Translate(list2.ToArray());
                 Find.LetterStack.ReceiveLetter(label, text, acceptance.letterDef, list);
             }
         }
@@ -421,8 +421,8 @@ namespace RimGamble
                 RejectionWorker?.DoResponse(list, list2);
                 if (rejection.hasLetter)
                 {
-                    TaggedString label = rejection.letterLabel.Formatted(list2);
-                    TaggedString text = rejection.letterDesc.Formatted(list2);
+                    TaggedString label = rejection.letterLabel.Translate(list2.ToArray());
+                    TaggedString text = rejection.letterDesc.Translate(list2.ToArray());
                     Find.LetterStack.ReceiveLetter(label, text, rejection.letterDef, list);
                 }
             }
@@ -439,20 +439,20 @@ namespace RimGamble
                 AggressiveWorker?.DoResponse(list, list2);
                 if (aggressive.hasMessage)
                 {
-                    Messages.Message(aggressive.message.Formatted(list2), list, MessageTypeDefOf.NegativeEvent);
+                    Messages.Message(aggressive.message.Translate(list2.ToArray()), list, MessageTypeDefOf.NegativeEvent);
                 }
 
                 if (aggressive.hasAlternativeLetter && useAlternativeLetter)
                 {
                     SetAlternativeLetter(false);
-                    TaggedString label = aggressive.letterLabel.Formatted(list2.ToArray());
-                    TaggedString text = aggressive.alternativeLetterDesc.Formatted(list2.ToArray());
+                    TaggedString label = aggressive.letterLabel.Translate(list2.ToArray());
+                    TaggedString text = aggressive.alternativeLetterDesc.Translate(list2.ToArray());
                     Find.LetterStack.ReceiveLetter(label, text, aggressive.letterDef, list);
                 }
                 else if (aggressive.hasLetter)
                 {
-                    TaggedString label = aggressive.letterLabel.Formatted(list2.ToArray());
-                    TaggedString text = aggressive.letterDesc.Formatted(list2.ToArray());
+                    TaggedString label = aggressive.letterLabel.Translate(list2.ToArray());
+                    TaggedString text = aggressive.letterDesc.Translate(list2.ToArray());
                     Find.LetterStack.ReceiveLetter(label, text, aggressive.letterDef, list);
                 }
             }
@@ -547,12 +547,12 @@ namespace RimGamble
         {
             if (!Disabled && IsOnEntryLord)
             {
-                yield return (!selPawn.CanReach(Pawn as Pawn, PathEndMode.OnCell, Danger.Deadly)) ? new FloatMenuOption("CannotTalkTo".Translate(Pawn) + ": " + "NoPath".Translate().CapitalizeFirst(), null) : (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking) ? FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("TalkTo".Translate(Pawn), delegate
+                yield return (!selPawn.CanReach(Pawn as Pawn, PathEndMode.OnCell, Danger.Deadly)) ? new FloatMenuOption("RimGamble.CannotTalkTo".Translate(Pawn) + ": " + "NoPath".Translate().CapitalizeFirst(), null) : (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking) ? FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("RimGamble.TalkTo".Translate(Pawn), delegate
                 {
                     Job job = JobMaker.MakeJob(RimGamble_DefOf.RimGamble_TalkTravelingGamblerJoiner, Pawn);
                     job.playerForced = true;
                     selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                }), selPawn, Pawn) : new FloatMenuOption("CannotTalkTo".Translate(Pawn) + ": " + "Incapable".Translate().CapitalizeFirst(), null));
+                }), selPawn, Pawn) : new FloatMenuOption("RimGamble.CannotTalkTo".Translate(Pawn) + ": " + "Incapable".Translate().CapitalizeFirst(), null));
             }
         }
 

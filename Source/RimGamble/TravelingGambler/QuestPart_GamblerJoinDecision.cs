@@ -34,8 +34,8 @@ namespace RimGamble
                 return;
             }
 
-            TaggedString label = "LetterTravelingGamblerInviteJoinsAccept".Translate(pawn.Named("PAWN"));
-            TaggedString text = "LetterTravelingGamblerInviteStartAccept".Translate(pawn.Named("PAWN")).CapitalizeFirst();
+            TaggedString label = "RimGamble.LetterTravelingGamblerInviteJoinsAccept".Translate(pawn.Named("PAWN"));
+            TaggedString text = "RimGamble.LetterTravelingGamblerInviteStartAccept".Translate(pawn.Named("PAWN")).CapitalizeFirst();
             letter = (ChoiceLetter_GamblerJoinDecision)LetterMaker.MakeLetter(label, text, RimGamble_LetterDefOf.RimGamble_GamblerJoinDecision, null, quest);
             letter.signalAccept = signalAccept;
             letter.signalReject = signalReject;
@@ -67,8 +67,8 @@ namespace RimGamble
                 {
                     List<TargetInfo> list = new List<TargetInfo> { pawn };
                     List<NamedArgument> list2 = new List<NamedArgument> { pawn.Named("PAWN") };
-                    TaggedString label = "LetterTravelingGamblerJoinColonyLabelAccept".Translate(pawn.Named("PAWN"));
-                    TaggedString text = "LetterTravelingGamblerJoinColonyDescAccept".Translate(pawn.Named("PAWN"));
+                    TaggedString label = "RimGamble.LetterTravelingGamblerJoinColonyLabelAccept".Translate(pawn.Named("PAWN"));
+                    TaggedString text = "RimGamble.LetterTravelingGamblerJoinColonyDescAccept".Translate(pawn.Named("PAWN"));
                     Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.PositiveEvent, list);
                     pawn_TravelingGamblerTracker.JoinColony();
                 }
@@ -76,8 +76,8 @@ namespace RimGamble
                 {
                     List<TargetInfo> list = new List<TargetInfo> { pawn };
                     List<NamedArgument> list2 = new List<NamedArgument> { pawn.Named("PAWN") };
-                    TaggedString label = "LetterTravelingGamblerJoinColonyLabelReject".Translate(pawn.Named("PAWN"));
-                    TaggedString text = "LetterTravelingGamblerJoinColonyDescReject".Translate(pawn.Named("PAWN"));
+                    TaggedString label = "RimGamble.LetterTravelingGamblerJoinColonyLabelReject".Translate(pawn.Named("PAWN"));
+                    TaggedString text = "RimGamble.LetterTravelingGamblerJoinColonyDescReject".Translate(pawn.Named("PAWN"));
                     Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.NeutralEvent, list);
                     pawn_TravelingGamblerTracker.DoLeave();
                 }
@@ -85,8 +85,8 @@ namespace RimGamble
                 {
                     List<TargetInfo> list = new List<TargetInfo> { pawn };
                     List<NamedArgument> list2 = new List<NamedArgument> { pawn.Named("PAWN") };
-                    TaggedString label = "LetterTravelingGamblerJoinColonyLabelTimeout".Translate(pawn.Named("PAWN"));
-                    TaggedString text = "LetterTravelingGamblerJoinColonyDescTimeout".Translate(pawn.Named("PAWN"));
+                    TaggedString label = "RimGamble.LetterTravelingGamblerJoinColonyLabelTimeout".Translate(pawn.Named("PAWN"));
+                    TaggedString text = "RimGamble.LetterTravelingGamblerJoinColonyDescTimeout".Translate(pawn.Named("PAWN"));
                     Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.NeutralEvent, list);
                     pawn_TravelingGamblerTracker.DoLeave();
                 }

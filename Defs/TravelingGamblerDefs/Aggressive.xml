@@ -7,8 +7,8 @@
     <weight>4</weight>
     <workerType>RimGamble.TravelingGamblerWorker_AggressionBasic</workerType>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} hostile</letterLabel>
-    <letterDesc>Upon being rejected, {PAWN_nameDef} flew into a murderous rage and began to attack!</letterDesc>
+    <letterLabel>RimGamble.AggressiveAssaultLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveAssaultLetterDesc</letterDesc>
     <letterDef>ThreatBig</letterDef>
   </RimGamble.TravelingGamblerAggressiveDef>
 
@@ -18,8 +18,8 @@
     <weight>2</weight>
     <workerType>RimGamble.TravelingGamblerWorker_Raid</workerType>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} hostile</letterLabel>
-    <letterDesc>Upon being rejected, {PAWN_nameDef} called in reinforcements to teach you a lesson!</letterDesc>
+    <letterLabel>RimGamble.AggressiveRaidLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveRaidLetterDesc</letterDesc>
     <letterDef>ThreatBig</letterDef>
   </RimGamble.TravelingGamblerAggressiveDef>
 
@@ -29,12 +29,12 @@
     <weight>2</weight>
     <workerType>RimGamble.TravelingGamblerWorker_DelayedRaid</workerType>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} left</letterLabel>
-    <letterDesc>Upon being rejected, {PAWN_nameDef} left, but as they leave you can tell they are not happy you denied them.</letterDesc>
+    <letterLabel>RimGamble.AggressiveDelayedRaidLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveDelayedRaidLetterDesc</letterDesc>
     <letterDef>NeutralEvent</letterDef>
 
-    <raidLetterLabel>{PAWN_nameDef} strikes back</raidLetterLabel>
-    <raidLetterDesc>{PAWN_nameDef} has returned the favor with a full-scale raid!</raidLetterDesc>
+    <raidLetterLabel>RimGamble.AggressiveDelayedRaidExtraLetterLabel</raidLetterLabel>
+    <raidLetterDesc>RimGamble.AggressiveDelayedRaidExtraLetterDesc</raidLetterDesc>
     <raidLetterDef>ThreatBig</raidLetterDef>
     <raidDelayTicks>6500</raidDelayTicks>
   </RimGamble.TravelingGamblerAggressiveDef>
@@ -45,12 +45,12 @@
     <weight>2</weight>
     <workerType>RimGamble.TravelingGamblerWorker_Theft</workerType>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} Left</letterLabel>
-    <letterDesc>Upon being rejected, {PAWN_nameDef} left angerly - it seems some silver has gone missing!</letterDesc>
+    <letterLabel>RimGamble.AggressiveTheftLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveTheftLetterDesc</letterDesc>
     <letterDef>ThreatSmall</letterDef>
 
     <hasAlternativeLetter>true</hasAlternativeLetter>
-    <alternativeLetterDesc>Upon being rejected, {PAWN_nameDef} left angerly - they wanted to steal from you but instead left upset as they could not find any silver to steal.</alternativeLetterDesc>
+    <alternativeLetterDesc>RimGamble.AggressiveTheftAlternativeLetterDesc</alternativeLetterDesc>
   </RimGamble.TravelingGamblerAggressiveDef>
 
 </Defs>

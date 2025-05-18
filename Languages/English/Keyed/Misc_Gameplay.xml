@@ -1,28 +1,78 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <!-- Traveling Gambler -->
-  <LetterTravelingGamblerAppearedAppended>{PAWN_pronoun} wants to talk. You can send a colonist to hear what {PAWN_pronoun} has to say.</LetterTravelingGamblerAppearedAppended>
-  <LetterTravelingGamblerInviteJoins>{PAWN_nameDef} wants to hang around for a bit</LetterTravelingGamblerInviteJoins>
-  <LetterTravelingGamblerInviteStart>A strange traveler named {PAWN_nameDef} has arrived, looking to stay for a bit.</LetterTravelingGamblerInviteStart>
-  <LetterTravelingGamblerInviteAppend>You feel like there is something about {PAWN_nameDef} that {PAWN_pronoun} is not telling you.</LetterTravelingGamblerInviteAppend>
+  <RimGamble.LetterTravelingGamblerAppearedAppended>{PAWN_pronoun} wants to talk. You can send a colonist to hear what {PAWN_pronoun} has to say.</RimGamble.LetterTravelingGamblerAppearedAppended>
+  <RimGamble.LetterTravelingGamblerInviteJoins>{PAWN_nameDef} wants to hang around for a bit</RimGamble.LetterTravelingGamblerInviteJoins>
+  <RimGamble.LetterTravelingGamblerInviteStart>A strange traveler named {PAWN_nameDef} has arrived, looking to stay for a bit.</RimGamble.LetterTravelingGamblerInviteStart>
+  <RimGamble.LetterTravelingGamblerInviteAppend>You feel like there is something about {PAWN_nameDef} that {PAWN_pronoun} is not telling you.</RimGamble.LetterTravelingGamblerInviteAppend>
   
-  <AcceptTravelingGambler>Allow {PAWN_nameDef} to stay</AcceptTravelingGambler>
-  <CaptureTravelingGambler>Send {SPEAKER_nameDef} to capture {PAWN_nameDef}</CaptureTravelingGambler>
-  <RejectTravelingGambler>Send {PAWN_nameDef} away</RejectTravelingGambler>
+  <RimGamble.AcceptTravelingGambler>Allow {PAWN_nameDef} to stay</RimGamble.AcceptTravelingGambler>
+  <RimGamble.CaptureTravelingGambler>Send {SPEAKER_nameDef} to capture {PAWN_nameDef}</RimGamble.CaptureTravelingGambler>
+  <RimGamble.RejectTravelingGambler>Send {PAWN_nameDef} away</RimGamble.RejectTravelingGambler>
 
-  <TravelingGamblerTimeout>Traveling gambler about to leave</TravelingGamblerTimeout>
-  <TravelingGamblerTimeoutDesc>A traveling gambler is about to leave your map. Speak to them or interact before they go.</TravelingGamblerTimeoutDesc>
+  <RimGamble.TravelingGamblerTimeout>Traveling gambler about to leave</RimGamble.TravelingGamblerTimeout>
+  <RimGamble.TravelingGamblerTimeoutDesc>A traveling gambler is about to leave your map. Speak to them or interact before they go.</RimGamble.TravelingGamblerTimeoutDesc>
 
-  <RimGamble_SabotageResultLabel>Sabotage</RimGamble_SabotageResultLabel>
-  <RimGamble_SabotageResultDesc>After {PAWN_nameDef} left, signs of sabotage were discovered...</RimGamble_SabotageResultDesc>
+  <RimGamble.SabotageResultLabel>Sabotage</RimGamble.SabotageResultLabel>
+  <RimGamble.SabotageResultDesc>After {PAWN_nameDef} left, signs of sabotage were discovered...</RimGamble.SabotageResultDesc>
 
-  <LetterTravelingGamblerInviteJoinsAccept>{PAWN_nameDef} wants to join</LetterTravelingGamblerInviteJoinsAccept>
-  <LetterTravelingGamblerInviteStartAccept>{PAWN_nameDef} likes the colony, and would like the become a member.</LetterTravelingGamblerInviteStartAccept>
+  <RimGamble.LetterTravelingGamblerInviteJoinsAccept>{PAWN_nameDef} wants to join</RimGamble.LetterTravelingGamblerInviteJoinsAccept>
+  <RimGamble.LetterTravelingGamblerInviteStartAccept>{PAWN_nameDef} likes the colony, and would like the become a member.</RimGamble.LetterTravelingGamblerInviteStartAccept>
   
-  <LetterTravelingGamblerJoinColonyLabelAccept>{PAWN_nameDef} joined the colony</LetterTravelingGamblerJoinColonyLabelAccept>
-  <LetterTravelingGamblerJoinColonyDescAccept>{PAWN_nameDef} thanks you! They have officially joined the colony!</LetterTravelingGamblerJoinColonyDescAccept>
-  <LetterTravelingGamblerJoinColonyLabelReject>{PAWN_nameDef} left the colony</LetterTravelingGamblerJoinColonyLabelReject>
-  <LetterTravelingGamblerJoinColonyDescReject>{PAWN_nameDef} understands, they thank you and leave.</LetterTravelingGamblerJoinColonyDescReject>
-  <LetterTravelingGamblerJoinColonyLabelTimeout>{PAWN_nameDef} left the colony</LetterTravelingGamblerJoinColonyLabelTimeout>
-  <LetterTravelingGamblerJoinColonyDescTimeout>{PAWN_nameDef} did not hear back from you and took that as a no. They thank you and leave.</LetterTravelingGamblerJoinColonyDescTimeout>
+  <RimGamble.LetterTravelingGamblerJoinColonyLabelAccept>{PAWN_nameDef} joined the colony</RimGamble.LetterTravelingGamblerJoinColonyLabelAccept>
+  <RimGamble.LetterTravelingGamblerJoinColonyDescAccept>{PAWN_nameDef} thanks you! They have officially joined the colony!</RimGamble.LetterTravelingGamblerJoinColonyDescAccept>
+  <RimGamble.LetterTravelingGamblerJoinColonyLabelReject>{PAWN_nameDef} left the colony</RimGamble.LetterTravelingGamblerJoinColonyLabelReject>
+  <RimGamble.LetterTravelingGamblerJoinColonyDescReject>{PAWN_nameDef} understands, they thank you and leave.</RimGamble.LetterTravelingGamblerJoinColonyDescReject>
+  <RimGamble.LetterTravelingGamblerJoinColonyLabelTimeout>{PAWN_nameDef} left the colony</RimGamble.LetterTravelingGamblerJoinColonyLabelTimeout>
+  <RimGamble.LetterTravelingGamblerJoinColonyDescTimeout>{PAWN_nameDef} did not hear back from you and took that as a no. They thank you and leave.</RimGamble.LetterTravelingGamblerJoinColonyDescTimeout>
+
+  <!-- Acceptance -->
+  <RimGamble.AcceptanceLeavesLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceLeavesLetterLabel>
+  <RimGamble.AcceptanceLeavesLetterDesc>{PAWN_nameDef} thanks you for your hospitality, but says that it is time for {PAWN_objective} to move on.</RimGamble.AcceptanceLeavesLetterDesc>
+  <RimGamble.AcceptanceHumanBombLetterLabel>{PAWN_nameDef} hostile</RimGamble.AcceptanceHumanBombLetterLabel>
+  <RimGamble.AcceptanceHumanBombLetterDesc>{PAWN_nameDef} whispered something about cleansing the impure. {PAWN_pronoun} burst apart in a flash.</RimGamble.AcceptanceHumanBombLetterDesc>
+  <RimGamble.AcceptanceSabotageLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceSabotageLetterLabel>
+  <RimGamble.AcceptanceSabotageLetterDesc>{PAWN_nameDef} is now leaving, but they seem to be acting strangely before leaving...</RimGamble.AcceptanceSabotageLetterDesc>
+  <RimGamble.AcceptanceLifeOfPartyLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceLifeOfPartyLetterLabel>
+  <RimGamble.AcceptanceLifeOfPartyLetterDesc>{PAWN_nameDef} is now leaving, and the colony feels a little quieter without them. Their charm and energy brought joy to many, and their absence is already felt.</RimGamble.AcceptanceLifeOfPartyLetterDesc>
+  <RimGamble.AcceptanceRumorSpreadLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceRumorSpreadLetterLabel>
+  <RimGamble.AcceptanceRumorSpreadLetterDesc>{PAWN_nameDef} has departed, but something feels off. The rumors they seeded continue to stir tension, and the air is thick with unspoken doubts.</RimGamble.AcceptanceRumorSpreadLetterDesc>
+  <RimGamble.AcceptanceTheftLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceTheftLetterLabel>
+  <RimGamble.AcceptanceTheftLetterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - it seems some silver has gone missing!</RimGamble.AcceptanceTheftLetterDesc>
+  <RimGamble.AcceptanceTheftAlternateLetterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - they wanted to steal from you but instead left upset as they could not find any silver to steal.</RimGamble.AcceptanceTheftAlternateLetterDesc>
+  <RimGamble.AcceptanceTradeCaravanLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceTradeCaravanLetterLabel>
+  <RimGamble.AcceptanceTradeCaravanLetterDesc>{PAWN_nameDef} is leaving, they have put in a good word with a trade caravan, they should be arriving soon.</RimGamble.AcceptanceTradeCaravanLetterDesc>
+  <RimGamble.AcceptanceTeachSkillLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceTeachSkillLetterLabel>
+  <RimGamble.AcceptanceTeachSkillLetterDesc>{PAWN_nameDef} leaves - sharing a moment of insight. {LEARNER_nameDef} has gained skill in {SKILL}.</RimGamble.AcceptanceTeachSkillLetterDesc>
+  <RimGamble.AcceptanceGiveInspirationLetterLabel>{PAWN_nameDef} departure</RimGamble.AcceptanceGiveInspirationLetterLabel>
+  <RimGamble.AcceptanceGiveInspirationLetterDesc>{PAWN_nameDef} leaves - sharing a moment of inspiration. {LEARNER_nameDef} has gained the {INSPIRATION} inspiration.</RimGamble.AcceptanceGiveInspirationLetterDesc>
+  <RimGamble.AcceptanceJoinLetterLabel>Official Join Request</RimGamble.AcceptanceJoinLetterLabel>
+  <RimGamble.AcceptanceJoinLetterDesc>The traveler {PAWN} is ready to join your colony...</RimGamble.AcceptanceJoinLetterDesc>
+
+  <!-- Rejection -->
+  <RimGamble.RejectionDepartureLetterLabel>{PAWN_nameDef} departure</RimGamble.RejectionDepartureLetterLabel>
+  <RimGamble.RejectionDepartureLetterDesc>{PAWN_nameDef} is disappointed by the way that you have treated {PAWN_objective}. {PAWN_pronoun} has decided to leave.</RimGamble.RejectionDepartureLetterDesc>
+
+  <!-- Aggressive -->
+  <RimGamble.AggressiveAssaultLetterLabel>{PAWN_nameDef} hostile</RimGamble.AggressiveAssaultLetterLabel>
+  <RimGamble.AggressiveAssaultLetterDesc>Upon being rejected, {PAWN_nameDef} flew into a murderous rage and began to attack!</RimGamble.AggressiveAssaultLetterDesc>
+  <RimGamble.AggressiveRaidLetterLabel>{PAWN_nameDef} hostile</RimGamble.AggressiveRaidLetterLabel>
+  <RimGamble.AggressiveRaidLetterDesc>Upon being rejected, {PAWN_nameDef} called in reinforcements to teach you a lesson!</RimGamble.AggressiveRaidLetterDesc>
+  <RimGamble.AggressiveDelayedRaidLetterLabel>{PAWN_nameDef} left</RimGamble.AggressiveDelayedRaidLetterLabel>
+  <RimGamble.AggressiveDelayedRaidLetterDesc>Upon being rejected, {PAWN_nameDef} left, but as they leave you can tell they are not happy you denied them.</RimGamble.AggressiveDelayedRaidLetterDesc>
+  <RimGamble.AggressiveDelayedRaidExtraLetterLabel>{PAWN_nameDef} strikes back</RimGamble.AggressiveDelayedRaidExtraLetterLabel>
+  <RimGamble.AggressiveDelayedRaidExtraLetterDesc>{PAWN_nameDef} has returned the favor with a full-scale raid!</RimGamble.AggressiveDelayedRaidExtraLetterDesc>
+  <RimGamble.AggressiveTheftLetterLabel>{PAWN_nameDef} Left</RimGamble.AggressiveTheftLetterLabel>
+  <RimGamble.AggressiveTheftLetterDesc>Upon being rejected, {PAWN_nameDef} left angerly - it seems some silver has gone missing!</RimGamble.AggressiveTheftLetterDesc>
+  <RimGamble.AggressiveTheftAlternativeLetterDesc>Upon being rejected, {PAWN_nameDef} left angerly - they wanted to steal from you but instead left upset as they could not find any silver to steal.</RimGamble.AggressiveTheftAlternativeLetterDesc>
+
+  <!-- Form -->
+  <RimGamble.FormLuckyDrifterLetterLabel>A well-dressed traveler approaches your colony, flipping a coin in the air.</RimGamble.FormLuckyDrifterLetterLabel>
+  <RimGamble.FormLuckyDrifterLetterDesc>The traveler's expression is unreadable as {PAWN_pronoun} idly flips a coin between {PAWN_possessive} fingers. {PAWN_pronoun} lingers for a moment, waiting, before pocketing the coin and watching the colony with curiosity.</RimGamble.FormLuckyDrifterLetterDesc>
+  <RimGamble.FormRiskyCardsharkLetterLabel>A sharp-dressed card player strides confidently toward your colony.</RimGamble.FormRiskyCardsharkLetterLabel>
+  <RimGamble.FormRiskyCardsharkLetterDesc>The cardshark moves with an effortless confidence, flicking a card between {PAWN_possessive} fingers before making it vanish up a sleeve. {PAWN_pronoun} stands silently, as though waiting for a challenge.</RimGamble.FormRiskyCardsharkLetterDesc>
+  <RimGamble.FormWashedUpHustlerLetterLabel>A ragged gambler stumbles toward your colony, muttering about "one last chance."</RimGamble.FormWashedUpHustlerLetterLabel>
+  <RimGamble.FormWashedUpHustlerLetterDesc>Disheveled and weary, the gambler moves with an uncertain step. {PAWN_pronoun} pats down {PAWN_possessive} empty pockets and exhales sharply, scanning the colony as though searching for something - perhaps another chance.</RimGamble.FormWashedUpHustlerLetterDesc>
+  <RimGamble.FormTricksterLetterLabel>A smirking gambler with a deck of marked cards approaches.</RimGamble.FormTricksterLetterLabel>
+  <RimGamble.FormTricksterLetterDesc>There's something unsettling about the way the gambler moves - too smooth, too practiced. {PAWN_pronoun} pulls a card from the deck, holds it for a moment, then flicks it away with a slight smirk. There's no telling what's on in {PAWN_possessive} mind.</RimGamble.FormTricksterLetterDesc>
 </LanguageData>

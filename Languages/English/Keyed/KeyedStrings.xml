@@ -35,7 +35,7 @@
     <RimGamble.Win>You Win!</RimGamble.Win>
     <RimGamble.Loss>You Lost!</RimGamble.Loss>
 
-    <!-- Text that is used inside of the Traveling Gambler -->
+    <!-- Traveling Gambler -->
     <RimGamble.TravelingGamblerDropPod>Traveling Gambler Left - Drop Pod</RimGamble.TravelingGamblerDropPod>
     <RimGamble.TravelingGamblerDropPodDesc>The Traveling Gambler has gifted you a loot crate. They thank you for allowing them to stay.</RimGamble.TravelingGamblerDropPodDesc>
 </LanguageData>

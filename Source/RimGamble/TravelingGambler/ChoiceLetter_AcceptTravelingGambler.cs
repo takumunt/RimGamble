@@ -47,9 +47,9 @@ namespace RimGamble
                     yield break;
                 }
 
-                DiaOption diaOption = new DiaOption("AcceptTravelingGambler".Translate(pawn.Named("PAWN"), speaker.Named("SPEAKER")));
-                DiaOption optionCapture = new DiaOption("CaptureTravelingGambler".Translate(pawn.Named("PAWN"), speaker.Named("SPEAKER")));
-                DiaOption optionReject = new DiaOption("RejectTravelingGambler".Translate(pawn.Named("PAWN"), speaker.Named("SPEAKER")));
+                DiaOption diaOption = new DiaOption("RimGamble.AcceptTravelingGambler".Translate(pawn.Named("PAWN"), speaker.Named("SPEAKER")));
+                DiaOption optionCapture = new DiaOption("RimGamble.CaptureTravelingGambler".Translate(pawn.Named("PAWN"), speaker.Named("SPEAKER")));
+                DiaOption optionReject = new DiaOption("RimGamble.RejectTravelingGambler".Translate(pawn.Named("PAWN"), speaker.Named("SPEAKER")));
                 diaOption.action = delegate
                 {
                     Find.SignalManager.SendSignal(new Signal(signalAccept));

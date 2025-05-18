@@ -27,8 +27,8 @@
     <defName>LuckyDrifter</defName>
     <label>lucky drifter</label>
     <weight>1</weight>
-    <letterLabel>A well-dressed traveler approaches your colony, flipping a coin in the air.</letterLabel>
-    <letterPrompt>The traveler's expression is unreadable as {PAWN_pronoun} idly flips a coin between {PAWN_possessive} fingers. {PAWN_pronoun} lingers for a moment, waiting, before pocketing the coin and watching the colony with curiosity.</letterPrompt>
+    <letterLabel>RimGamble.FormLuckyDrifterLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormLuckyDrifterLetterDesc</letterPrompt>
     <minGenerationAge>25</minGenerationAge>
     <maxGenerationAge>55</maxGenerationAge>
     <skills>
@@ -60,8 +60,8 @@
     <defName>RiskyCardshark</defName>
     <label>risky cardshark</label>
     <weight>1</weight>
-    <letterLabel>A sharp-dressed card player strides confidently toward your colony.</letterLabel>
-    <letterPrompt>The cardshark moves with an effortless confidence, flicking a card between {PAWN_possessive} fingers before making it vanish up a sleeve. {PAWN_pronoun} stands silently, as though waiting for a challenge.</letterPrompt>
+    <letterLabel>RimGamble.FormRiskyCardsharkLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormRiskyCardsharkLetterDesc</letterPrompt>
     <minGenerationAge>30</minGenerationAge>
     <maxGenerationAge>60</maxGenerationAge>
     <skills>
@@ -98,8 +98,8 @@
     <defName>WashedUpHustler</defName>
     <label>washed-up hustler</label>
     <weight>1</weight>
-    <letterLabel>A ragged gambler stumbles toward your colony, muttering about "one last chance."</letterLabel>
-    <letterPrompt>Disheveled and weary, the gambler moves with an uncertain step. {PAWN_pronoun} pats down {PAWN_possessive} empty pockets and exhales sharply, scanning the colony as though searching for something - perhaps another chance.</letterPrompt>
+    <letterLabel>RimGamble.FormWashedUpHustlerLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormWashedUpHustlerLetterDesc</letterPrompt>
     <minGenerationAge>40</minGenerationAge>
     <maxGenerationAge>70</maxGenerationAge>
     <skills>
@@ -132,8 +132,8 @@
     <defName>Trickster</defName>
     <label>trickster</label>
     <weight>1</weight>
-    <letterLabel>A smirking gambler with a deck of marked cards approaches.</letterLabel>
-    <letterPrompt>There's something unsettling about the way the gambler moves - too smooth, too practiced. {PAWN_pronoun} pulls a card from the deck, holds it for a moment, then flicks it away with a slight smirk. There's no telling what's on in {PAWN_possessive} mind.</letterPrompt>
+    <letterLabel>RimGamble.FormTricksterLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormTricksterLetterDesc</letterPrompt>
     <minGenerationAge>22</minGenerationAge>
     <maxGenerationAge>45</maxGenerationAge>
     <skills>

@@ -7,8 +7,8 @@
     <workerType>RimGamble.TravelingGambler_DepartAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} thanks you for your hospitality, but says that it is time for {PAWN_objective} to move on.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceLeavesLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceLeavesLetterDesc</letterDesc>
     <letterDef>NeutralEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
   
@@ -19,8 +19,8 @@
     <workerType>RimGamble.TravelingGambler_HumanBombAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} hostile</letterLabel>
-    <letterDesc>{PAWN_nameDef} whispered something about cleansing the impure. {PAWN_pronoun} burst apart in a flash.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceHumanBombLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceHumanBombLetterDesc</letterDesc>
     <letterDef>NegativeEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
 
@@ -31,15 +31,15 @@
     <workerType>RimGamble.TravelingGamblerWorker_SabotageAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} is now leaving, but they seem to be acting strangely before leaving...</letterDesc>
+    <letterLabel>RimGamble.AcceptanceSabotageLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceSabotageLetterDesc</letterDesc>
     <letterDef>NeutralEvent</letterDef>
   
     <sabotageMinTargets>2</sabotageMinTargets>
     <sabotageMaxTargets>5</sabotageMaxTargets>
     <sabotageDelayTicks>6000</sabotageDelayTicks>
-    <sabotageResultLetterLabel>RimGamble_SabotageResultLabel</sabotageResultLetterLabel>
-    <sabotageResultLetterDesc>RimGamble_SabotageResultDesc</sabotageResultLetterDesc>    
+    <sabotageResultLetterLabel>RimGamble.SabotageResultLabel</sabotageResultLetterLabel>
+    <sabotageResultLetterDesc>RimGamble.SabotageResultDesc</sabotageResultLetterDesc>    
   </RimGamble.TravelingGamblerAcceptanceDef>
 
   <RimGamble.TravelingGamblerAcceptanceDef>
@@ -49,8 +49,8 @@
     <workerType>RimGamble.TravelingGamblerWorker_MoodAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} is now leaving, and the colony feels a little quieter without them. Their charm and energy brought joy to many, and their absence is already felt.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceLifeOfPartyLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceLifeOfPartyLetterDesc</letterDesc>
     <letterDef>NeutralEvent</letterDef>
 
     <moodEffect>RimGamble_LifeOfTheParty</moodEffect>
@@ -63,8 +63,8 @@
     <workerType>RimGamble.TravelingGamblerWorker_MoodAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} has departed, but something feels off. The rumors they seeded continue to stir tension, and the air is thick with unspoken doubts.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceRumorSpreadLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceRumorSpreadLetterDesc</letterDesc>
     <letterDef>NeutralEvent</letterDef>
 
     <moodEffect>RimGamble_RumorSpread</moodEffect>
@@ -77,12 +77,12 @@
     <workerType>RimGamble.TravelingGamblerWorker_TheftAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - it seems some silver has gone missing!</letterDesc>
+    <letterLabel>RimGamble.AcceptanceTheftLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceTheftLetterDesc</letterDesc>
     <letterDef>ThreatSmall</letterDef>
 
     <hasAlternativeLetter>true</hasAlternativeLetter>
-    <alternativeLetterDesc>After staying with you {PAWN_nameDef} seems to have taken advantage of your kindness - they wanted to steal from you but instead left upset as they could not find any silver to steal.</alternativeLetterDesc>
+    <alternativeLetterDesc>RimGamble.AcceptanceTheftAlternateLetterDesc</alternativeLetterDesc>
   </RimGamble.TravelingGamblerAcceptanceDef>
 
   <RimGamble.TravelingGamblerAcceptanceDef>
@@ -92,8 +92,8 @@
     <workerType>RimGamble.TravelingGambler_TradeCaravanAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} is leaving, they have put in a good word with a trade caravan, they should be arriving soon.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceTradeCaravanLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceTradeCaravanLetterDesc</letterDesc>
     <letterDef>NeutralEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
 
@@ -116,8 +116,8 @@
     <workerType>RimGamble.TravelingGamblerWorker_TeachSkillAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} leaves - sharing a moment of insight. {LEARNER_nameDef} has gained skill in {SKILL}.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceTeachSkillLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceTeachSkillLetterDesc</letterDesc>
     <letterDef>PositiveEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
 
@@ -128,8 +128,8 @@
     <workerType>RimGamble.TravelingGamblerWorker_GiveInspirationAcceptance</workerType>
     <triggersAfterDays>2~3</triggersAfterDays>
     <hasLetter>true</hasLetter>
-    <letterLabel>{PAWN_nameDef} departure</letterLabel>
-    <letterDesc>{PAWN_nameDef} leaves - sharing a moment of inspiration. {LEARNER_nameDef} has gained the {INSPIRATION} inspiration.</letterDesc>
+    <letterLabel>RimGamble.AcceptanceGiveInspirationLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AcceptanceGiveInspirationLetterDesc</letterDesc>
     <letterDef>PositiveEvent</letterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
 
@@ -142,8 +142,8 @@
 
     <clearLord>false</clearLord>
 
-    <joinLetterLabel>Official Join Request</joinLetterLabel>
-    <joinLetterDesc>The traveler {PAWN} is ready to join your colony...</joinLetterDesc>
+    <joinLetterLabel>RimGamble.AcceptanceJoinLetterLabel</joinLetterLabel>
+    <joinLetterDesc>RimGamble.AcceptanceJoinLetterDesc</joinLetterDesc>
     <joinLetterDef>RimGamble_GamblerJoinDecision</joinLetterDef>
   </RimGamble.TravelingGamblerAcceptanceDef>
   

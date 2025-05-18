@@ -47,7 +47,7 @@ namespace RimGamble
             if (gamblers.NullOrEmpty())
                 return string.Empty;
 
-            return "TravelingGamblerTimeout".Translate();
+            return "RimGamble.TravelingGamblerTimeout".Translate();
         }
 
         public override TaggedString GetExplanation()
@@ -63,7 +63,7 @@ namespace RimGamble
                 sb.AppendLineTagged($"  - {pawn.LabelShortCap.Colorize(ColoredText.NameColor)}, {tracker.form.label.Colorize(Color.gray)}: {timeRemaining.ToStringTicksToPeriodVerbose()}");
             }
 
-            return "TravelingGamblerTimeoutDesc".Translate() + ":\n\n" + sb.ToString();
+            return "RimGamble.TravelingGamblerTimeoutDesc".Translate() + ":\n\n" + sb.ToString();
         }
 
         public override AlertReport GetReport()

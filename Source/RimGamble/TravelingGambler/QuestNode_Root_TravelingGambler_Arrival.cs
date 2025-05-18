@@ -94,8 +94,8 @@ namespace RimGamble
         private void SendLetter(Pawn pawn)
         {
             string text = pawn.GetKindLabelSingular().CapitalizeFirst();
-            TaggedString taggedString = "LetterTravelingGamblerInviteStart".Translate(pawn.Named("PAWN")).CapitalizeFirst();
-            ChoiceLetter let = LetterMaker.MakeLetter(text: taggedString + ("\n\n" + "LetterTravelingGamblerAppearedAppended".Translate(pawn.Named("PAWN")).CapitalizeFirst()), label: text, def: LetterDefOf.NeutralEvent, lookTargets: pawn);
+            TaggedString taggedString = "RimGamble.LetterTravelingGamblerInviteStart".Translate(pawn.Named("PAWN")).CapitalizeFirst();
+            ChoiceLetter let = LetterMaker.MakeLetter(text: taggedString + ("\n\n" + "RimGamble.LetterTravelingGamblerAppearedAppended".Translate(pawn.Named("PAWN")).CapitalizeFirst()), label: text, def: LetterDefOf.NeutralEvent, lookTargets: pawn);
             Find.LetterStack.ReceiveLetter(let);
         }
     }

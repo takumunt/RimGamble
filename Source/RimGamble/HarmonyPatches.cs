@@ -51,12 +51,12 @@ namespace RimGamble
                 // check if the pawn is a warningpawn
                 if (__instance.kindDef == PawnKindDef.Named("RimGamble_WarningPawn"))
                 {
-                    option = (!selPawn.CanReach(__instance, PathEndMode.OnCell, Danger.Deadly)) ? new FloatMenuOption("CannotTalkTo".Translate(__instance) + ": " + "NoPath".Translate().CapitalizeFirst(), null) : (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking) ? FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("TalkTo".Translate(__instance), delegate
+                    option = (!selPawn.CanReach(__instance, PathEndMode.OnCell, Danger.Deadly)) ? new FloatMenuOption("RimGamble.CannotTalkTo".Translate(__instance) + ": " + "NoPath".Translate().CapitalizeFirst(), null) : (selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking) ? FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption("RimGamble.TalkTo".Translate(__instance), delegate
                     {
                         Job job = JobMaker.MakeJob(RimGamble_DefOf.RimGamble_TalkWarningPawn, __instance);
                         job.playerForced = true;
                         selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                    }), selPawn, __instance) : new FloatMenuOption("CannotTalkTo".Translate(__instance) + ": " + "Incapable".Translate().CapitalizeFirst(), null));
+                    }), selPawn, __instance) : new FloatMenuOption("RimGamble.CannotTalkTo".Translate(__instance) + ": " + "Incapable".Translate().CapitalizeFirst(), null));
                     modifiedOptions.Add(option);
                 }
 

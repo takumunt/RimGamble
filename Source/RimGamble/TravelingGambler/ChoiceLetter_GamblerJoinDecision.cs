@@ -42,8 +42,8 @@ namespace RimGamble
                     yield break;
                 }
 
-                DiaOption diaOption = new DiaOption("AcceptTravelingGambler".Translate(pawn.Named("PAWN")));
-                DiaOption optionReject = new DiaOption("RejectTravelingGambler".Translate(pawn.Named("PAWN")));
+                DiaOption diaOption = new DiaOption("RimGamble.AcceptTravelingGambler".Translate(pawn.Named("PAWN")));
+                DiaOption optionReject = new DiaOption("RimGamble.RejectTravelingGambler".Translate(pawn.Named("PAWN")));
                 diaOption.action = delegate
                 {
                     Find.SignalManager.SendSignal(new Signal(signalAccept));

@@ -31,9 +31,9 @@ namespace RimGamble
                 return;
             }
 
-            TaggedString label = "LetterTravelingGamblerInviteJoins".Translate(pawn.Named("PAWN"));
-            TaggedString text = travelinggambler.form.letterPrompt.Formatted(pawn.Named("PAWN")).CapitalizeFirst();
-            text += "\n\n" + "LetterTravelingGamblerInviteAppend".Translate(pawn.Named("PAWN")).CapitalizeFirst();
+            TaggedString label = "RimGamble.LetterTravelingGamblerInviteJoins".Translate(pawn.Named("PAWN"));
+            TaggedString text = travelinggambler.form.letterPrompt.Translate(pawn.Named("PAWN")).CapitalizeFirst();
+            text += "\n\n" + "RimGamble.LetterTravelingGamblerInviteAppend".Translate(pawn.Named("PAWN")).CapitalizeFirst();
             letter = (ChoiceLetter_AcceptTravelingGambler)LetterMaker.MakeLetter(label, text, RimGamble_LetterDefOf.RimGamble_AcceptTravelingGambler, null, quest);
             letter.signalAccept = signalAccept;
             letter.signalCapture = signalCapture;
