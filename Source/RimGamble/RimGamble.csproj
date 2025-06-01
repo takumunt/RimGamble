@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CaravanGambling\JobDriver_StartCaravanGambling.cs" />
     <Compile Include="CaravanGambling\StakeItem.cs" />
+    <Compile Include="CaravanGambling\WagerItem.cs" />
     <Compile Include="GachaMachine\Refuel\CompGachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\CompProperties_GachaRefuelable.cs" />
     <Compile Include="GachaMachine\Refuel\GachaRefuelWorkGiverUtility.cs" />
@@ -78,7 +79,25 @@
     <Compile Include="Storyteller\StorytellerCompProperties_MagEvents.cs" />
     <Compile Include="Storyteller\StorytellerComp_MagEvents.cs" />
     <Compile Include="Storyteller\WarningData.cs" />
+    <Compile Include="TravelingGambler\Alert_TravelingGamblerTimeout.cs" />
+    <Compile Include="TravelingGambler\ChoiceLetter_AcceptTravelingGambler.cs" />
+    <Compile Include="TravelingGambler\ChoiceLetter_GamblerJoinDecision.cs" />
+    <Compile Include="TravelingGambler\DelayedEntryIExposables.cs" />
+    <Compile Include="TravelingGambler\PawnTravelingGambler.cs" />
+    <Compile Include="TravelingGambler\Pawn_TravelingGamblerTracker.cs" />
+    <Compile Include="TravelingGambler\QuestNode_Root_GamblerJoinDecision.cs" />
+    <Compile Include="TravelingGambler\QuestNode_Root_TravelingGambler_Arrival.cs" />
+    <Compile Include="TravelingGambler\QuestPart_GamblerJoinDecision.cs" />
+    <Compile Include="TravelingGambler\QuestPart_TravelingGamblerOutcomes.cs" />
+    <Compile Include="TravelingGambler\TravelingGamblerDefs.cs" />
+    <Compile Include="TravelingGambler\TravelingGamblerJobDrivers.cs" />
+    <Compile Include="TravelingGambler\TravelingGamblerTrackerManager.cs" />
+    <Compile Include="TravelingGambler\TravelingGamblerUtility.cs" />
+    <Compile Include="TravelingGambler\TravelingGamblerWorkers.cs" />
+    <Compile Include="TravelingGambler\TravelingGambler_DoFunctions.cs" />
     <Compile Include="UI\Window_CaravanGambling.cs" />
+    <Compile Include="DebugActionRimGamble.cs" />
+    <Compile Include="Utils\RimGamble_LetterDefOf.cs" />
     <Compile Include="CaravanGambling\CaravanGambleAI.cs" />
     <Compile Include="CaravanGambling\WagerItem.cs" />
     <Compile Include="Utils\RimGamble_StaticCollections.cs" />

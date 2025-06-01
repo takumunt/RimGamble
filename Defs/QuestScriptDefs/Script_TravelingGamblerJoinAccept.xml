@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <QuestScriptDef>
+    <defName>GamblerJoinDecisionQuest</defName>
+    <autoAccept>true</autoAccept>
+    <defaultHidden>true</defaultHidden>
+    <isRootSpecial>true</isRootSpecial>
+    <questNameRules>
+      <rulesStrings>
+        <li>questDescription->travelinggamblerjoin</li> <!-- hidden -->
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->travelinggamblerjoin</li> <!-- hidden -->
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="RimGamble.QuestNode_Root_GamblerJoinDecision" />
+  </QuestScriptDef>
+</Defs>

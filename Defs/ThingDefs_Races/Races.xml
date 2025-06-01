@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="Human">
+    <defName>TravelingGambler</defName>
+    <tradeability>Sellable</tradeability>
+    <race>
+      <lifeExpectancy>100</lifeExpectancy>
+      <linkedCorpseKind>Human</linkedCorpseKind>
+      <useMeatFrom>Human</useMeatFrom>
+    </race>
+  </ThingDef>
+</Defs>

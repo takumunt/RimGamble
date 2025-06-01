@@ -28,4 +28,29 @@
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
 
+  <JobDef>
+    <defName>RimGamble_TalkTravelingGamblerJoiner</defName>
+    <driverClass>RimGamble.JobDriver_TalkTravelingGambler</driverClass>
+    <reportString>talking to TargetA.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
+  <JobDef>
+    <defName>RimGamble_LeaveAfterSabotage</defName>
+    <driverClass>RimGamble.JobDriver_LeaveAfterSabotage</driverClass>
+  </JobDef>
+
+  <JobDef>
+    <defName>RimGamble_StealSilver</defName>
+    <driverClass>RimGamble.JobDriver_StealSilver</driverClass>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>false</playerInterruptible>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+  </JobDef>
+
+  <JobDef>
+    <defName>RimGamble_SpawnTradeCaravan</defName>
+    <driverClass>RimGamble.JobDriver_SpawnTradeCaravan</driverClass>
+  </JobDef>
+
 </Defs>

@@ -37,4 +37,42 @@
       </li>
     </stages>
   </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>RimGamble_LifeOfTheParty</defName>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <nullifyingTraits>
+      <li>Ascetic</li>
+    </nullifyingTraits>
+    <nullifyingPrecepts>
+      <li MayRequire="Ludeon.RimWorld.Ideology">RoughLiving_Welcomed</li>
+    </nullifyingPrecepts>
+    <stages>
+      <li>
+        <label>traveling gambler left a good impression</label>
+        <description>The colony was happy to have the traveling gambler around.</description>
+        <baseMoodEffect>15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>RimGamble_RumorSpread</defName>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <nullifyingTraits>
+      <li>Ascetic</li>
+    </nullifyingTraits>
+    <nullifyingPrecepts>
+      <li MayRequire="Ludeon.RimWorld.Ideology">RoughLiving_Welcomed</li>
+    </nullifyingPrecepts>
+    <stages>
+      <li>
+        <label>traveling gambler left a bad impression</label>
+        <description>The colony seems to be having doubts about each other, stemming from the traveling gambler.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
 </Defs>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <RimGamble.TalkTo>Talk to {0_nameDef}</RimGamble.TalkTo>
+  <RimGamble.CannotTalkTo>Cannot talk to {0_nameDef}</RimGamble.CannotTalkTo>
+  
+</LanguageData>

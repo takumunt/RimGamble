@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <RimGamble.TravelingGamblerRejectionDef>
+        <defName>RimGamble_Departure</defName>
+        <label>departure</label>
+        <weight>2</weight>
+        <hasLetter>true</hasLetter>
+        <letterLabel>RimGamble.RejectionDepartureLetterLabel</letterLabel>
+        <letterDesc>RimGamble.RejectionDepartureLetterDesc</letterDesc>
+        <letterDef>NeutralEvent</letterDef>
+        <workerType>RimGamble.TravelingGamblerWorker_DoDepart</workerType>
+    </RimGamble.TravelingGamblerRejectionDef>
+
+    <RimGamble.TravelingGamblerRejectionDef>
+        <defName>RimGamble_AggressiveRejection</defName>
+        <label>aggressive</label>
+        <weight>1</weight>
+        <workerType>RimGamble.TravelingGamblerWorker_DoAggressive</workerType>
+    </RimGamble.TravelingGamblerRejectionDef>
+</Defs>

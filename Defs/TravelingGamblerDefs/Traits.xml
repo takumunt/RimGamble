@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <TraitDef>
+    <defName>Lucky</defName>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li>
+        <label>lucky</label>
+        <description>This person seems to have an unnatural amount of luck. Things just tend to go their way.</description>
+        <statOffsets>
+          <MeleeDodgeChance>1.5</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
+  <TraitDef>
+    <defName>SmoothTalker</defName>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li>
+        <label>smooth talker</label>
+        <description>This person has a natural charm and easily convinces others to see things their way.</description>
+        <statOffsets>
+          <SocialImpact>1.5</SocialImpact>
+        </statOffsets>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+
+</Defs>
