@@ -28,7 +28,7 @@ namespace RimGamble.Options
 
             ls.Begin(inRect);
             ls.Gap(12f);
-            ls.Label("bigEventMtb".Translate() + ": " +  (int) (bigEventMtb) +  "days");
+            ls.Label("Rimgamble.BigEventMtb".Translate() + ": " +  (int) (bigEventMtb) +  "days");
             bigEventMtb = (int) ls.Slider(bigEventMtb, 1, 10);
 
             ls.End();
