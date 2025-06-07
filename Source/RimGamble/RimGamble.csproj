@@ -71,6 +71,8 @@
     <Compile Include="GachaMachine\Refuel\JobDriver_RefuelGachaMachines.cs" />
     <Compile Include="GachaMachine\JoyGiver_PlayGachaMachine.cs" />
     <Compile Include="HarmonyPatches.cs" />
+    <Compile Include="Options\RimGamble_Settings.cs" />
+    <Compile Include="Options\Settings_Controller.cs" />
     <Compile Include="SlotMachine\JobDriver_PlaySlotMachine.cs" />
     <Compile Include="SlotMachine\JoyGiver_PlaySlotMachine.cs" />
     <Compile Include="Storyteller\IncidentWorker_WarningEvent.cs" />
