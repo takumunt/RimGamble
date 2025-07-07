@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_Assault</defName>
+    <label>basic assault</label>
+    <weight>4</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_AggressionBasic</workerType>
+    <hasLetter>true</hasLetter>
+    <letterLabel>RimGamble.AggressiveAssaultLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveAssaultLetterDesc</letterDesc>
+    <letterDef>ThreatBig</letterDef>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_Raid</defName>
+    <label>raid</label>
+    <weight>2</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_Raid</workerType>
+    <hasLetter>true</hasLetter>
+    <letterLabel>RimGamble.AggressiveRaidLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveRaidLetterDesc</letterDesc>
+    <letterDef>ThreatBig</letterDef>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_DelayedRaid</defName>
+    <label>delayed raid</label>
+    <weight>2</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_DelayedRaid</workerType>
+    <hasLetter>true</hasLetter>
+    <letterLabel>RimGamble.AggressiveDelayedRaidLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveDelayedRaidLetterDesc</letterDesc>
+    <letterDef>NeutralEvent</letterDef>
+
+    <raidLetterLabel>RimGamble.AggressiveDelayedRaidExtraLetterLabel</raidLetterLabel>
+    <raidLetterDesc>RimGamble.AggressiveDelayedRaidExtraLetterDesc</raidLetterDesc>
+    <raidLetterDef>ThreatBig</raidLetterDef>
+    <raidDelayTicks>6500</raidDelayTicks>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+  <RimGamble.TravelingGamblerAggressiveDef>
+    <defName>RimGamble_Theft</defName>
+    <label>theft</label>
+    <weight>2</weight>
+    <workerType>RimGamble.TravelingGamblerWorker_Theft</workerType>
+    <hasLetter>true</hasLetter>
+    <letterLabel>RimGamble.AggressiveTheftLetterLabel</letterLabel>
+    <letterDesc>RimGamble.AggressiveTheftLetterDesc</letterDesc>
+    <letterDef>ThreatSmall</letterDef>
+
+    <hasAlternativeLetter>true</hasAlternativeLetter>
+    <alternativeLetterDesc>RimGamble.AggressiveTheftAlternativeLetterDesc</alternativeLetterDesc>
+  </RimGamble.TravelingGamblerAggressiveDef>
+
+</Defs>

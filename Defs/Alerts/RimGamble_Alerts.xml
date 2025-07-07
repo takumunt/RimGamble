@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <Alert>
+    <defName>TravelingGamblerTimeout</defName>
+    <class>RimGamble.Alert_TravelingGamblerTimeout</class>
+    <defaultLabel>Traveling gambler about to leave</defaultLabel>
+    <defaultExplanation>A traveling gambler is about to leave your map soon.</defaultExplanation>
+    <priority>High</priority>
+  </Alert>
+</Defs>

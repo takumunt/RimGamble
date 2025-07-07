@@ -1,7 +1,10 @@
 ﻿using RimGamble;
 using RimWorld;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
+using Verse.AI.Group;
 using static UnityEngine.GraphicsBuffer;
 
 public class RimGambleManager : GameComponent
@@ -14,6 +17,11 @@ public class RimGambleManager : GameComponent
     // Follow-up event tracking
     private List<WarningData> warningEventTick; // Tick when the warning event happened
 
+    private List<DelayedRaidEntry> delayedRaids = new List<DelayedRaidEntry>();
+
+    private List<DelayedSabotageEntry> sabotageEntries = new List<DelayedSabotageEntry>();
+
+    private List<DelayedTradeCaravanEntry> delayedTradeCaravans = new List<DelayedTradeCaravanEntry>();
 
     /**
      * 
@@ -67,6 +75,141 @@ public class RimGambleManager : GameComponent
                 bets.RemoveAt(i);
             }
         }
+
+        // Delayed raids
+        for (int i = delayedRaids.Count - 1; i >= 0; i--)
+        {
+            var entry = delayedRaids[i];
+            var tracker = TravelingGamblerTrackerManager.GetTracker(entry.pawn);
+
+            if (entry.pawn == null || tracker == null || tracker.Disabled || tracker.Pawn.Dead || tracker.Pawn.DestroyedOrNull())
+            {
+                delayedRaids.RemoveAt(i);
+                continue;
+            }
+
+            // Check if pawn has left and delay has passed
+            bool pawnLeft = tracker.Pawn.MapHeld == null || tracker.Pawn.Dead || !tracker.Pawn.Spawned;
+            if (pawnLeft && Find.TickManager.TicksGame >= entry.triggerAfterTick)
+            {
+                // Show custom raid letter
+                TaggedString label = entry.raidLetterLabel.Formatted(entry.pawn.Named("PAWN"));
+                TaggedString desc = entry.raidLetterDesc.Formatted(entry.pawn.Named("PAWN"));
+                Find.LetterStack.ReceiveLetter(label, desc, entry.raidLetterDef ?? LetterDefOf.ThreatBig);
+
+                // Trigger the raid
+                tracker.DoRaid(entry.faction);
+                delayedRaids.RemoveAt(i);
+            }
+        }
+
+        // Delayed sabotage
+        for (int i = sabotageEntries.Count - 1; i >= 0; i--)
+        {
+            var entry = sabotageEntries[i];
+            if (Find.TickManager.TicksGame >= entry.triggerTick)
+            {
+                foreach (var thing in entry.targets)
+                {
+                    var building = thing as Building;
+                    if (building == null || !building.Spawned) continue;
+
+                    var power = building.TryGetComp<CompPowerTrader>();
+                    var breakdown = building.TryGetComp<CompBreakdownable>();
+
+                    if (power != null)
+                    {
+                        breakdown?.DoBreakdown();
+                    }
+                    else
+                    {
+                        FireUtility.TryStartFireIn(building.Position, building.Map, 0.5f, null);
+                    }
+                }
+
+                Find.LetterStack.ReceiveLetter(entry.label, entry.desc, LetterDefOf.NegativeEvent);
+                sabotageEntries.RemoveAt(i);
+            }
+        }
+
+        // Delayed trade caravans
+        for (int i = delayedTradeCaravans.Count - 1; i >= 0; i--)
+        {
+            var entry = delayedTradeCaravans[i];
+
+            if (Find.TickManager.TicksGame >= entry.triggerAfterTick)
+            {
+                if (entry.map != null && entry.faction != null && entry.traderKind != null)
+                {
+                    IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(entry.pawn.Position, entry.pawn.Map, 10);
+
+                    IncidentParms parms = new IncidentParms
+                    {
+                        target = entry.map,
+                        faction = entry.faction,
+                        traderKind = entry.traderKind,
+                        spawnCenter = spawnCell,
+                        forced = true,
+                        points = 400f
+                    };
+
+                    IncidentDefOf.TraderCaravanArrival.Worker.TryExecute(parms);
+                }
+
+                delayedTradeCaravans.RemoveAt(i);
+            }
+        }
+
+    }
+
+    public void QueueDelayedRaid(Pawn pawn, Faction faction)
+    {
+        var tracker = TravelingGamblerTrackerManager.GetTracker(pawn);
+        var def = tracker?.aggressive;
+
+        int delayTicks = def?.raidDelayTicks ?? 0;
+        int triggerAt = Find.TickManager.TicksGame + delayTicks;
+
+        delayedRaids.Add(new DelayedRaidEntry
+        {
+            pawn = pawn,
+            faction = faction,
+            triggerAfterTick = triggerAt,
+            raidLetterLabel = def?.raidLetterLabel,
+            raidLetterDesc = def?.raidLetterDesc,
+            raidLetterDef = def?.raidLetterDef
+        });
+    }
+
+    public void QueueDelayedSabotage(Pawn pawn)
+    {
+        var tracker = TravelingGamblerTrackerManager.GetTracker(pawn);
+        var def = tracker?.acceptance;
+        if (tracker == null || def == null || tracker.sabotageTargets.NullOrEmpty()) return;
+
+        sabotageEntries.Add(new DelayedSabotageEntry
+        {
+            targets = tracker.sabotageTargets,
+            triggerTick = Find.TickManager.TicksGame + def.sabotageDelayTicks,
+            label = def.sabotageResultLetterLabel?.Translate(pawn.Named("PAWN")) ?? "Sabotage!",
+            desc = def.sabotageResultLetterDesc?.Translate(pawn.Named("PAWN")) ?? "Something was sabotaged."
+        });
+    }
+
+    public void QueueDelayedTradeCaravan(Pawn pawn, Faction faction, TraderKindDef traderKind, int delayTicks)
+    {
+        if (pawn?.Map == null || pawn.Destroyed) return;
+
+        int triggerTick = Find.TickManager.TicksGame + delayTicks;
+
+        delayedTradeCaravans.Add(new DelayedTradeCaravanEntry
+        {
+            pawn = pawn,
+            faction = faction,
+            map = pawn.Map,
+            traderKind = traderKind,
+            triggerAfterTick = triggerTick
+        });
     }
 
     private void givePayout(int payout)
@@ -77,7 +220,7 @@ public class RimGambleManager : GameComponent
             silverStack.stackCount = payout;
             IntVec3 dropSpot = DropCellFinder.TradeDropSpot(Find.CurrentMap);
             TradeUtility.SpawnDropPod(dropSpot, Find.CurrentMap, silverStack);
-            Find.LetterStack.ReceiveLetter("RimGamble.PayoutArrived".Translate(), "RimGamble.PayoutArrivedDesc".Translate(), LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, Find.CurrentMap));
+            Find.LetterStack.ReceiveLetter("RimGamble.PayoutArrived".Translate(), "RimGamble.TravelingGamblerDropPodDesc".Translate(), LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, Find.CurrentMap));
         }
         else
         {
@@ -133,6 +276,26 @@ public class RimGambleManager : GameComponent
         return eventsToFire;
     }
 
+    public void ApplyThoughtToColony(string thoughtDefName, Predicate<Pawn> filter = null)
+    {
+        ThoughtDef thoughtDef = ThoughtDef.Named(thoughtDefName);
+        if (thoughtDef == null)
+        {
+            Log.Warning($"[RimGamble] ThoughtDef '{thoughtDefName}' not found.");
+            return;
+        }
+
+        if (Find.CurrentMap == null) return;
+
+        foreach (Pawn pawn in Find.CurrentMap.mapPawns.FreeColonists)
+        {
+            if (pawn.needs?.mood == null || pawn.Dead) continue;
+            if (filter != null && !filter(pawn)) continue;
+
+            pawn.needs.mood.thoughts.memories.TryGainMemory(thoughtDef);
+        }
+    }
+
     public RimGambleManager()
     {
         Instance = this;
@@ -148,5 +311,8 @@ public class RimGambleManager : GameComponent
         base.ExposeData();
         Scribe_Collections.Look(ref bets, "bets", LookMode.Deep);
         Scribe_Collections.Look(ref warningEventTick, "warningEventTick", LookMode.Deep);
+        Scribe_Collections.Look(ref delayedRaids, "delayedRaids", LookMode.Deep);
+        Scribe_Collections.Look(ref sabotageEntries, "sabotageEntries", LookMode.Deep);
+        Scribe_Collections.Look(ref delayedTradeCaravans, "delayedTradeCaravans", LookMode.Deep);
     }
 }

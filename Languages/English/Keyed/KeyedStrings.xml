@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
     <RimGamble.RickyRiskDesc>Ricky loves the thrill of chance. He will periodically send events of increased magnitude - both positive and negative. A messenger will be sent to inform your colony of these occurrences in advance.</RimGamble.RickyRiskDesc>
+
+    <!-- Traveling Gambler -->
+    <RimGamble.TravelingGamblerDropPod>Traveling Gambler Left - Drop Pod</RimGamble.TravelingGamblerDropPod>
+    <RimGamble.TravelingGamblerDropPodDesc>The Traveling Gambler has gifted you a loot crate. They thank you for allowing them to stay.</RimGamble.TravelingGamblerDropPodDesc>
 </LanguageData>

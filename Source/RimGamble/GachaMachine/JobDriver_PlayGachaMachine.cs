@@ -16,7 +16,6 @@ namespace RimGamble
         {
             if (pawn == null)
             {
-                Log.Error("TryMakePreToilReservations failed because the pawn is null.");
                 return false;
             }
 
@@ -24,13 +23,11 @@ namespace RimGamble
 
             if (!target.IsValid)
             {
-                Log.Warning($"{pawn.Name} attempted to reserve an invalid target for job {job.def.defName}");
                 return false;
             }
 
             if (!pawn.Reserve(target, job, 1, -1, null, errorOnFailed))
             {
-                Log.Warning($"{pawn.Name} failed to reserve {target.Label} for job {job.def.defName}");
                 return false;
             }
 

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RimGamble.TravelingGamblerFormKindDef Abstract="True" Name="RimGamble.BaseTravelingGamblerKind" ParentName="BasePlayerPawnKind">
+    <race>TravelingGambler</race>
+    <canBeScattered>false</canBeScattered>
+    <apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+    <combatPower>55</combatPower>
+    <humanPregnancyChance>0</humanPregnancyChance>
+    <initialResistanceRange>0~0</initialResistanceRange>
+    <invNutrition>10</invNutrition>
+    <studiableAsPrisoner>true</studiableAsPrisoner>
+    <acceptArrestChanceFactor>0.8</acceptArrestChanceFactor>
+    <basePrisonBreakMtbDays>30</basePrisonBreakMtbDays>
+    <initialWillRange>80~90</initialWillRange>
+    <showInDebugSpawner>false</showInDebugSpawner>
+    <apparelIgnoreSeasons>false</apparelIgnoreSeasons>
+    <isFighter>false</isFighter>
+    <fixedChildBackstories>
+      <li>UnknownChildhood</li>
+    </fixedChildBackstories>
+    <fixedAdultBackstories>
+      <li>UnknownAdulthood</li>
+    </fixedAdultBackstories>
+  </RimGamble.TravelingGamblerFormKindDef>
+
+  <RimGamble.TravelingGamblerFormKindDef ParentName="RimGamble.BaseTravelingGamblerKind">
+    <defName>LuckyDrifter</defName>
+    <label>lucky drifter</label>
+    <weight>1</weight>
+    <letterLabel>RimGamble.FormLuckyDrifterLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormLuckyDrifterLetterDesc</letterPrompt>
+    <minGenerationAge>25</minGenerationAge>
+    <maxGenerationAge>55</maxGenerationAge>
+    <skills>
+      <li>
+        <skill>Social</skill>
+        <range>12~18</range>
+      </li>
+    </skills>
+    <forcedTraits>
+      <Lucky/>
+      <SmoothTalker/>
+    </forcedTraits>
+    <apparelTags>
+      <li>Western</li>
+    </apparelTags>
+    <apparelRequired>
+      <li>Apparel_Duster</li>
+      <li>Apparel_Pants</li>
+    </apparelRequired>
+    <fixedInventory>
+      <Gun_Revolver />
+      <Silver>
+        <countRange>50~200</countRange>
+      </Silver>
+    </fixedInventory>
+  </RimGamble.TravelingGamblerFormKindDef>
+
+  <RimGamble.TravelingGamblerFormKindDef ParentName="RimGamble.BaseTravelingGamblerKind">
+    <defName>RiskyCardshark</defName>
+    <label>risky cardshark</label>
+    <weight>1</weight>
+    <letterLabel>RimGamble.FormRiskyCardsharkLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormRiskyCardsharkLetterDesc</letterPrompt>
+    <minGenerationAge>30</minGenerationAge>
+    <maxGenerationAge>60</maxGenerationAge>
+    <skills>
+      <li>
+        <skill>Social</skill>
+        <range>14~20</range>
+      </li>
+      <li>
+        <skill>Intellectual</skill>
+        <range>8~12</range>
+      </li>
+    </skills>
+    <forcedTraits>
+      <Greedy/>
+      <Psychopath/>
+    </forcedTraits>
+    <apparelTags>
+      <li>Formal</li>
+    </apparelTags>
+    <apparelRequired>
+      <li>Apparel_BasicShirt</li>
+      <li>Apparel_Pants</li>
+      <li>Apparel_BowlerHat</li>
+    </apparelRequired>
+    <fixedInventory>
+      <Gun_Autopistol />
+      <Silver>
+        <countRange>100~500</countRange>
+      </Silver>
+    </fixedInventory>
+  </RimGamble.TravelingGamblerFormKindDef>
+
+  <RimGamble.TravelingGamblerFormKindDef ParentName="RimGamble.BaseTravelingGamblerKind">
+    <defName>WashedUpHustler</defName>
+    <label>washed-up hustler</label>
+    <weight>1</weight>
+    <letterLabel>RimGamble.FormWashedUpHustlerLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormWashedUpHustlerLetterDesc</letterPrompt>
+    <minGenerationAge>40</minGenerationAge>
+    <maxGenerationAge>70</maxGenerationAge>
+    <skills>
+      <li>
+        <skill>Social</skill>
+        <range>8~15</range>
+      </li>
+    </skills>
+    <forcedTraits>
+      <NaturalMood>-2</NaturalMood>
+    </forcedTraits>
+    <apparelTags>
+      <li>Tattered</li>
+    </apparelTags>
+    <apparelRequired>
+      <li>Apparel_Jacket</li>
+      <li>Apparel_Pants</li>
+    </apparelRequired>
+    <fixedInventory>
+      <Beer>
+        <countRange>3~6</countRange>
+      </Beer>
+      <Silver>
+        <countRange>10~50</countRange>
+      </Silver>
+    </fixedInventory>
+  </RimGamble.TravelingGamblerFormKindDef>
+
+  <RimGamble.TravelingGamblerFormKindDef ParentName="RimGamble.BaseTravelingGamblerKind">
+    <defName>Trickster</defName>
+    <label>trickster</label>
+    <weight>1</weight>
+    <letterLabel>RimGamble.FormTricksterLetterLabel</letterLabel>
+    <letterPrompt>RimGamble.FormTricksterLetterDesc</letterPrompt>
+    <minGenerationAge>22</minGenerationAge>
+    <maxGenerationAge>45</maxGenerationAge>
+    <skills>
+      <li>
+        <skill>Social</skill>
+        <range>10~18</range>
+      </li>
+      <li>
+        <skill>Shooting</skill>
+        <range>6~12</range>
+      </li>
+    </skills>
+    <forcedTraits>
+      <TooSmart/>
+    </forcedTraits>
+    <apparelTags>
+      <li>Casual</li>
+    </apparelTags>
+    <apparelRequired>
+      <li>Apparel_CollarShirt</li>
+      <li>Apparel_Pants</li>
+    </apparelRequired>
+    <fixedInventory>
+      <Silver>
+        <countRange>75~200</countRange>
+      </Silver>
+      <MeleeWeapon_Knife>
+        <stuff>Plasteel</stuff>
+      </MeleeWeapon_Knife>
+    </fixedInventory>
+  </RimGamble.TravelingGamblerFormKindDef>
+
+</Defs>
