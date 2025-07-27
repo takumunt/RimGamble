@@ -147,6 +147,18 @@
         <minDaysPassed>1</minDaysPassed>
         <mtbDays>15</mtbDays>
       </li>
+      <!-- Traveling Gambler - Natural spawning rates -->
+      <li Class="StorytellerCompProperties_OnOffCycle">
+        <incident>TravelingGamblerJoin</incident>
+        <allowedTargetTags>
+          <li>Map_PlayerHome</li>
+        </allowedTargetTags>
+        <onDays>60</onDays>
+        <offDays>20</offDays>
+        <minSpacingDays>35</minSpacingDays>
+        <minDaysPassed>15</minDaysPassed>
+        <numIncidentsRange>1</numIncidentsRange>
+      </li>
       <!-- Triggered -->
       <li Class="StorytellerCompProperties_Triggered">
         <incident>StrangerInBlackJoin</incident>

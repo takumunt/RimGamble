@@ -51,7 +51,7 @@
     <fixedInventory>
       <Gun_Revolver />
       <Silver>
-        <countRange>50~200</countRange>
+        <count>79</count>
       </Silver>
     </fixedInventory>
   </RimGamble.TravelingGamblerFormKindDef>
@@ -89,7 +89,7 @@
     <fixedInventory>
       <Gun_Autopistol />
       <Silver>
-        <countRange>100~500</countRange>
+        <count>128</count>
       </Silver>
     </fixedInventory>
   </RimGamble.TravelingGamblerFormKindDef>
@@ -120,10 +120,10 @@
     </apparelRequired>
     <fixedInventory>
       <Beer>
-        <countRange>3~6</countRange>
+        <count>4</count>
       </Beer>
       <Silver>
-        <countRange>10~50</countRange>
+        <count>38</count>
       </Silver>
     </fixedInventory>
   </RimGamble.TravelingGamblerFormKindDef>
@@ -158,7 +158,7 @@
     </apparelRequired>
     <fixedInventory>
       <Silver>
-        <countRange>75~200</countRange>
+        <count>142</count>
       </Silver>
       <MeleeWeapon_Knife>
         <stuff>Plasteel</stuff>

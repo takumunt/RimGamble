@@ -13,6 +13,5 @@
       <li>Manipulation</li>
     </requiredCapacities>
     <prioritizeSustains>true</prioritizeSustains>
-    <canBeDoneByMutants>false</canBeDoneByMutants>
   </WorkGiverDef>
 </Defs>

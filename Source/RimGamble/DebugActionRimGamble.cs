@@ -80,6 +80,53 @@ namespace RimGamble
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(formOptions));
         }
 
+        [DebugAction("RimGamble", "Quick Spawn Random Traveling Gambler", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void QuickSpawnRandomGambler()
+        {
+            try
+            {
+                QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamed("TravelingGamblerArrival");
+                if (questDef != null)
+                {
+                    Quest quest = QuestUtility.GenerateQuestAndMakeAvailable(questDef, new Slate());
+                    Messages.Message("Traveling Gambler quest generated!", MessageTypeDefOf.PositiveEvent);
+                }
+                else
+                {
+                    Messages.Message("ERROR: Could not find TravelingGamblerArrival quest script!", MessageTypeDefOf.RejectInput);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[RimGamble] Error spawning traveling gambler: {ex}");
+                Messages.Message($"ERROR: Failed to spawn traveling gambler: {ex.Message}", MessageTypeDefOf.RejectInput);
+            }
+        }
+
+        [DebugAction("RimGamble", "Test Incident: TravelingGamblerJoin", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void TestTravelingGamblerIncident()
+        {
+            try
+            {
+                IncidentDef incidentDef = DefDatabase<IncidentDef>.GetNamed("TravelingGamblerJoin");
+                if (incidentDef != null)
+                {
+                    IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, Find.CurrentMap);
+                    bool result = incidentDef.Worker.TryExecute(parms);
+                    Messages.Message($"TravelingGamblerJoin incident executed: {result}", result ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.RejectInput);
+                }
+                else
+                {
+                    Messages.Message("ERROR: Could not find TravelingGamblerJoin incident!", MessageTypeDefOf.RejectInput);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[RimGamble] Error testing traveling gambler incident: {ex}");
+                Messages.Message($"ERROR: Failed to test incident: {ex.Message}", MessageTypeDefOf.RejectInput);
+            }
+        }
+
 
     }
 }
