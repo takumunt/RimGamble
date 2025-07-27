@@ -34,7 +34,7 @@ namespace RimGamble
             };
             playSlotToil.tickAction = delegate ()
             {
-                JoyUtility.JoyTickCheckEnd(this.pawn, JoyTickFullJoyAction.EndJob, 1f, (Building)base.TargetThingA);
+                JoyUtility.JoyTickCheckEnd(this.pawn, 1, JoyTickFullJoyAction.EndJob, 1f, (Building)TargetThingA);
             };
 
             playSlotToil.defaultCompleteMode = ToilCompleteMode.Delay; // Wait for a specified duration

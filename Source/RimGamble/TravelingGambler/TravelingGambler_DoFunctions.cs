@@ -154,12 +154,12 @@ namespace RimGamble
                         null,
                         null,
                         null,
-                        1f,
+                        0f,
                         1,
                         null,
-                        false,
                         null,
-                        1
+                        1,
+                        false
                     );
                 }
             }

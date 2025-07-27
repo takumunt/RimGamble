@@ -118,6 +118,8 @@
     <Compile Include="UI\Window_OnlineGambling.cs" />
     <Compile Include="Utils\RimGamble_DefOf.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
