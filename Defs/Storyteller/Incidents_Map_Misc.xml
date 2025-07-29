@@ -7,11 +7,11 @@
     <targetTags>
       <li>Map_PlayerHome</li>
     </targetTags>
-    <workerClass>IncidentWorker_GiveQuest</workerClass>
+    <workerClass>RimGamble.IncidentWorker_TravelingGamblerJoin</workerClass>
     <questScriptDef>TravelingGamblerArrival</questScriptDef>
-    <earliestDay>1</earliestDay>
-    <baseChance>10.0</baseChance>
-    <minRefireDays>1</minRefireDays>
+    <earliestDay>0</earliestDay>
+    <baseChance>15.0</baseChance>
+    <minRefireDays>0</minRefireDays>
     <requireColonistsPresent>true</requireColonistsPresent>
   </IncidentDef>
   

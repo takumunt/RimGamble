@@ -112,8 +112,24 @@ namespace RimGamble
                 if (incidentDef != null)
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, Find.CurrentMap);
+                    
+                    // Show current behavior configuration for testing
+                    var enabledBehaviors = GetEnabledBehaviors();
+                    
                     bool result = incidentDef.Worker.TryExecute(parms);
-                    Messages.Message($"TravelingGamblerJoin incident executed: {result}", result ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.RejectInput);
+                    
+                    // Show detailed messages for testing
+                    if (result)
+                    {
+                        Messages.Message($"✅ TravelingGamblerJoin spawned! Active behaviors: {enabledBehaviors}", MessageTypeDefOf.PositiveEvent);
+                    }
+                    else if (Options.RimGamble_Settings.enableTravelingGambler)
+                    {
+                        // Show helpful failure message with current settings
+                        var wealth = Find.CurrentMap?.wealthWatcher?.WealthTotal ?? 0;
+                        Messages.Message($"❌ Spawn failed. Wealth: {wealth:N0} (req: {Options.RimGamble_Settings.gamblerMinWealth:N0}). Behaviors: {enabledBehaviors}", MessageTypeDefOf.CautionInput);
+                    }
+                    // If disabled in settings, show no message (expected behavior)
                 }
                 else
                 {
@@ -125,6 +141,125 @@ namespace RimGamble
                 Log.Error($"[RimGamble] Error testing traveling gambler incident: {ex}");
                 Messages.Message($"ERROR: Failed to test incident: {ex.Message}", MessageTypeDefOf.RejectInput);
             }
+        }
+
+        [DebugAction("RimGamble", "TEST CURRENT BEHAVIOR SETUP", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void TestCurrentBehaviorSetup()
+        {
+            try
+            {
+                var enabledBehaviors = GetEnabledBehaviors();
+                var wealth = Find.CurrentMap?.wealthWatcher?.WealthTotal ?? 0;
+                var canSpawn = Options.RimGamble_Settings.enableTravelingGambler && wealth >= Options.RimGamble_Settings.gamblerMinWealth;
+                
+                StringBuilder report = new StringBuilder();
+                report.AppendLine("🎯 BEHAVIOR TEST REPORT");
+                report.AppendLine($"Traveling Gambler Enabled: {Options.RimGamble_Settings.enableTravelingGambler}");
+                report.AppendLine($"Current Wealth: {wealth:N0} / Required: {Options.RimGamble_Settings.gamblerMinWealth:N0}");
+                report.AppendLine($"Can Spawn: {(canSpawn ? "✅ YES" : "❌ NO")}");
+                report.AppendLine();
+                
+                if (Options.RimGamble_Settings.enableAcceptanceBehaviors)
+                {
+                    report.AppendLine("📋 ENABLED ACCEPTANCE BEHAVIORS:");
+                    var enabledAcceptance = Options.RimGamble_Settings.GetEnabledAcceptanceBehaviors();
+                    if (enabledAcceptance.Any())
+                    {
+                        foreach (var behavior in enabledAcceptance)
+                        {
+                            report.AppendLine($"  ✅ {behavior}");
+                        }
+                    }
+                    else
+                    {
+                        report.AppendLine("  ❌ NONE ENABLED!");
+                    }
+                }
+                else
+                {
+                    report.AppendLine("❌ ALL ACCEPTANCE BEHAVIORS DISABLED");
+                }
+                
+                if (Options.RimGamble_Settings.enableAggressiveBehaviors)
+                {
+                    report.AppendLine();
+                    report.AppendLine("⚔️ ENABLED AGGRESSIVE BEHAVIORS:");
+                    var enabledAggressive = Options.RimGamble_Settings.GetEnabledAggressiveBehaviors();
+                    if (enabledAggressive.Any())
+                    {
+                        foreach (var behavior in enabledAggressive)
+                        {
+                            report.AppendLine($"  ✅ {behavior}");
+                        }
+                    }
+                    else
+                    {
+                        report.AppendLine("  ❌ NONE ENABLED!");
+                    }
+                }
+                else
+                {
+                    report.AppendLine();
+                    report.AppendLine("❌ ALL AGGRESSIVE BEHAVIORS DISABLED");
+                }
+                
+                if (Options.RimGamble_Settings.enableRejectionBehaviors)
+                {
+                    report.AppendLine();
+                    report.AppendLine("🚪 ENABLED REJECTION BEHAVIORS:");
+                    var enabledRejection = Options.RimGamble_Settings.GetEnabledRejectionBehaviors();
+                    if (enabledRejection.Any())
+                    {
+                        foreach (var behavior in enabledRejection)
+                        {
+                            report.AppendLine($"  ✅ {behavior}");
+                        }
+                    }
+                    else
+                    {
+                        report.AppendLine("  ❌ NONE ENABLED!");
+                    }
+                }
+                else
+                {
+                    report.AppendLine();
+                    report.AppendLine("❌ ALL REJECTION BEHAVIORS DISABLED");
+                }
+                
+                report.AppendLine();
+                report.AppendLine("🔄 Both 'Test Incident' and natural spawning will now use these same settings!");
+                
+                Messages.Message(report.ToString(), MessageTypeDefOf.NeutralEvent);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[RimGamble] Error testing behavior setup: {ex}");
+                Messages.Message($"ERROR: Failed to test setup: {ex.Message}", MessageTypeDefOf.RejectInput);
+            }
+        }
+        
+        private static string GetEnabledBehaviors()
+        {
+            var behaviors = new List<string>();
+            
+            if (Options.RimGamble_Settings.enableAcceptanceBehaviors)
+            {
+                if (Options.RimGamble_Settings.allowPeacefulDeparture) behaviors.Add("Peaceful");
+                if (Options.RimGamble_Settings.allowHumanBomb) behaviors.Add("Bomb");
+                if (Options.RimGamble_Settings.allowSabotage) behaviors.Add("Sabotage");
+                if (Options.RimGamble_Settings.allowPartyMood) behaviors.Add("Party");
+                if (Options.RimGamble_Settings.allowRumorSpread) behaviors.Add("Rumors");
+                if (Options.RimGamble_Settings.allowTheftAccept) behaviors.Add("Theft");
+                if (Options.RimGamble_Settings.allowTradeCaravan) behaviors.Add("Trade");
+                if (Options.RimGamble_Settings.allowDropPod) behaviors.Add("DropPod");
+                if (Options.RimGamble_Settings.allowTeachSkill) behaviors.Add("Teach");
+                if (Options.RimGamble_Settings.allowGiveInspiration) behaviors.Add("Inspire");
+                if (Options.RimGamble_Settings.allowAskJoin) behaviors.Add("Join");
+            }
+            
+            if (behaviors.Count == 0) return "None";
+            if (behaviors.Count > 3) return $"{behaviors.Count} behaviors";
+            return string.Join(", ", behaviors);
         }
 
 

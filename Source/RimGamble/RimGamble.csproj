@@ -76,6 +76,7 @@
     <Compile Include="Options\Settings_Controller.cs" />
     <Compile Include="SlotMachine\JobDriver_PlaySlotMachine.cs" />
     <Compile Include="SlotMachine\JoyGiver_PlaySlotMachine.cs" />
+    <Compile Include="Storyteller\IncidentWorker_TravelingGamblerJoin.cs" />
     <Compile Include="Storyteller\IncidentWorker_WarningEvent.cs" />
     <Compile Include="Storyteller\JobDriver_TalkWarningPawn.cs" />
     <Compile Include="Storyteller\StorytellerCompProperties_MagEvents.cs" />

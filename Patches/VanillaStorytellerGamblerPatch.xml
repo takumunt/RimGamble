@@ -9,10 +9,10 @@
         <allowedTargetTags>
           <li>Map_PlayerHome</li>
         </allowedTargetTags>
-        <onDays>45</onDays>
-        <offDays>15</offDays>
-        <minSpacingDays>30</minSpacingDays>
-        <minDaysPassed>10</minDaysPassed>
+        <onDays>3</onDays>
+        <offDays>1</offDays>
+        <minSpacingDays>1</minSpacingDays>
+        <minDaysPassed>0</minDaysPassed>
         <numIncidentsRange>1</numIncidentsRange>
       </li>
     </value>

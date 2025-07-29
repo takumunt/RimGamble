@@ -15,6 +15,131 @@ namespace RimGamble
 
         private static readonly List<ITravelingGamblerDef> temp = new List<ITravelingGamblerDef>();
 
+        /// <summary>
+        /// Filters behavior definitions based on current mod settings
+        /// </summary>
+        private static List<T> FilterDefsBySettings<T>(List<T> defs) where T : TravelingGamblerBaseDef
+        {
+            var filtered = new List<T>();
+            
+            foreach (var def in defs)
+            {
+                bool shouldInclude = true;
+                
+                // Check if this is an acceptance behavior and if acceptance behaviors are enabled
+                if (def is TravelingGamblerAcceptanceDef acceptance)
+                {
+                    if (!Options.RimGamble_Settings.enableAcceptanceBehaviors)
+                    {
+                        shouldInclude = false;
+                    }
+                    else
+                    {
+                        // Check specific acceptance behavior settings
+                        switch (acceptance.defName)
+                        {
+                            case "RimGamble_Leaves":
+                                shouldInclude = Options.RimGamble_Settings.allowPeacefulDeparture;
+                                break;
+                            case "RimGamble_HumanBomb":
+                                shouldInclude = Options.RimGamble_Settings.allowHumanBomb;
+                                break;
+                            case "RimGamble_Sabotage":
+                                shouldInclude = Options.RimGamble_Settings.allowSabotage;
+                                break;
+                            case "RimGamble_LifeOfTheParty":
+                                shouldInclude = Options.RimGamble_Settings.allowPartyMood;
+                                break;
+                            case "RimGamble_RumorSpread":
+                                shouldInclude = Options.RimGamble_Settings.allowRumorSpread;
+                                break;
+                            case "RimGamble_TheftAccept":
+                                shouldInclude = Options.RimGamble_Settings.allowTheftAccept;
+                                break;
+                            case "RimGamble_TradeCaravan":
+                                shouldInclude = Options.RimGamble_Settings.allowTradeCaravan;
+                                break;
+                            case "RimGamble_DropPod":
+                                shouldInclude = Options.RimGamble_Settings.allowDropPod;
+                                break;
+                            case "RimGamble_TeachSkill":
+                                shouldInclude = Options.RimGamble_Settings.allowTeachSkill;
+                                break;
+                            case "RimGamble_GiveInspiration":
+                                shouldInclude = Options.RimGamble_Settings.allowGiveInspiration;
+                                break;
+                            case "RimGamble_AskJoin":
+                                shouldInclude = Options.RimGamble_Settings.allowAskJoin;
+                                break;
+                            default:
+                                shouldInclude = true; // Allow unknown behaviors by default
+                                break;
+                        }
+                    }
+                }
+                // Check aggressive behaviors
+                else if (def is TravelingGamblerAggressiveDef aggressive)
+                {
+                    if (!Options.RimGamble_Settings.enableAggressiveBehaviors)
+                    {
+                        shouldInclude = false;
+                    }
+                    else
+                    {
+                        switch (aggressive.defName)
+                        {
+                            case "RimGamble_Assault":
+                                shouldInclude = Options.RimGamble_Settings.allowAssault;
+                                break;
+                            case "RimGamble_Raid":
+                                shouldInclude = Options.RimGamble_Settings.allowRaid;
+                                break;
+                            case "RimGamble_DelayedRaid":
+                                shouldInclude = Options.RimGamble_Settings.allowDelayedRaid;
+                                break;
+                            case "RimGamble_Theft":
+                                shouldInclude = Options.RimGamble_Settings.allowTheft;
+                                break;
+                            default:
+                                shouldInclude = true;
+                                break;
+                        }
+                    }
+                }
+                // Check rejection behaviors  
+                else if (def is TravelingGamblerRejectionDef rejection)
+                {
+                    if (!Options.RimGamble_Settings.enableRejectionBehaviors)
+                    {
+                        shouldInclude = false;
+                    }
+                    else
+                    {
+                        switch (rejection.defName)
+                        {
+                            case "RimGamble_Departure":
+                                shouldInclude = Options.RimGamble_Settings.allowPeacefulRejection;
+                                break;
+                            case "RimGamble_AggressiveRejection":
+                                shouldInclude = Options.RimGamble_Settings.allowAggressiveRejection;
+                                break;
+                            default:
+                                shouldInclude = true;
+                                break;
+                        }
+                    }
+                }
+                // For other behavior types (form), include all for now
+                
+                if (shouldInclude)
+                {
+                    filtered.Add(def);
+                }
+            }
+            
+            return filtered;
+        }
+
         public static void GetTravelingGamblerSpecifics(Map map, ref TravelingGamblerFormKindDef form, ref TravelingGamblerAggressiveDef aggressive, ref TravelingGamblerRejectionDef rejection, ref TravelingGamblerAcceptanceDef acceptance)
         {
             float combatPoints = StorytellerUtility.DefaultThreatPointsNow(map);
@@ -112,15 +237,23 @@ namespace RimGamble
                 exclude = new List<TravelingGamblerBaseDef>();
             }
 
+            // Filter defs based on mod settings
+            var filteredDefs = FilterDefsBySettings(defs);
+            if (filteredDefs.Count == 0)
+            {
+                Log.Warning("[RimGamble] All behaviors of this type are disabled in settings. Using fallback selection.");
+                filteredDefs = defs; // Fallback to allow at least something
+            }
+
             T val;
             if (requires.Empty() && exclude.Empty())
             {
-                val = defs.Where((T x) => combatPoints >= x.MinCombatPoints && x.CanOccurRandomly).RandomElementByWeight((T x) => x.Weight);
+                val = filteredDefs.Where((T x) => combatPoints >= x.MinCombatPoints && x.CanOccurRandomly).RandomElementByWeight((T x) => x.Weight);
             }
             else
             {
                 bool flag = false;
-                foreach (T def in defs)
+                foreach (T def in filteredDefs)
                 {
                     if (!(combatPoints < def.MinCombatPoints) && def.CanOccurRandomly && requires.Contains(def))
                     {
@@ -131,7 +264,7 @@ namespace RimGamble
 
                 if (flag)
                 {
-                    foreach (T def2 in defs)
+                    foreach (T def2 in filteredDefs)
                     {
                         if (!(combatPoints < def2.MinCombatPoints) && def2.CanOccurRandomly && requires.Contains(def2))
                         {
@@ -141,7 +274,7 @@ namespace RimGamble
                 }
                 else
                 {
-                    foreach (T def3 in defs)
+                    foreach (T def3 in filteredDefs)
                     {
                         if (combatPoints >= def3.MinCombatPoints && def3.CanOccurRandomly)
                         {
@@ -154,17 +287,17 @@ namespace RimGamble
                 {
                     if (exclude.Contains(temp[num]))
                     {
-                        defs.RemoveAt(num);
+                        temp.RemoveAt(num);
                     }
                 }
 
                 if (temp.Empty())
                 {
-                    string text = defs.Select((T x) => x.label).ToCommaList();
+                    string text = filteredDefs.Select((T x) => x.label).ToCommaList();
                     string text2 = requires.Select((TravelingGamblerBaseDef x) => x.label).ToCommaList();
                     string text3 = exclude.Select((TravelingGamblerBaseDef x) => x.label).ToCommaList();
                     Log.Error($"Attempted to create travelinggambler but blacklist removed all possible whitelist; combatPoints = {combatPoints}, defs = ({text}), whitelist = ({text2}), blacklist = ({text3})");
-                    val = defs.RandomElementByWeight((T x) => x.Weight);
+                    val = filteredDefs.RandomElementByWeight((T x) => x.Weight);
                 }
                 else
                 {
