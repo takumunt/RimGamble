@@ -6,13 +6,11 @@
     <value>
       <li Class="StorytellerCompProperties_OnOffCycle">
         <incident>TravelingGamblerJoin</incident>
-        <allowedTargetTags>
-          <li>Map_PlayerHome</li>
-        </allowedTargetTags>
-        <onDays>3</onDays>
-        <offDays>1</offDays>
-        <minSpacingDays>1</minSpacingDays>
-        <minDaysPassed>0</minDaysPassed>
+        <onDays>60</onDays>
+        <offDays>0</offDays>
+        <minSpacingDays>15</minSpacingDays>
+        <forceRaidEnemyBeforeDaysPassed>-1</forceRaidEnemyBeforeDaysPassed>
+        <minDaysPassed>15</minDaysPassed>
         <numIncidentsRange>1</numIncidentsRange>
       </li>
     </value>

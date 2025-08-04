@@ -56,31 +56,9 @@ namespace RimGamble
                     return 0f;
                 }
 
-                // Use spawn frequency setting to modify base chance
-                // Lower frequency = lower chance, but make sure very low frequencies still have reasonable chances
-                float baseChance = base.BaseChanceThisGame;
-                
-                if (RimGamble_Settings.gamblerSpawnFrequency <= 1)
-                {
-                    // For daily or more frequent spawns, significantly increase chance
-                    return baseChance * 20f;
-                }
-                else if (RimGamble_Settings.gamblerSpawnFrequency <= 5)
-                {
-                    // For very frequent spawns (2-5 days), increase chance a lot
-                    return baseChance * 10f;
-                }
-                else if (RimGamble_Settings.gamblerSpawnFrequency <= 15)
-                {
-                    // For frequent spawns (6-15 days), increase chance moderately
-                    return baseChance * 5f;
-                }
-                else
-                {
-                    // For normal/slow spawns, use frequency modifier
-                    float frequencyModifier = 60f / Mathf.Max(1f, RimGamble_Settings.gamblerSpawnFrequency);
-                    return baseChance * frequencyModifier;
-                }
+                // Use the base chance from the storyteller system
+                // Frequency is now controlled by the XML patch mtbDays value
+                return base.BaseChanceThisGame;
             }
         }
     }

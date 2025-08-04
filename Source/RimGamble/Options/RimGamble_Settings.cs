@@ -14,14 +14,16 @@ namespace RimGamble.Options
 
         // Traveling Gambler settings
         public static bool enableTravelingGambler = true;
-        public static int gamblerSpawnFrequency = 60;
         public static int gamblerMinStayDuration = 3;
         public static int gamblerMaxStayDuration = 7;
         public static float gamblerNegativeOutcomeChance = 0.3f;
-        public static bool allowGamblerViolence = true;
-        public static bool allowGamblerTheft = true;
         public static int gamblerMinWealth = 1000;
-        public static bool showGamblerWarnings = true;
+
+        // Gambler Form settings
+        public static bool allowLuckyDrifter = true;
+        public static bool allowRiskyCardshark = true;
+        public static bool allowWashedUpHustler = true;
+        public static bool allowTrickster = true;
 
         // Behavior Categories
         public static bool enableAcceptanceBehaviors = true;
@@ -54,6 +56,7 @@ namespace RimGamble.Options
         private static int currentTab = 0;
         private static readonly string[] tabLabels = { "General", "Behaviors" };
         private static Vector2 scrollPosition = Vector2.zero;
+        private static bool lastTravelingGamblerState = true; // Track state changes
 
         public override void ExposeData()
         {
@@ -61,14 +64,11 @@ namespace RimGamble.Options
             
             Scribe_Values.Look(ref bigEventMtb, "bigEventMtb", bigEventMtbBase, true);
             Scribe_Values.Look(ref enableTravelingGambler, "enableTravelingGambler", true);
-            Scribe_Values.Look(ref gamblerSpawnFrequency, "gamblerSpawnFrequency", 60);
-            Scribe_Values.Look(ref gamblerMinStayDuration, "gamblerMinStayDuration", 3);
-            Scribe_Values.Look(ref gamblerMaxStayDuration, "gamblerMaxStayDuration", 7);
-            Scribe_Values.Look(ref gamblerNegativeOutcomeChance, "gamblerNegativeOutcomeChance", 0.3f);
-            Scribe_Values.Look(ref allowGamblerViolence, "allowGamblerViolence", true);
-            Scribe_Values.Look(ref allowGamblerTheft, "allowGamblerTheft", true);
-            Scribe_Values.Look(ref gamblerMinWealth, "gamblerMinWealth", 1000);
-            Scribe_Values.Look(ref showGamblerWarnings, "showGamblerWarnings", true);
+            
+            Scribe_Values.Look(ref allowLuckyDrifter, "allowLuckyDrifter", true);
+            Scribe_Values.Look(ref allowRiskyCardshark, "allowRiskyCardshark", true);
+            Scribe_Values.Look(ref allowWashedUpHustler, "allowWashedUpHustler", true);
+            Scribe_Values.Look(ref allowTrickster, "allowTrickster", true);
             
             Scribe_Values.Look(ref enableAcceptanceBehaviors, "enableAcceptanceBehaviors", true);
             Scribe_Values.Look(ref enableAggressiveBehaviors, "enableAggressiveBehaviors", true);
@@ -121,6 +121,13 @@ namespace RimGamble.Options
             }
             TabDrawer.DrawTabs(tabRect, tabs);
             
+            // Reset scroll position if traveling gambler state changed
+            if (lastTravelingGamblerState != enableTravelingGambler)
+            {
+                scrollPosition = Vector2.zero;
+                lastTravelingGamblerState = enableTravelingGambler;
+            }
+            
             // Add scrollable view
             var viewRect = new Rect(0f, 0f, contentRect.width - 16f, GetContentHeight());
             Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
@@ -147,7 +154,7 @@ namespace RimGamble.Options
             // Calculate approximate content height for scrolling
             switch (currentTab)
             {
-                case 0: return enableTravelingGambler ? 400f : 200f; // General tab
+                case 0: return enableTravelingGambler ? 500f : 250f; // General tab (ensure enough space for enable checkbox when disabled)
                 case 1: return enableTravelingGambler ? 800f : 100f; // Behaviors tab
                 default: return 400f;
             }
@@ -165,16 +172,31 @@ namespace RimGamble.Options
             
             if (enableTravelingGambler)
             {
+                ls.Gap(12f);
+                DrawSectionHeader(ls, "Gambler Forms");
+                ls.Label("Choose which types of traveling gamblers can appear:");
                 ls.Gap(6f);
-                ls.Label("Spawn Frequency: " + gamblerSpawnFrequency + " days");
-                gamblerSpawnFrequency = (int)ls.Slider(gamblerSpawnFrequency, 15, 120);
                 
-                ls.Label("Stay Duration: " + gamblerMinStayDuration + "-" + gamblerMaxStayDuration + " days");
-                gamblerMinStayDuration = (int)ls.Slider(gamblerMinStayDuration, 1, 10);
-                gamblerMaxStayDuration = Mathf.Max(gamblerMinStayDuration, (int)ls.Slider(gamblerMaxStayDuration, gamblerMinStayDuration, 15));
+                // Prevent disabling all forms
+                bool isLastLuckyDrifter = IsLastGamblerForm("LuckyDrifter") && allowLuckyDrifter;
+                bool isLastRiskyCardshark = IsLastGamblerForm("RiskyCardshark") && allowRiskyCardshark;
+                bool isLastWashedUpHustler = IsLastGamblerForm("WashedUpHustler") && allowWashedUpHustler;
+                bool isLastTrickster = IsLastGamblerForm("Trickster") && allowTrickster;
                 
-                ls.Label("Minimum Colony Wealth: " + gamblerMinWealth.ToString("N0"));
-                gamblerMinWealth = (int)ls.Slider(gamblerMinWealth, 0, 10000);
+                DrawFormCheckbox(ls, "Lucky Drifter", "Smooth-talking, lucky gambler with a revolver", ref allowLuckyDrifter, isLastLuckyDrifter);
+                DrawFormCheckbox(ls, "Risky Cardshark", "Greedy, dangerous formal gambler with an autopistol", ref allowRiskyCardshark, isLastRiskyCardshark);
+                DrawFormCheckbox(ls, "Washed-Up Hustler", "Depressed, less skilled gambler with beer", ref allowWashedUpHustler, isLastWashedUpHustler);
+                DrawFormCheckbox(ls, "Trickster", "Smart, casual gambler with a knife", ref allowTrickster, isLastTrickster);
+            }
+            else
+            {
+                ls.Gap(12f);
+                Text.Font = GameFont.Medium;
+                GUI.color = new Color(0.7f, 0.7f, 0.7f);
+                ls.Label("💡 Enable traveling gamblers above to configure gambler forms.");
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+                ls.Gap(6f);
             }
         }
 
@@ -197,17 +219,30 @@ namespace RimGamble.Options
             ls.Label("What happens when you accept the gambler into your colony:");
             ls.Gap(8f);
             
-            DrawIndentedCheckbox(ls, "Peaceful departure", ref allowPeacefulDeparture);
-            DrawIndentedCheckbox(ls, "Human bomb incident", ref allowHumanBomb);
-            DrawIndentedCheckbox(ls, "Sabotage incident", ref allowSabotage);
-            DrawIndentedCheckbox(ls, "Party mood boost", ref allowPartyMood);
-            DrawIndentedCheckbox(ls, "Rumor spread", ref allowRumorSpread);
-            DrawIndentedCheckbox(ls, "Theft incident (acceptance)", ref allowTheftAccept);
-            DrawIndentedCheckbox(ls, "Trade caravan arrival", ref allowTradeCaravan);
-            DrawIndentedCheckbox(ls, "Drop pod delivery", ref allowDropPod);
-            DrawIndentedCheckbox(ls, "Teach skill", ref allowTeachSkill);
-            DrawIndentedCheckbox(ls, "Give inspiration", ref allowGiveInspiration);
-            DrawIndentedCheckbox(ls, "Ask to join colony", ref allowAskJoin);
+            // Prevent disabling all acceptance behaviors
+            bool isLastPeacefulDeparture = IsLastAcceptanceBehavior("PeacefulDeparture") && allowPeacefulDeparture;
+            bool isLastHumanBomb = IsLastAcceptanceBehavior("HumanBomb") && allowHumanBomb;
+            bool isLastSabotage = IsLastAcceptanceBehavior("Sabotage") && allowSabotage;
+            bool isLastPartyMood = IsLastAcceptanceBehavior("PartyMood") && allowPartyMood;
+            bool isLastRumorSpread = IsLastAcceptanceBehavior("RumorSpread") && allowRumorSpread;
+            bool isLastTheftAccept = IsLastAcceptanceBehavior("TheftAccept") && allowTheftAccept;
+            bool isLastTradeCaravan = IsLastAcceptanceBehavior("TradeCaravan") && allowTradeCaravan;
+            bool isLastDropPod = IsLastAcceptanceBehavior("DropPod") && allowDropPod;
+            bool isLastTeachSkill = IsLastAcceptanceBehavior("TeachSkill") && allowTeachSkill;
+            bool isLastGiveInspiration = IsLastAcceptanceBehavior("GiveInspiration") && allowGiveInspiration;
+            bool isLastAskJoin = IsLastAcceptanceBehavior("AskJoin") && allowAskJoin;
+            
+            DrawIndentedCheckbox(ls, "Peaceful departure" + (isLastPeacefulDeparture ? " (at least one required)" : ""), ref allowPeacefulDeparture, isLastPeacefulDeparture);
+            DrawIndentedCheckbox(ls, "Human bomb incident" + (isLastHumanBomb ? " (at least one required)" : ""), ref allowHumanBomb, isLastHumanBomb);
+            DrawIndentedCheckbox(ls, "Sabotage incident" + (isLastSabotage ? " (at least one required)" : ""), ref allowSabotage, isLastSabotage);
+            DrawIndentedCheckbox(ls, "Party mood boost" + (isLastPartyMood ? " (at least one required)" : ""), ref allowPartyMood, isLastPartyMood);
+            DrawIndentedCheckbox(ls, "Rumor spread" + (isLastRumorSpread ? " (at least one required)" : ""), ref allowRumorSpread, isLastRumorSpread);
+            DrawIndentedCheckbox(ls, "Theft incident (acceptance)" + (isLastTheftAccept ? " (at least one required)" : ""), ref allowTheftAccept, isLastTheftAccept);
+            DrawIndentedCheckbox(ls, "Trade caravan arrival" + (isLastTradeCaravan ? " (at least one required)" : ""), ref allowTradeCaravan, isLastTradeCaravan);
+            DrawIndentedCheckbox(ls, "Drop pod delivery" + (isLastDropPod ? " (at least one required)" : ""), ref allowDropPod, isLastDropPod);
+            DrawIndentedCheckbox(ls, "Teach skill" + (isLastTeachSkill ? " (at least one required)" : ""), ref allowTeachSkill, isLastTeachSkill);
+            DrawIndentedCheckbox(ls, "Give inspiration" + (isLastGiveInspiration ? " (at least one required)" : ""), ref allowGiveInspiration, isLastGiveInspiration);
+            DrawIndentedCheckbox(ls, "Ask to join colony" + (isLastAskJoin ? " (at least one required)" : ""), ref allowAskJoin, isLastAskJoin);
             
             ls.Gap(12f);
 
@@ -216,10 +251,10 @@ namespace RimGamble.Options
             ls.Gap(8f);
             
             // Prevent disabling all aggressive behaviors
-            bool isLastAssault = IsLastAggressiveBehavior("Assault");
-            bool isLastRaid = IsLastAggressiveBehavior("Raid");
-            bool isLastDelayedRaid = IsLastAggressiveBehavior("DelayedRaid");
-            bool isLastTheft = IsLastAggressiveBehavior("Theft");
+            bool isLastAssault = IsLastAggressiveBehavior("Assault") && allowAssault;
+            bool isLastRaid = IsLastAggressiveBehavior("Raid") && allowRaid;
+            bool isLastDelayedRaid = IsLastAggressiveBehavior("DelayedRaid") && allowDelayedRaid;
+            bool isLastTheft = IsLastAggressiveBehavior("Theft") && allowTheft;
             
             DrawIndentedCheckbox(ls, "Direct assault" + (isLastAssault ? " (at least one required)" : ""), ref allowAssault, isLastAssault);
             DrawIndentedCheckbox(ls, "Immediate raid" + (isLastRaid ? " (at least one required)" : ""), ref allowRaid, isLastRaid);
@@ -233,11 +268,11 @@ namespace RimGamble.Options
             ls.Gap(8f);
             
             // Prevent disabling all rejection behaviors
-            bool isLastPeaceful = IsLastRejectionBehavior("Peaceful");
-            bool isLastAggressive = IsLastRejectionBehavior("Aggressive");
+            bool isLastPeacefulRej = IsLastRejectionBehavior("Peaceful") && allowPeacefulRejection;
+            bool isLastAggressiveRej = IsLastRejectionBehavior("Aggressive") && allowAggressiveRejection;
             
-            DrawIndentedCheckbox(ls, "Peaceful departure" + (isLastPeaceful ? " (at least one required)" : ""), ref allowPeacefulRejection, isLastPeaceful);
-            DrawIndentedCheckbox(ls, "Aggressive response" + (isLastAggressive ? " (at least one required)" : ""), ref allowAggressiveRejection, isLastAggressive);
+            DrawIndentedCheckbox(ls, "Peaceful departure" + (isLastPeacefulRej ? " (at least one required)" : ""), ref allowPeacefulRejection, isLastPeacefulRej);
+            DrawIndentedCheckbox(ls, "Aggressive response" + (isLastAggressiveRej ? " (at least one required)" : ""), ref allowAggressiveRejection, isLastAggressiveRej);
         }
 
         private static void DrawSectionHeader(Listing_Standard ls, string text)
@@ -269,53 +304,6 @@ namespace RimGamble.Options
             ls.Gap(4f);
         }
 
-        private static void DrawIndentedCheckbox(Listing_Standard ls, string label, ref bool value)
-        {
-            var rect = ls.GetRect(Text.LineHeight + 2f);
-            rect.x += 40f;
-            rect.width -= 40f;
-            
-            if (Mouse.IsOver(rect))
-            {
-                var bgRect = new Rect(rect.x - 5f, rect.y, rect.width + 10f, rect.height);
-                GUI.color = new Color(1f, 1f, 1f, 0.1f);
-                Widgets.DrawHighlight(bgRect);
-                GUI.color = Color.white;
-            }
-            
-            // Check if this would be the last acceptance behavior being disabled
-            bool wouldBeLastAcceptance = IsLastAcceptanceBehavior(ref value);
-            
-            if (wouldBeLastAcceptance && value)
-            {
-                // Don't allow disabling the last acceptance behavior - enforce by preventing the change
-                GUI.color = Color.gray;
-                bool tempValue = value; // Create temp to prevent changing the actual value
-                Widgets.CheckboxLabeled(rect, label + " (at least one required)", ref tempValue);
-                GUI.color = Color.white;
-                
-                if (Widgets.ButtonInvisible(rect))
-                {
-                    Messages.Message("At least one acceptance behavior must remain enabled!", MessageTypeDefOf.RejectInput);
-                }
-                // Don't change the actual value - keep it enabled
-            }
-            else
-            {
-                bool oldValue = value;
-                Widgets.CheckboxLabeled(rect, label, ref value);
-                
-                // If they disabled this and it would leave none enabled, auto-enable the first one
-                if (oldValue && !value && GetEnabledAcceptanceBehaviors().Count == 0)
-                {
-                    allowPeacefulDeparture = true; // Auto-enable first option
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Draw indented checkbox with custom validation logic
-        /// </summary>
         private static void DrawIndentedCheckbox(Listing_Standard ls, string label, ref bool value, bool isLastOfType)
         {
             var rect = ls.GetRect(Text.LineHeight + 2f);
@@ -352,8 +340,13 @@ namespace RimGamble.Options
                 // Auto-enforcement logic: if they disabled this and it would leave none enabled, auto-enable the first one
                 if (oldValue && !value)
                 {
+                    // Check if this was for acceptance behaviors
+                    if (enableAcceptanceBehaviors && GetEnabledAcceptanceBehaviors().Count == 0)
+                    {
+                        allowPeacefulDeparture = true; // Auto-enable first acceptance option
+                    }
                     // Check if this was for aggressive behaviors
-                    if (enableAggressiveBehaviors && GetEnabledAggressiveBehaviors().Count == 0)
+                    else if (enableAggressiveBehaviors && GetEnabledAggressiveBehaviors().Count == 0)
                     {
                         allowAssault = true; // Auto-enable first aggressive option
                     }
@@ -366,11 +359,105 @@ namespace RimGamble.Options
             }
         }
         
-        private static bool IsLastAcceptanceBehavior(ref bool currentValue)
+        private static void DrawFormCheckbox(Listing_Standard ls, string formName, string description, ref bool value, bool isLastForm)
         {
-            if (currentValue || !enableAcceptanceBehaviors) return false;
+            var rect = ls.GetRect(Text.LineHeight + 2f);
+            rect.x += 20f;
+            rect.width -= 20f;
             
-            // Count how many acceptance behaviors are currently enabled
+            if (Mouse.IsOver(rect))
+            {
+                var bgRect = new Rect(rect.x - 5f, rect.y, rect.width + 10f, rect.height);
+                GUI.color = new Color(1f, 1f, 1f, 0.1f);
+                Widgets.DrawHighlight(bgRect);
+                GUI.color = Color.white;
+            }
+            
+            string displayName = formName + (isLastForm ? " (at least one required)" : "");
+            
+            if (isLastForm && value)
+            {
+                // Don't allow disabling the last form - enforce by preventing the change
+                GUI.color = Color.gray;
+                bool tempValue = value; // Create temp to prevent changing the actual value
+                Widgets.CheckboxLabeled(rect, displayName, ref tempValue);
+                GUI.color = Color.white;
+                
+                if (Widgets.ButtonInvisible(rect))
+                {
+                    Messages.Message("At least one gambler form must remain enabled!", MessageTypeDefOf.RejectInput);
+                }
+                // Don't change the actual value - keep it enabled
+            }
+            else
+            {
+                bool oldValue = value;
+                Widgets.CheckboxLabeled(rect, displayName, ref value);
+                
+                // Auto-enforcement logic: if they disabled this and it would leave none enabled, auto-enable the first one
+                if (oldValue && !value && GetEnabledFormCount() == 0)
+                {
+                    allowLuckyDrifter = true; // Auto-enable first form
+                }
+            }
+            
+            // Add description as a smaller text below
+            if (!string.IsNullOrEmpty(description))
+            {
+                var descRect = ls.GetRect(Text.LineHeight);
+                descRect.x += 40f;
+                descRect.width -= 40f;
+                var oldFont = Text.Font;
+                var oldColor = GUI.color;
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(0.7f, 0.7f, 0.7f);
+                Widgets.Label(descRect, description);
+                Text.Font = oldFont;
+                GUI.color = oldColor;
+            }
+        }
+        
+        /// <summary>
+        /// Count how many gambler forms are currently enabled
+        /// </summary>
+        private static int GetEnabledFormCount()
+        {
+            int count = 0;
+            if (allowLuckyDrifter) count++;
+            if (allowRiskyCardshark) count++;
+            if (allowWashedUpHustler) count++;
+            if (allowTrickster) count++;
+            return count;
+        }
+        
+        /// <summary>
+        /// Check if disabling this specific gambler form would leave none enabled
+        /// </summary>
+        private static bool IsLastGamblerForm(string formName)
+        {
+            int enabledCount = 0;
+            if (allowLuckyDrifter) enabledCount++;
+            if (allowRiskyCardshark) enabledCount++;
+            if (allowWashedUpHustler) enabledCount++;
+            if (allowTrickster) enabledCount++;
+            
+            // Only return true if there's exactly 1 enabled AND this form is the one enabled
+            if (enabledCount != 1) return false;
+            
+            switch (formName)
+            {
+                case "LuckyDrifter": return allowLuckyDrifter;
+                case "RiskyCardshark": return allowRiskyCardshark;
+                case "WashedUpHustler": return allowWashedUpHustler;
+                case "Trickster": return allowTrickster;
+                default: return false;
+            }
+        }
+        
+        private static bool IsLastAcceptanceBehavior(string behaviorName)
+        {
+            if (!enableAcceptanceBehaviors) return false;
+            
             int enabledCount = 0;
             if (allowPeacefulDeparture) enabledCount++;
             if (allowHumanBomb) enabledCount++;
@@ -384,7 +471,24 @@ namespace RimGamble.Options
             if (allowGiveInspiration) enabledCount++;
             if (allowAskJoin) enabledCount++;
             
-            return enabledCount <= 1; // Would be the last one if disabled
+            // Only return true if there's exactly 1 enabled AND this behavior is the one enabled
+            if (enabledCount != 1) return false;
+            
+            switch (behaviorName)
+            {
+                case "PeacefulDeparture": return allowPeacefulDeparture;
+                case "HumanBomb": return allowHumanBomb;
+                case "Sabotage": return allowSabotage;
+                case "PartyMood": return allowPartyMood;
+                case "RumorSpread": return allowRumorSpread;
+                case "TheftAccept": return allowTheftAccept;
+                case "TradeCaravan": return allowTradeCaravan;
+                case "DropPod": return allowDropPod;
+                case "TeachSkill": return allowTeachSkill;
+                case "GiveInspiration": return allowGiveInspiration;
+                case "AskJoin": return allowAskJoin;
+                default: return false;
+            }
         }
         
         public static List<string> GetEnabledAcceptanceBehaviors()
@@ -440,7 +544,17 @@ namespace RimGamble.Options
             if (allowDelayedRaid) enabledCount++;
             if (allowTheft) enabledCount++;
             
-            return enabledCount <= 1; // Would be the last one if disabled
+            // Only return true if there's exactly 1 enabled AND this behavior is the one enabled
+            if (enabledCount != 1) return false;
+            
+            switch (behaviorName)
+            {
+                case "Assault": return allowAssault;
+                case "Raid": return allowRaid;
+                case "DelayedRaid": return allowDelayedRaid;
+                case "Theft": return allowTheft;
+                default: return false;
+            }
         }
         
         /// <summary>
@@ -454,7 +568,15 @@ namespace RimGamble.Options
             if (allowPeacefulRejection) enabledCount++;
             if (allowAggressiveRejection) enabledCount++;
             
-            return enabledCount <= 1; // Would be the last one if disabled
+            // Only return true if there's exactly 1 enabled AND this behavior is the one enabled
+            if (enabledCount != 1) return false;
+            
+            switch (behaviorName)
+            {
+                case "Peaceful": return allowPeacefulRejection;
+                case "Aggressive": return allowAggressiveRejection;
+                default: return false;
+            }
         }
         
         public static List<string> GetEnabledAggressiveBehaviors()
@@ -468,6 +590,19 @@ namespace RimGamble.Options
             if (allowTheft) behaviors.Add("Theft");
             
             return behaviors;
+        }
+        
+        /// <summary>
+        /// Get list of enabled gambler forms
+        /// </summary>
+        public static List<string> GetEnabledGamblerForms()
+        {
+            var forms = new List<string>();
+            if (allowLuckyDrifter) forms.Add("Lucky Drifter");
+            if (allowRiskyCardshark) forms.Add("Risky Cardshark");
+            if (allowWashedUpHustler) forms.Add("Washed-Up Hustler");
+            if (allowTrickster) forms.Add("Trickster");
+            return forms;
         }
         
         public static List<string> GetEnabledRejectionBehaviors()
@@ -491,14 +626,12 @@ namespace RimGamble.Options
             
             // Traveling Gambler general settings
             enableTravelingGambler = true;
-            gamblerSpawnFrequency = 60;
-            gamblerMinStayDuration = 3;
-            gamblerMaxStayDuration = 7;
-            gamblerNegativeOutcomeChance = 0.3f;
-            allowGamblerViolence = true;
-            allowGamblerTheft = true;
-            gamblerMinWealth = 1000;
-            showGamblerWarnings = true;
+            
+            // Gambler Forms
+            allowLuckyDrifter = true;
+            allowRiskyCardshark = true;
+            allowWashedUpHustler = true;
+            allowTrickster = true;
             
             // Behavior Categories
             enableAcceptanceBehaviors = true;

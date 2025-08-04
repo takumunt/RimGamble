@@ -129,7 +129,29 @@ namespace RimGamble
                         }
                     }
                 }
-                // For other behavior types (form), include all for now
+                // Check form types
+                else if (def is TravelingGamblerFormKindDef form)
+                {
+                    switch (form.defName)
+                    {
+                        case "LuckyDrifter":
+                            shouldInclude = Options.RimGamble_Settings.allowLuckyDrifter;
+                            break;
+                        case "RiskyCardshark":
+                            shouldInclude = Options.RimGamble_Settings.allowRiskyCardshark;
+                            break;
+                        case "WashedUpHustler":
+                            shouldInclude = Options.RimGamble_Settings.allowWashedUpHustler;
+                            break;
+                        case "Trickster":
+                            shouldInclude = Options.RimGamble_Settings.allowTrickster;
+                            break;
+                        default:
+                            shouldInclude = true; // Allow unknown forms by default
+                            break;
+                    }
+                }
+                // For other behavior types, include all for now
                 
                 if (shouldInclude)
                 {
@@ -146,7 +168,15 @@ namespace RimGamble
 
             if (form == null)
             {
-                form = DefDatabase<TravelingGamblerFormKindDef>.AllDefsListForReading.RandomElementByWeight((TravelingGamblerFormKindDef x) => x.Weight);
+                var allForms = DefDatabase<TravelingGamblerFormKindDef>.AllDefsListForReading;
+                var availableForms = allForms.Where(f => IsFormEnabled(f)).ToList();
+                
+                if (availableForms.Count == 0)
+                {
+                    // Fallback: re-enable all forms if none are available
+                    availableForms = allForms.ToList();
+                }
+                form = availableForms.RandomElementByWeight((TravelingGamblerFormKindDef x) => x.Weight);
             }
 
             requires.AddRange(form.Requires);
@@ -172,7 +202,16 @@ namespace RimGamble
 
         public static Pawn GenerateAndSpawn(Map map, float combatPoints)
         {
-            TravelingGamblerFormKindDef travelingGamblerFormKindDef = DefDatabase<TravelingGamblerFormKindDef>.AllDefsListForReading.RandomElementByWeight((TravelingGamblerFormKindDef x) => x.Weight);
+            var allForms = DefDatabase<TravelingGamblerFormKindDef>.AllDefsListForReading;
+            var availableForms = allForms.Where(f => IsFormEnabled(f)).ToList();
+            
+            if (availableForms.Count == 0)
+            {
+                // Fallback: re-enable all forms if none are available
+                availableForms = allForms.ToList();
+            }
+            
+            TravelingGamblerFormKindDef travelingGamblerFormKindDef = availableForms.RandomElementByWeight((TravelingGamblerFormKindDef x) => x.Weight);
             requires.AddRange(travelingGamblerFormKindDef.Requires);
             exclude.AddRange(travelingGamblerFormKindDef.Excludes);
             TravelingGamblerAggressiveDef aggressive = GetRandom(DefDatabase<TravelingGamblerAggressiveDef>.AllDefsListForReading, combatPoints, requires, exclude);
@@ -201,7 +240,6 @@ namespace RimGamble
             travelinggambler.aggressive = aggressive;
             travelinggambler.rejection = rejection;
             travelinggambler.acceptance = acceptance;
-            pawn.guest.Recruitable = false;
 
             if (!RCellFinder.TryFindRandomPawnEntryCell(out var result, map, CellFinder.EdgeRoadChance_Friendly, allowFogged: false, (IntVec3 cell) => map.reachability.CanReachMapEdge(cell, TraverseParms.For(TraverseMode.PassDoors))))
             {
@@ -209,12 +247,15 @@ namespace RimGamble
             }
 
             GenSpawn.Spawn(pawn, result, map);
+            
             if (!RCellFinder.TryFindRandomSpotJustOutsideColony(pawn, out var result2))
             {
                 return null;
             }
 
-            LordMaker.MakeNewLord(pawn.Faction, new LordJob_CreepJoiner(result2, pawn), map).AddPawn(pawn);
+            Lord lord = LordMaker.MakeNewLord(pawn.Faction, new LordJob_CreepJoiner(result2, pawn), map);
+            lord.AddPawn(pawn);
+            
             travelinggambler.Notify_Created();
             return pawn;
         }
@@ -241,8 +282,8 @@ namespace RimGamble
             var filteredDefs = FilterDefsBySettings(defs);
             if (filteredDefs.Count == 0)
             {
-                Log.Warning("[RimGamble] All behaviors of this type are disabled in settings. Using fallback selection.");
-                filteredDefs = defs; // Fallback to allow at least something
+                // Fallback: allow all behaviors if none are available
+                filteredDefs = defs;
             }
 
             T val;
@@ -310,6 +351,23 @@ namespace RimGamble
             exclude.AddRange(val.Excludes);
             requires.AddRange(val.Requires);
             return val;
+        }
+        
+        private static bool IsFormEnabled(TravelingGamblerFormKindDef form)
+        {
+            switch (form.defName)
+            {
+                case "LuckyDrifter":
+                    return Options.RimGamble_Settings.allowLuckyDrifter;
+                case "RiskyCardshark":
+                    return Options.RimGamble_Settings.allowRiskyCardshark;
+                case "WashedUpHustler":
+                    return Options.RimGamble_Settings.allowWashedUpHustler;
+                case "Trickster":
+                    return Options.RimGamble_Settings.allowTrickster;
+                default:
+                    return true; // Allow unknown forms by default
+            }
         }
     }
 
