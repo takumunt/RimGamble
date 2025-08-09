@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- Existing -->
+  <RimGamble.BigEventMtb>Mean Time Between Ricky Risk Events</RimGamble.BigEventMtb>
+  
+  <!-- New settings -->
+  <RimGamble.SettingsHeader>RimGamble Settings</RimGamble.SettingsHeader>
+  <RimGamble.Days>days</RimGamble.Days>
+  
+  <!-- Ricky Risk Section -->
+  <RimGamble.RickyRiskSettings>Ricky Risk Storyteller</RimGamble.RickyRiskSettings>
+  
+  <!-- Traveling Gambler Section -->
+  <RimGamble.TravelingGamblerSettings>Traveling Gambler</RimGamble.TravelingGamblerSettings>
+  <RimGamble.EnableTravelingGambler>Enable traveling gamblers</RimGamble.EnableTravelingGambler>
+  <RimGamble.EnableTravelingGamblerTooltip>If disabled, traveling gamblers will never visit your colony.</RimGamble.EnableTravelingGamblerTooltip>
+  
+  <RimGamble.GamblerSpawnFrequency>Spawn frequency</RimGamble.GamblerSpawnFrequency>
+  <RimGamble.GamblerStayDuration>Stay duration</RimGamble.GamblerStayDuration>
+  <RimGamble.GamblerMinWealth>Minimum colony wealth</RimGamble.GamblerMinWealth>
+  
+  <!-- Risk Settings -->
+  <RimGamble.RiskSettings>Risk Settings</RimGamble.RiskSettings>
+  <RimGamble.NegativeOutcomeChance>Negative outcome chance</RimGamble.NegativeOutcomeChance>
+  <RimGamble.AllowGamblerViolence>Allow gambler violence</RimGamble.AllowGamblerViolence>
+  <RimGamble.AllowGamblerViolenceTooltip>Gamblers may become hostile if deals go badly.</RimGamble.AllowGamblerViolenceTooltip>
+  <RimGamble.AllowGamblerTheft>Allow gambler theft</RimGamble.AllowGamblerTheft>
+  <RimGamble.AllowGamblerTheftTooltip>Gamblers may steal items when leaving.</RimGamble.AllowGamblerTheftTooltip>
+  
+  <!-- UI Settings -->
+  <RimGamble.UISettings>Interface Settings</RimGamble.UISettings>
+  <RimGamble.ShowGamblerWarnings>Show risk warnings</RimGamble.ShowGamblerWarnings>
+  <RimGamble.ShowGamblerWarningsTooltip>Display warnings about potential negative outcomes in letters.</RimGamble.ShowGamblerWarningsTooltip>
+  
+  <!-- Behavior Settings -->
+  <RimGamble.BehaviorSettings>Behavior Configuration</RimGamble.BehaviorSettings>
+  
+  <!-- Acceptance Behavior Category -->
+  <RimGamble.EnableAcceptanceBehaviors>Enable acceptance behaviors</RimGamble.EnableAcceptanceBehaviors>
+  <RimGamble.EnableAcceptanceBehaviorsTooltip>Allow outcomes when the gambler is accepted into your colony.</RimGamble.EnableAcceptanceBehaviorsTooltip>
+  
+  <!-- Specific Acceptance Behaviors -->
+  <RimGamble.AllowPeacefulDeparture>Peaceful departure</RimGamble.AllowPeacefulDeparture>
+  <RimGamble.AllowPeacefulDepartureTooltip>The gambler may simply leave peacefully after a few days.</RimGamble.AllowPeacefulDepartureTooltip>
+  <RimGamble.AllowHumanBomb>Human bomb incident</RimGamble.AllowHumanBomb>
+  <RimGamble.AllowHumanBombTooltip>The gambler may explode, causing damage to your colony.</RimGamble.AllowHumanBombTooltip>
+  <RimGamble.AllowSabotage>Sabotage incident</RimGamble.AllowSabotage>
+  <RimGamble.AllowSabotageTooltip>The gambler may sabotage your buildings before leaving.</RimGamble.AllowSabotageTooltip>
+  <RimGamble.AllowPartyMood>Party mood boost</RimGamble.AllowPartyMood>
+  <RimGamble.AllowPartyMoodTooltip>The gambler may boost colonist moods by being the life of the party.</RimGamble.AllowPartyMoodTooltip>
+  
+  <!-- Aggressive Behavior Category -->
+  <RimGamble.EnableAggressiveBehaviors>Enable aggressive behaviors</RimGamble.EnableAggressiveBehaviors>
+  <RimGamble.EnableAggressiveBehaviorsTooltip>Allow violent and theft outcomes during gambling interactions.</RimGamble.EnableAggressiveBehaviorsTooltip>
+  
+  <!-- Specific Aggressive Behaviors -->
+  <RimGamble.AllowAssault>Direct assault</RimGamble.AllowAssault>
+  <RimGamble.AllowAssaultTooltip>The gambler may attack your colonists directly.</RimGamble.AllowAssaultTooltip>
+  <RimGamble.AllowRaid>Immediate raid</RimGamble.AllowRaid>
+  <RimGamble.AllowRaidTooltip>The gambler may call in allies for an immediate raid.</RimGamble.AllowRaidTooltip>
+  <RimGamble.AllowDelayedRaid>Delayed raid</RimGamble.AllowDelayedRaid>
+  <RimGamble.AllowDelayedRaidTooltip>The gambler may organize a raid that arrives later.</RimGamble.AllowDelayedRaidTooltip>
+  <RimGamble.AllowTheft>Theft incident</RimGamble.AllowTheft>
+  <RimGamble.AllowTheftTooltip>The gambler may steal valuable items from your colony.</RimGamble.AllowTheftTooltip>
+  
+  <!-- Rejection Behavior Category -->
+  <RimGamble.EnableRejectionBehaviors>Enable rejection behaviors</RimGamble.EnableRejectionBehaviors>
+  <RimGamble.EnableRejectionBehaviorsTooltip>Allow outcomes when the gambler is rejected from your colony.</RimGamble.EnableRejectionBehaviorsTooltip>
+  
+  <!-- Specific Rejection Behaviors -->
+  <RimGamble.AllowPeacefulRejection>Peaceful departure</RimGamble.AllowPeacefulRejection>
+  <RimGamble.AllowPeacefulRejectionTooltip>The gambler may leave peacefully when rejected.</RimGamble.AllowPeacefulRejectionTooltip>
+  <RimGamble.AllowAggressiveRejection>Aggressive rejection response</RimGamble.AllowAggressiveRejection>
+  <RimGamble.AllowAggressiveRejectionTooltip>The gambler may become hostile when rejected.</RimGamble.AllowAggressiveRejectionTooltip>
+</LanguageData>

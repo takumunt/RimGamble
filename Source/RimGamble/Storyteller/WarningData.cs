@@ -8,9 +8,11 @@ using Verse;
 
 namespace RimGamble
 {
-    public class WarningData
+    public class WarningData : IExposable
     {
         public int warningEventTick;
+
+        public WarningData() { }
 
         public WarningData(int warningEventTick, int delayTick)
         {

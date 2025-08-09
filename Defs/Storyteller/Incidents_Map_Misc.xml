@@ -2,17 +2,17 @@
 <Defs>
   <IncidentDef>
     <defName>TravelingGamblerJoin</defName>
-    <label>travelinggambler join</label>  
+    <label>traveling gambler arrival</label>  
     <category>Misc</category>
     <targetTags>
       <li>Map_PlayerHome</li>
     </targetTags>
-    <workerClass>IncidentWorker_GiveQuest</workerClass>
+    <workerClass>RimGamble.IncidentWorker_TravelingGamblerJoin</workerClass>
     <questScriptDef>TravelingGamblerArrival</questScriptDef>
-    <earliestDay>10</earliestDay>
-    <baseChance>1</baseChance>
-    <minRefireDays>30</minRefireDays>
-    <requireColonistsPresent>True</requireColonistsPresent>
+    <earliestDay>0</earliestDay>
+    <baseChance>15.0</baseChance>
+    <minRefireDays>0</minRefireDays>
+    <requireColonistsPresent>true</requireColonistsPresent>
   </IncidentDef>
   
   <IncidentDef>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- Adds traveling gambler spawning to vanilla storytellers (Cassandra, Phoebe, Randy) -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/StorytellerDef[defName="Cassandra" or defName="Phoebe" or defName="Randy"]/comps</xpath>
+    <value>
+      <li Class="StorytellerCompProperties_OnOffCycle">
+        <incident>TravelingGamblerJoin</incident>
+        <onDays>60</onDays>
+        <offDays>0</offDays>
+        <minSpacingDays>15</minSpacingDays>
+        <forceRaidEnemyBeforeDaysPassed>-1</forceRaidEnemyBeforeDaysPassed>
+        <minDaysPassed>15</minDaysPassed>
+        <numIncidentsRange>1</numIncidentsRange>
+      </li>
+    </value>
+  </Operation>
+</Patch>

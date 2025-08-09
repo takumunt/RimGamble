@@ -35,7 +35,7 @@ namespace RimGamble
             Pawn warningPawn = (Pawn)TargetA.Thing;
 
             Find.WindowStack.Add(new Dialog_MessageBox(
-                "The mysterious figure delivers their message. After speaking, they quickly depart.", "OK", () =>
+                "The mysterious figure delivers their message. \"Something approaches.\" They refuse to respond to further questions.", "OK", () =>
                     {
                         if (warningPawn.GetLord() != null)
                         {

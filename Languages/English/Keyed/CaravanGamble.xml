@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <RimGamble.GambleWith>Gamble with</RimGamble.GambleWith>
+    <RimGamble.CannotGambleWith>Cannot gamble with</RimGamble.CannotGambleWith>
+    <RimGamble.CaravanGamblingLabel>Caravan Jackpot</RimGamble.CaravanGamblingLabel>
+    <RimGamble.CaravanGamblingDesc>Add items to the betting pool. The greater the value of your items compared to that of your opponent, the greater the odds of winning. The winner takes all the items from the pool.</RimGamble.CaravanGamblingDesc>
+    <RimGamble.StartGame>Start Caravan Jackpot</RimGamble.StartGame>
+    <RimGamble.ColonyItems>Colony's Items</RimGamble.ColonyItems>
+    <RimGamble.TraderItems>Trader's Items</RimGamble.TraderItems>
+    <RimGamble.TraderItemCount>Amount</RimGamble.TraderItemCount>
+    <RimGamble.TraderItemWagered>Wagered</RimGamble.TraderItemWagered>
+    <RimGamble.ColonyAmtHeld>Amount</RimGamble.ColonyAmtHeld>
+    <RimGamble.TimeRemaining>Time Remaining: </RimGamble.TimeRemaining>
+    <RimGamble.OddsofWinning>Odds of Winning: </RimGamble.OddsofWinning>
+    <RimGamble.Cancel>Cancel</RimGamble.Cancel>
+    <RimGamble.ReGamble>Retry</RimGamble.ReGamble>
+    <RimGamble.Exit>Exit</RimGamble.Exit>
+    <RimGamble.Win>You Win!</RimGamble.Win>
+    <RimGamble.Loss>You Lost!</RimGamble.Loss>
+</LanguageData>

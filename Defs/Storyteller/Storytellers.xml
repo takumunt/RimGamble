@@ -10,11 +10,11 @@
     <comps>
       <!-- Custom comp for generating the periodic increased magnitude events -->
       <li Class="RimGamble.StorytellerCompProperties_MagEvents">
-        <mtbDays>1.0</mtbDays>
+        <mtbDays>20.0</mtbDays>
         <eventMagnitudeMult>2.5</eventMagnitudeMult>
         <skipThreatBigIfRaidBeacon>true</skipThreatBigIfRaidBeacon>
         <randomPointsFactorRange>0.5~1.5</randomPointsFactorRange>
-        <maxThreatBigIntervalDays>13</maxThreatBigIntervalDays>
+        <maxThreatBigIntervalDays>40.0</maxThreatBigIntervalDays>
         <categoryWeights>
           <Misc>3.5</Misc>
           <ThreatBig>1.4</ThreatBig>

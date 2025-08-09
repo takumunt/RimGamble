@@ -18,15 +18,15 @@
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\Assemblies\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>5</WarningLevel>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -72,8 +72,11 @@
     <Compile Include="GachaMachine\Refuel\JobDriver_RefuelGachaMachines.cs" />
     <Compile Include="GachaMachine\JoyGiver_PlayGachaMachine.cs" />
     <Compile Include="HarmonyPatches.cs" />
+    <Compile Include="Options\RimGamble_Settings.cs" />
+    <Compile Include="Options\Settings_Controller.cs" />
     <Compile Include="SlotMachine\JobDriver_PlaySlotMachine.cs" />
     <Compile Include="SlotMachine\JoyGiver_PlaySlotMachine.cs" />
+    <Compile Include="Storyteller\IncidentWorker_TravelingGamblerJoin.cs" />
     <Compile Include="Storyteller\IncidentWorker_WarningEvent.cs" />
     <Compile Include="Storyteller\JobDriver_TalkWarningPawn.cs" />
     <Compile Include="Storyteller\StorytellerCompProperties_MagEvents.cs" />
@@ -96,7 +99,6 @@
     <Compile Include="TravelingGambler\TravelingGamblerWorkers.cs" />
     <Compile Include="TravelingGambler\TravelingGambler_DoFunctions.cs" />
     <Compile Include="UI\Window_CaravanGambling.cs" />
-    <Compile Include="DebugActionRimGamble.cs" />
     <Compile Include="Utils\RimGamble_LetterDefOf.cs" />
     <Compile Include="CaravanGambling\CaravanGambleAI.cs" />
     <Compile Include="CaravanGambling\WagerItem.cs" />
@@ -116,6 +118,8 @@
     <Compile Include="UI\Window_OnlineGambling.cs" />
     <Compile Include="Utils\RimGamble_DefOf.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

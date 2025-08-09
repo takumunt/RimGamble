@@ -46,7 +46,7 @@ namespace RimGamble
 
             // try and roll for the warning event if possible
             // dont roll if there is already a big event scheduled
-            if (!Rand.MTBEventOccurs(Props.mtbDays, 60000f, 1000f))
+            if (!Rand.MTBEventOccurs(RimGamble.Options.RimGamble_Settings.bigEventMtb, 60000f, 1000f))
             {
                 yield break;
             }
