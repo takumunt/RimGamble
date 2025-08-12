@@ -216,11 +216,11 @@ public class RimGambleManager : GameComponent
     {
         if (Find.CurrentMap != null)
         {
-            Thing silverStack = ThingMaker.MakeThing(ThingDefOf.Silver);
+            Thing silverStack = ThingMaker.MakeThing(ThingDefOf.Silver);    
             silverStack.stackCount = payout;
             IntVec3 dropSpot = DropCellFinder.TradeDropSpot(Find.CurrentMap);
             TradeUtility.SpawnDropPod(dropSpot, Find.CurrentMap, silverStack);
-            Find.LetterStack.ReceiveLetter("RimGamble.PayoutArrived".Translate(), "RimGamble.TravelingGamblerDropPodDesc".Translate(), LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, Find.CurrentMap));
+            Find.LetterStack.ReceiveLetter("RimGamble.PayoutArrived".Translate(), "RimGamble.PayoutArrivedDesc".Translate(), LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, Find.CurrentMap));
         }
         else
         {
