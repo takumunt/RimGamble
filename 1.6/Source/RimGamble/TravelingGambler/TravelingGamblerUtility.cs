@@ -217,6 +217,11 @@ namespace RimGamble
             TravelingGamblerAggressiveDef aggressive = GetRandom(DefDatabase<TravelingGamblerAggressiveDef>.AllDefsListForReading, combatPoints, requires, exclude);
             TravelingGamblerRejectionDef rejection = GetRandom(DefDatabase<TravelingGamblerRejectionDef>.AllDefsListForReading, combatPoints, requires, exclude);
             TravelingGamblerAcceptanceDef acceptance = GetRandom(DefDatabase<TravelingGamblerAcceptanceDef>.AllDefsListForReading, combatPoints, requires, exclude);
+            if (acceptance == null)
+            {
+                Log.Warning("[RimGamble] Failed to find valid acceptance behavior. Defaulting to first available.");
+                 acceptance = DefDatabase<TravelingGamblerAcceptanceDef>.AllDefsListForReading.RandomElement();
+            }
             exclude.Clear();
             requires.Clear();
             return GenerateAndSpawn(travelingGamblerFormKindDef, aggressive, rejection, acceptance, map);

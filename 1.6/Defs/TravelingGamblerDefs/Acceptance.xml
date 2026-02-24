@@ -5,7 +5,7 @@
     <label>leaves</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGambler_DepartAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceLeavesLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceLeavesLetterDesc</letterDesc>
@@ -17,7 +17,7 @@
     <label>human bomb</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGambler_HumanBombAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceHumanBombLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceHumanBombLetterDesc</letterDesc>
@@ -29,7 +29,7 @@
     <label>sabotage</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_SabotageAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceSabotageLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceSabotageLetterDesc</letterDesc>
@@ -47,7 +47,7 @@
     <label>life of the party</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_MoodAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceLifeOfPartyLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceLifeOfPartyLetterDesc</letterDesc>
@@ -61,7 +61,7 @@
     <label>rumor spread</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_MoodAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceRumorSpreadLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceRumorSpreadLetterDesc</letterDesc>
@@ -75,7 +75,7 @@
     <label>theft accept</label>
     <weight>2</weight>
     <workerType>RimGamble.TravelingGamblerWorker_TheftAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceTheftLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceTheftLetterDesc</letterDesc>
@@ -90,7 +90,7 @@
     <label>trade caravan</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGambler_TradeCaravanAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceTradeCaravanLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceTradeCaravanLetterDesc</letterDesc>
@@ -102,7 +102,7 @@
     <label>drop pod</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_DropPodAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>false</hasLetter>
     <!-- <letterLabel>{PAWN_nameDef} departure</letterLabel> -->
     <!-- <letterDesc>{PAWN_nameDef} thanks you for having them, they contacted someone to drop off some loot crates.</letterDesc> -->
@@ -114,7 +114,7 @@
     <label>teach skill</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_TeachSkillAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceTeachSkillLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceTeachSkillLetterDesc</letterDesc>
@@ -126,7 +126,7 @@
     <label>give inspiration</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_GiveInspirationAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
     <hasLetter>true</hasLetter>
     <letterLabel>RimGamble.AcceptanceGiveInspirationLetterLabel</letterLabel>
     <letterDesc>RimGamble.AcceptanceGiveInspirationLetterDesc</letterDesc>
@@ -138,7 +138,7 @@
     <label>ask join</label>
     <weight>3</weight>
     <workerType>RimGamble.TravelingGamblerWorker_AskJoinAcceptance</workerType>
-    <triggersAfterDays>2~3</triggersAfterDays>
+    <triggersAfterDays>0.5~1.0</triggersAfterDays>
 
     <clearLord>false</clearLord>
 
