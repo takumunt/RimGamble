@@ -25,7 +25,7 @@ namespace RimGamble
                         if (TravelingGamblerTrackerManager.HasTracker(pawn))
                         {
                             var tracker = TravelingGamblerTrackerManager.GetTracker(pawn);
-                            if (tracker != null && tracker.IsOnEntryLord &&
+                            if (tracker != null && tracker.IsOnEntryLord && !tracker.IsAccepted &&
                                 GenTicks.TicksAbs >= tracker.timeoutAt - WarningTicks)
                             {
                                 gamblers.Add(pawn);

@@ -11,11 +11,19 @@ namespace RimGamble
     {
         private static Dictionary<Pawn, Pawn_TravelingGamblerTracker> trackers = new Dictionary<Pawn, Pawn_TravelingGamblerTracker>();
 
-        public static void AddTracker(Pawn pawn)
+        public static void Reset()
+        {
+            trackers.Clear();
+        }
+
+        public static void AddTracker(Pawn pawn, Pawn_TravelingGamblerTracker tracker = null)
         {
             if (!trackers.ContainsKey(pawn))
             {
-                trackers[pawn] = new Pawn_TravelingGamblerTracker(pawn);
+                if (tracker == null)
+                    trackers[pawn] = new Pawn_TravelingGamblerTracker(pawn);
+                else
+                    trackers[pawn] = tracker;
             }
         }
 

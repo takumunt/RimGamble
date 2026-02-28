@@ -32,7 +32,7 @@ namespace RimGamble
             if (selPawn.IsColonist)
             {
                 // Adding custom float menu
-                List<FloatMenuOption> modifiedOptions = new List<FloatMenuOption>(__result);
+                List<FloatMenuOption> modifiedOptions = __result != null ? new List<FloatMenuOption>(__result) : new List<FloatMenuOption>();
 
                 // Add custom float menu option
                 FloatMenuOption option = null;
@@ -158,6 +158,11 @@ namespace RimGamble
             {
                 Pawn_TravelingGamblerTracker tracker = TravelingGamblerTrackerManager.GetTracker(__instance);
                 Scribe_Deep.Look(ref tracker, "travelinggambler", __instance);
+                
+                if (Scribe.mode == LoadSaveMode.LoadingVars && tracker != null)
+                {
+                    TravelingGamblerTrackerManager.AddTracker(__instance, tracker);
+                }
             }
         }
     }

@@ -10,8 +10,8 @@
     <workerClass>RimGamble.IncidentWorker_TravelingGamblerJoin</workerClass>
     <questScriptDef>TravelingGamblerArrival</questScriptDef>
     <earliestDay>0</earliestDay>
-    <baseChance>15.0</baseChance>
-    <minRefireDays>0</minRefireDays>
+    <baseChance>5.0</baseChance>
+    <minRefireDays>60</minRefireDays>
     <requireColonistsPresent>true</requireColonistsPresent>
   </IncidentDef>
   

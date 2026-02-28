@@ -299,11 +299,13 @@ public class RimGambleManager : GameComponent
     public RimGambleManager()
     {
         Instance = this;
+        TravelingGamblerTrackerManager.Reset();
     }
 
     public RimGambleManager(Game game)
     {
         Instance = this;
+        TravelingGamblerTrackerManager.Reset();
     }
 
     public override void ExposeData()

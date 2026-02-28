@@ -16,7 +16,7 @@ namespace RimGamble
 
         private bool useAlternativeLetter;
 
-        private bool IsAccepted;
+        public bool IsAccepted;
 
         public TravelingGamblerFormKindDef form;
 
@@ -130,6 +130,11 @@ namespace RimGamble
         public void AcceptTravleingGambler()
         {
             IsAccepted = true;
+            if (Pawn.Map != null)
+            {
+                ClearLord();
+                LordMaker.MakeNewLord(Pawn.Faction, new LordJob_DefendPoint(Pawn.Position), Pawn.Map, new List<Pawn> { Pawn });
+            }
         }
 
         public void SetAlternativeLetter(bool setAlternativeLetter)
@@ -164,6 +169,11 @@ namespace RimGamble
 
         public void Tick()
         {
+            if (acceptance == null || form == null || rejection == null || aggressive == null)
+            {
+               InitializeDefaults();
+            }
+
             if (IsAccepted)
             {
                 AcceptedTick();
@@ -172,6 +182,27 @@ namespace RimGamble
             {
                 CheckTriggersTick();
             }
+        }
+
+        private void InitializeDefaults()
+        {
+            if (form == null)
+            {
+                form = DefDatabase<TravelingGamblerFormKindDef>.AllDefs.RandomElement();
+            }
+            if (acceptance == null)
+            {
+                acceptance = DefDatabase<TravelingGamblerAcceptanceDef>.AllDefs.RandomElement();
+            }
+            if (rejection == null)
+            {
+                rejection = DefDatabase<TravelingGamblerRejectionDef>.AllDefs.RandomElement();
+            }
+            if (aggressive == null)
+            {
+                aggressive = DefDatabase<TravelingGamblerAggressiveDef>.AllDefs.RandomElement();
+            }
+            Notify_Created();
         }
 
         private void CheckTriggersTick()
